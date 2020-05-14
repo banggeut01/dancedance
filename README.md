@@ -1,6 +1,5 @@
 
-
-# [심화] :dancer:DANCE DANCE:man_dancing: PROJECT 
+# [심화] :dancer: DANCE DANCE :man_dancing: PROJECT 
 
 # 1. 프로젝트 개요
 
