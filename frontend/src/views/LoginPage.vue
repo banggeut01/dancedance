@@ -1,6 +1,6 @@
 <template>
   <div>
-    <video autoplay loop id="login-video">
+    <video autoplay muted loop id="login-video">
         <source src="../assets/login_back_img.mp4" type="video/mp4">
     </video>
     <LoginForm></LoginForm>
