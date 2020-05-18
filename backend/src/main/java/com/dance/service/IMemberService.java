@@ -8,4 +8,8 @@ public interface IMemberService {
 
 	Member login(Member login);
 
+	int emailcheck(String email);
+
+	void signup(Member member);
+
 }
