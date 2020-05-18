@@ -6,18 +6,19 @@ import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
-import com.dance.dto.Test;
+import com.dance.dto.Member;
+
 
 @Repository
-public class TestDaoImpl {
+public class MemberDaoImpl {
 	
-	String ns = "dance.test.";
+	String ns = "dance.member.";
 	@Autowired
 	private SqlSession sqlSession;
 
 
-	public Test test() {
-		return sqlSession.selectOne(ns+"test");
+	public Member login(Member login) {
+		return sqlSession.selectOne(ns+"login", login);
 	}
 	
 }

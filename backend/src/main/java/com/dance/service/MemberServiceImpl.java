@@ -6,21 +6,21 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.dance.dao.TestDaoImpl;
-import com.dance.dto.Test;
+import com.dance.dao.MemberDaoImpl;
+import com.dance.dto.Member;
 
 
 @Service
-public class TestServiceImpl implements ITestService {
+public class MemberServiceImpl implements IMemberService {
 	
 	@Autowired
-	private TestDaoImpl testdao;
+	private MemberDaoImpl memberdao;
 
 
 	@Override
 	@Transactional(readOnly=true)
-	public Test test() {
-		return testdao.test();
+	public Member login(Member login) {
+		return memberdao.login(login);
 	}
 
 
