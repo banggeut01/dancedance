@@ -20,6 +20,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.dance.dto.Member;
 import com.dance.service.IMemberService;
+import com.dance.service.IJwtService;
 
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
@@ -35,6 +36,8 @@ public class MemberController {
 
 	@Autowired
 	private IMemberService memberservice;
+	@Autowired
+	private IJwtService jwtService;
 	
 	@ApiOperation(value = "로그인", response = Member.class)
 	@RequestMapping(value = "/login", method = RequestMethod.POST)
@@ -47,6 +50,9 @@ public class MemberController {
 		
 		if(login==null)
 			return new ResponseEntity(HttpStatus.BAD_REQUEST);
+		
+		String token = jwtService.create(login);
+		headers.set("Authorization", token);
 		
 		resultMap.put("memberid", login.getMember_id());
 		resultMap.put("email", login.getEmail());

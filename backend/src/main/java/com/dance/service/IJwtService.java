@@ -4,19 +4,17 @@ import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 
+import com.dance.dto.Member;
+
 
 public interface IJwtService {
-
-//	String create(String key, Member data, String subject);
 
 	boolean isUsable(String jwt);
 
 //	String signin(Member data);
 
-//	Map<String, Object> get(String key);
+	Member get(HttpServletRequest req);
 
-//	Member get(HttpServletRequest req);
-
-//	String create(Member data);
+	String create(Member data);
 
 }
