@@ -1,30 +1,29 @@
 <template>
   <v-app-bar color="deep-purple accent-4" dense dark>
-    <v-toolbar-title class="neon">Page title</v-toolbar-title>
-
+    <v-toolbar-title class="neon">DANCE_DANCE</v-toolbar-title>
     <v-spacer></v-spacer>
-
-    <v-btn icon>
-      <v-icon>mdi-heart</v-icon>
-    </v-btn>
-
-    <v-btn icon>
-      <v-icon>mdi-magnify</v-icon>
-    </v-btn>
-
-    <v-menu left bottom>
-      <template v-slot:activator="{ on }">
-        <v-btn icon v-on="on">
-          <v-icon>mdi-dots-vertical</v-icon>
+    <v-toolbar-items class="hidden-sm-and-down">
+      <div class="my-auto mx-2" @click="moveMain">
+        <div>
+          GO
+        </div>
+      </div>
+      <div v-if="islogin" class="my-auto mx-2">
+        <v-btn v-if="user.name !='test'" key="MY PAGE" to="/userinfo" large text color="white">
+          MY PAGE
         </v-btn>
-      </template>
-
-      <v-list>
-        <v-list-item v-for="n in 5" :key="n" @click="() => {}">
-          <v-list-item-title>Option {{ n }}</v-list-item-title>
-        </v-list-item>
-      </v-list>
-    </v-menu>
+      </div>
+      <div v-if="!islogin" class="my-auto mx-2">
+        <v-btn large color="#FF7033" key="LOG IN" to="/login" style="color: white;">
+          LOG IN
+        </v-btn>
+      </div>
+      <div v-if="islogin" class="my-auto mx-2">
+        <v-btn large color="#FF7033" key="LOG OUT" @click="logout" style="color: white;">
+          LOG OUT
+        </v-btn>
+      </div>
+    </v-toolbar-items>
   </v-app-bar>
 </template>
 
@@ -34,10 +33,45 @@
     components: {
 
     },
-
+    computed: {
+      islogin() {
+        return false
+      }
+    },
   }
 </script>
 
 <style>
+@font-face {
+  font-family: neon;
+  src: url(https://s3-us-west-2.amazonaws.com/s.cdpn.io/707108/neon.ttf);
+}
+
+.neon {
+  font-family: neon;
+  color: #FB4264;
+  font-size: 3rem;
+  line-height: 3rem;
+  text-shadow: 0 0 3vw #F40A35;
+}
+
+.neon {
+  animation: neon 1s ease infinite;
+  -moz-animation: neon 1s ease infinite;
+  -webkit-animation: neon 1s ease infinite;
+}
+
+@keyframes neon {
+  0%,
+  100% {
+    text-shadow: 0 0 1vw #FA1C16, 0 0 3vw #FA1C16, 0 0 10vw #FA1C16, 0 0 10vw #FA1C16, 0 0 .4vw #FED128, .5vw .5vw .1vw #806914;
+    color: #FED128;
+  }
+  50% {
+    text-shadow: 0 0 .5vw #800E0B, 0 0 1.5vw #800E0B, 0 0 5vw #800E0B, 0 0 5vw #800E0B, 0 0 .2vw #800E0B, .5vw .5vw .1vw #40340A;
+    color: #806914;
+  }
+}
+
 
 </style>
