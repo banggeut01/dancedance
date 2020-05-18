@@ -42,7 +42,7 @@ public class MemberController {
 	@ApiOperation(value = "로그인", response = Member.class)
 	@RequestMapping(value = "/login", method = RequestMethod.POST)
 	public ResponseEntity<Map<String, Object>> login(@RequestBody Member member) throws Exception {
-		logger.info("1-------------login-----------------------------" + new Date()+member);
+		logger.info("1-------------login-----------------------------" + new Date());
 		HttpHeaders headers = new HttpHeaders();
 		Map<String, Object> resultMap = new HashMap<>();
 		
@@ -61,4 +61,23 @@ public class MemberController {
 		return new ResponseEntity<Map<String, Object>>(resultMap, headers, HttpStatus.OK);
 	}
 	
+	@ApiOperation(value = "email 중복 체크", response = Member.class)
+	@RequestMapping(value = "/emailcheck", method = RequestMethod.POST)
+	public ResponseEntity<Map<String, Object>> emailcheck(@RequestBody String email) throws Exception {
+		logger.info("1-------------emailcheck-----------------------------" + new Date());
+		HttpHeaders headers = new HttpHeaders();
+		Map<String, Object> resultMap = new HashMap<>();
+		
+		int cnt = memberservice.emailcheck(email);
+
+		if(cnt==0) {
+			resultMap.put("emailcheck", "ok");
+		}else {
+			resultMap.put("emailcheck", "fail");
+		}
+
+		return new ResponseEntity<Map<String, Object>>(resultMap, HttpStatus.OK);
+	}
+	
+
 }

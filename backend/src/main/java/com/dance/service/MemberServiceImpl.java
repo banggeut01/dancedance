@@ -24,4 +24,11 @@ public class MemberServiceImpl implements IMemberService {
 	}
 
 
+	@Override
+	@Transactional(readOnly=true)
+	public int emailcheck(String email) {
+		return memberdao.emailcheck(email);
+	}
+
+
 }
