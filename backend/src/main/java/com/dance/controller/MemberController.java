@@ -79,5 +79,18 @@ public class MemberController {
 		return new ResponseEntity<Map<String, Object>>(resultMap, HttpStatus.OK);
 	}
 	
+	@ApiOperation(value = "회원가입", response = Member.class)
+	@RequestMapping(value = "/signup", method = RequestMethod.POST)
+	public ResponseEntity<Map<String, Object>> signup(@RequestBody Member member) throws Exception {
+		logger.info("1-------------signup-----------------------------" + new Date());
+		HttpHeaders headers = new HttpHeaders();
+		Map<String, Object> resultMap = new HashMap<>();
+		
+		memberservice.signup(member);
 
+		resultMap.put("signup", "ok");
+
+		return new ResponseEntity<Map<String, Object>>(resultMap, HttpStatus.OK);
+	}
+	
 }

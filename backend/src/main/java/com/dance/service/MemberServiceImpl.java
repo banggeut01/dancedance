@@ -31,4 +31,11 @@ public class MemberServiceImpl implements IMemberService {
 	}
 
 
+	@Override
+	@Transactional
+	public void signup(Member member) {
+		memberdao.signup(member);
+	}
+
+
 }

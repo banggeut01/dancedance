@@ -48,6 +48,14 @@ public class Member implements Serializable {
 	}
 
 
+	public Member(String email, String password, String nickname) {
+		super();
+		this.email = email;
+		this.password = password;
+		this.nickname = nickname;
+	}
+
+
 	public int getMember_id() {
 		return member_id;
 	}

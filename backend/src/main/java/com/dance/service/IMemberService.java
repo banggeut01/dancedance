@@ -10,4 +10,6 @@ public interface IMemberService {
 
 	int emailcheck(String email);
 
+	void signup(Member member);
+
 }

@@ -25,5 +25,10 @@ public class MemberDaoImpl {
 	public int emailcheck(String email) {
 		return sqlSession.selectOne(ns+"emailcheck", email);
 	}
+
+
+	public void signup(Member member) {
+		sqlSession.insert(ns+"signup", member);
+	}
 	
 }
