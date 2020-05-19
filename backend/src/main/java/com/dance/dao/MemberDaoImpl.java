@@ -41,5 +41,10 @@ public class MemberDaoImpl {
 	public List<Avatar> obtained(int member_id) {
 		return sqlSession.selectList(ns+"obtained", member_id);
 	}
+
+
+	public List<Avatar> not_obtained(int member_id) {
+		return sqlSession.selectList(ns+"not_obtained", member_id);
+	}
 	
 }

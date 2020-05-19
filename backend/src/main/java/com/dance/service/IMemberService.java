@@ -17,4 +17,6 @@ public interface IMemberService {
 
 	List<Avatar> obtained(int member_id);
 
+	List<Avatar> not_obtained(int member_id);
+
 }

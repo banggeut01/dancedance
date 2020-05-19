@@ -105,9 +105,11 @@ public class MemberController {
 		
 		Avatar myavatar = memberservice.myavatar(member_id);
 		List<Avatar> obtained = memberservice.obtained(member_id);
+		List<Avatar> not_obtained = memberservice.not_obtained(member_id);
 
 		resultMap.put("myavatar", myavatar);
 		resultMap.put("obtained", obtained);
+		resultMap.put("not_obtained", not_obtained);
 
 		return new ResponseEntity<Map<String, Object>>(resultMap, HttpStatus.OK);
 	}
