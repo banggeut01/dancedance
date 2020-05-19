@@ -11,11 +11,15 @@ export default {
         id: Number,
         title: String,
         src: String,
-        thumbnail: String,
+        closeDetail: Function,
     }
 }
 </script>
 
 <style>
-
+.DanceDetail {
+  position: fixed;
+  top: 0;
+  left: 0;
+}
 </style>
