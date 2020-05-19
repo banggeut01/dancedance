@@ -36,7 +36,7 @@
     <!-- slide button -->
     <div class="navigation">
       <label for="r1" style="margin-right:25px;"><p class="nav-p login-p">LOGIN</p></label>
-      <label for="r2" style="margin-left:25px;"><p class="nav-p signup-p">SINGUP</p></label>
+      <label for="r2" style="margin-left:25px;"><p class="nav-p signup-p">SIGNUP</p></label>
     </div>
   </div>
 </template>
