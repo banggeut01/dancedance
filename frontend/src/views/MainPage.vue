@@ -1,7 +1,7 @@
 <template>
   <div class="main">
     <Header></Header>
-    <DanceListCarousel></DanceListCarousel>
+    <DanceListCarousel :dances="dances"></DanceListCarousel>
   </div>
 </template>
 
@@ -11,6 +11,27 @@ import DanceListCarousel from '@/components/main/DanceListCarousel.vue'
 
 export default {
   name: 'MainPage',
+  data () {
+    return {
+      dances: [{
+        id: 0,
+        title: 'BTS',
+        src: "BTS.jpg"
+      }, {
+        id: 1,
+        title: 'IZONE',
+        src: "IZONE.jpg"
+      }, {
+        id: 2,
+        title: 'TWICE',
+        src: "TWICE.jpg"
+      }, {
+        id: 3,
+        title: 'GANG',
+        src: "GANG.jpg"
+      }]
+    }
+  },
   components: {
     Header,
     DanceListCarousel,

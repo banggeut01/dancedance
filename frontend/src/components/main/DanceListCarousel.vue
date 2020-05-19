@@ -1,11 +1,10 @@
 <template>
   <div class="carousel">
-    <CarouselCard :interval="7000" height="300px" type="card" arrow="always">
-      <CarouselCardItem v-for="i in 4" :key="i">
-        <img class="thumbnail" v-if="i === 1" src="@/assets/BTS.jpg">
-        <img class="thumbnail" v-if="i === 2" src="@/assets/IZONE.jpg">
-        <img class="thumbnail" v-if="i === 3" src="@/assets/TWICE.jpg">
-        <img class="thumbnail" v-if="i === 4" src="@/assets/GANG.jpg">
+    <CarouselCard :interval="7000" height="70vh" type="card" arrow="hover" indicatorPosition="none">
+      <CarouselCardItem v-for="dance in dances" :key="dance.id">
+        <div class="thumbnail" :style="'background: url(' + require(`@/assets/${dance.src}`) + ') no-repeat center; background-size: cover;'">
+
+        </div>
       </CarouselCardItem>
     </CarouselCard>
   </div>
@@ -17,17 +16,16 @@ import 'vue-carousel-card/styles/index.css'
 
 export default {
   name: 'Carousel',
-  dara () {
-    return {
-      dances: [{
-        
-      }]
+  props: {
+    dances: {
+      type: Array,
+      default: () => ([]),
     }
   },
   components: {
     CarouselCard,
     CarouselCardItem,
-  }
+  },
 }
 </script>
 
