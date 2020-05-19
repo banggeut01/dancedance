@@ -1,14 +1,18 @@
 <template>
   <div>
+    <!-- / link button -->
+    <div v-if="!islogin" class="logo-div">
+      <v-btn style="background-color: rgba(0,0,0,0);" to="/"><p class="neon">DANCE_DANCE</p></v-btn>
+    </div>
+    <!-- background img -->
     <video autoplay muted loop id="login-video">
       <source src="../assets/login_back_img.mp4" type="video/mp4">
     </video>
-    <!-- <embed src="" autostart=true loop="infinite"> -->
+    <!-- background sound -->
     <audio class="login-audio" controls autoplay loop>
-      <!-- <source src="horse.ogg" type="audio/ogg"> -->
       <source src="../assets/login_bgsound.mp3" type="audio/mpeg">
-      Your browser does not support the audio element.
     </audio>
+    <!-- slide login/signup -->
     <div class="slidershow middle">
 
       <div class="slides">
@@ -19,7 +23,6 @@
           <div class="account-form">
             <LoginForm></LoginForm>
           </div>
-          <!-- <img src="../assets/logo.png"> -->
         </div>
         <div class="slide">
           <div style="width:50%; height:100%;">
@@ -27,19 +30,14 @@
               <SignUpForm></SignUpForm>
             </div>
           </div>
-          <!-- <img class="signup-form" src="../assets/logo.png"> -->
         </div>
       </div>
     </div>
-
+    <!-- slide button -->
     <div class="navigation">
-      <label for="r1" class="bar"><p class="nav-p login-p">LOGIN</p></label>
-      <label for="r2" class="bar"><p class="nav-p signup-p">SINGUP</p></label>
+      <label for="r1" style="margin-right:25px;"><p class="nav-p login-p">LOGIN</p></label>
+      <label for="r2" style="margin-left:25px;"><p class="nav-p signup-p">SINGUP</p></label>
     </div>
-
-
-
-
   </div>
 </template>
 
@@ -56,11 +54,54 @@
     components: {
       LoginForm,
       SignUpForm
-    }
+    },
+    computed: {
+      islogin() {
+        return false
+      }
+    },
   }
 </script>
 
 <style>
+  /* DANCE DANCE LINK */
+  .logo-div {
+    position: absolute;
+    left: 10px;
+    top: 20px;
+  }
+
+  @font-face {
+    font-family: neon;
+    src: url(https://s3-us-west-2.amazonaws.com/s.cdpn.io/707108/neon.ttf);
+  }
+
+  .neon {
+    font-family: neon;
+    color: #FB4264;
+    font-size: 3rem;
+    line-height: 3rem;
+    text-shadow: 0 0 3vw #F40A35;
+  }
+
+  .neon {
+    animation: neon 1s ease infinite;
+    -moz-animation: neon 1s ease infinite;
+    -webkit-animation: neon 1s ease infinite;
+  }
+
+  @keyframes neon {
+    0%,
+    100% {
+      text-shadow: 0 0 1vw #FA1C16, 0 0 3vw #FA1C16, 0 0 10vw #FA1C16, 0 0 10vw #FA1C16, 0 0 .4vw #FED128, .5vw .5vw .1vw #806914;
+      color: #FED128;
+    }
+    50% {
+      text-shadow: 0 0 .5vw #800E0B, 0 0 1.5vw #800E0B, 0 0 5vw #800E0B, 0 0 5vw #800E0B, 0 0 .2vw #800E0B, .5vw .5vw .1vw #40340A;
+      color: #806914;
+    }
+  }
+  /* background-video */
   #login-video {
     position: fixed;
     right: 0;
@@ -69,7 +110,7 @@
     min-height: 100%;
     z-index: -1;
   }
-
+  /* slide login & signup form */
   .slidershow {
     width: 100%;
     height: 400px;
@@ -82,26 +123,13 @@
     left: 50%;
     transform: translate(-50%, -50%);
   }
-
+  /* login, signup button */
   .navigation {
     position: absolute;
     top: 100px;
     left: 50%;
     transform: translateX(-50%);
     display: flex;
-  }
-
-  .bar {
-    width: 50px;
-    height: 10px;
-    border: 2px solid #fff;
-    margin: 6px;
-    cursor: pointer;
-    transition: 0.4s;
-  }
-
-  .bar:hover {
-    background: #fff;
   }
 
   input[name="r"] {
@@ -152,6 +180,7 @@
     -moz-transition: all 0.5s;
     transition: all 0.5s;
     font-family: Iceland;
+    cursor: pointer;
   }
   .login-p {
     color: #228DFF;
