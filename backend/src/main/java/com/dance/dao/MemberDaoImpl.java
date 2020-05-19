@@ -6,6 +6,7 @@ import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
+import com.dance.dto.Avatar;
 import com.dance.dto.Member;
 
 
@@ -29,6 +30,21 @@ public class MemberDaoImpl {
 
 	public void signup(Member member) {
 		sqlSession.insert(ns+"signup", member);
+	}
+
+
+	public Avatar myavatar(int member_id) {
+		return sqlSession.selectOne(ns+"myavatar", member_id);
+	}
+
+
+	public List<Avatar> obtained(int member_id) {
+		return sqlSession.selectList(ns+"obtained", member_id);
+	}
+
+
+	public List<Avatar> not_obtained(int member_id) {
+		return sqlSession.selectList(ns+"not_obtained", member_id);
 	}
 	
 }
