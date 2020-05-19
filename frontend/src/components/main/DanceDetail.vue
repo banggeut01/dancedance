@@ -1,5 +1,7 @@
 <template>
-  
+  <div class="danceDetail">
+
+  </div>
 </template>
 
 <script>
