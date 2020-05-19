@@ -25,4 +25,12 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		insert into members (`email`, `password`, `nickname`) VALUES (#{email}, hex(aes_encrypt(#{password}, 'human')), #{nickname});
 	</insert>
 	
+	<select id="myavatar"
+		parameterType="java.lang.Integer"
+		resultType="com.dance.dto.Avatar">
+		select avatar_id, img
+		from members m, avatar a
+		where m.member_id = #{member_id} and m.avatar_now = a.avatar_id
+	</select>
+	
 </mapper>
