@@ -1,5 +1,5 @@
 <template>
-  <v-app-bar color="deep-purple accent-4" dense dark>
+  <v-app-bar color="rgba(0, 0, 0, 0)" bottom="true">
     <v-toolbar-title class="neon">DANCE_DANCE</v-toolbar-title>
     <v-spacer></v-spacer>
     <v-toolbar-items class="hidden-sm-and-down">
@@ -50,8 +50,8 @@
 .neon {
   font-family: neon;
   color: #FB4264;
-  font-size: 3rem;
-  line-height: 3rem;
+  font-size: 2rem;
+  line-height: 2rem;
   text-shadow: 0 0 3vw #F40A35;
 }
 
@@ -72,6 +72,4 @@
     color: #806914;
   }
 }
-
-
 </style>
