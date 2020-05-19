@@ -3,18 +3,18 @@
     <v-col cols="12">
       <v-form ref="form">
         <v-card-text color="white">
-          <v-text-field ref="email" v-model="email" :rules="[
+          <v-text-field autocomplete="new-password" ref="email" v-model="email" :rules="[
                 () => !!email || '이메일을 입력해주세요',
                 () => /^[A-Za-z0-9_\.\-]+@[A-Za-z0-9\-]+\.[A-Za-z0-9\-]+/.test(email) || '이메일 형식이 아닙니다!'
               ]" lazy-validation label="E-mail" color="success" dark background-color="success" required>
           </v-text-field>
-          <v-text-field ref="nickname" v-model="nickname" :rules="[
+          <v-text-field autocomplete="new-password" ref="nickname" v-model="nickname" :rules="[
               () => !!nickname || '닉네임을 입력해주세요',
               () => !!nickname && nickname.length <= 10 || '10글자 이하로 닉네임을 만드세요'
             ]" label="NickName" counter="10" maxlength="10" dark required></v-text-field>
-          <v-text-field ref="password" v-model="password" :rules="[() => !!password || '패스워드를 입력해주세요']" label="Password"
+          <v-text-field autocomplete="new-password" ref="password" v-model="password" :rules="[() => !!password || '패스워드를 입력해주세요']" label="Password"
             type="password" dark required></v-text-field>
-          <v-text-field ref="passwordcheck" v-model="passwordcheck" :rules="[
+          <v-text-field autocomplete="new-password" ref="passwordcheck" v-model="passwordcheck" :rules="[
               () => !!passwordcheck || '패스워드를 입력해주세요',
               () => password === passwordcheck || '동일한 패스워드를 입력해주세요'
             ]" label="Passwordcheck" type="password" dark required></v-text-field>
