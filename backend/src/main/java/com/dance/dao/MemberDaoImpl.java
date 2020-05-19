@@ -36,5 +36,10 @@ public class MemberDaoImpl {
 	public Avatar myavatar(int member_id) {
 		return sqlSession.selectOne(ns+"myavatar", member_id);
 	}
+
+
+	public List<Avatar> obtained(int member_id) {
+		return sqlSession.selectList(ns+"obtained", member_id);
+	}
 	
 }

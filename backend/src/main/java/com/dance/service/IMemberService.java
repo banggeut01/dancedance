@@ -15,4 +15,6 @@ public interface IMemberService {
 
 	Avatar myavatar(int member_id);
 
+	List<Avatar> obtained(int member_id);
+
 }

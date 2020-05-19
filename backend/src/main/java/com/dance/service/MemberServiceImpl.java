@@ -46,4 +46,11 @@ public class MemberServiceImpl implements IMemberService {
 	}
 
 
+	@Override
+	@Transactional(readOnly=true)
+	public List<Avatar> obtained(int member_id) {
+		return memberdao.obtained(member_id);
+	}
+
+
 }

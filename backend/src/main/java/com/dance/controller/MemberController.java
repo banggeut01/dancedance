@@ -2,6 +2,7 @@ package com.dance.controller;
 
 import java.util.Date;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
@@ -103,8 +104,10 @@ public class MemberController {
 		Map<String, Object> resultMap = new HashMap<>();
 		
 		Avatar myavatar = memberservice.myavatar(member_id);
+		List<Avatar> obtained = memberservice.obtained(member_id);
 
 		resultMap.put("myavatar", myavatar);
+		resultMap.put("obtained", obtained);
 
 		return new ResponseEntity<Map<String, Object>>(resultMap, HttpStatus.OK);
 	}
