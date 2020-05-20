@@ -9,4 +9,4 @@ public class App {
 		SpringApplication.run(App.class, args);
 	}
 }
-//http://localhost:8197/ssafyvue/swagger-ui.html
+//http://localhost:8197/ssafy-dance/swagger-ui.html

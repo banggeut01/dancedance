@@ -20,6 +20,14 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		where email=#{email}
 	</select>
 	
+	<select id="nicknamecheck"
+		parameterType="java.lang.String"
+		resultType="java.lang.Integer">
+		select count(*)
+		from members
+		where nickname=#{nickname}
+	</select>
+	
 	<insert id="signup"
 		parameterType="com.dance.dto.Member">
 		insert into members (`email`, `password`, `nickname`) VALUES (#{email}, hex(aes_encrypt(#{password}, 'human')), #{nickname});

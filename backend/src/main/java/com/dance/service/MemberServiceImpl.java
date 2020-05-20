@@ -30,6 +30,13 @@ public class MemberServiceImpl implements IMemberService {
 	public int emailcheck(String email) {
 		return memberdao.emailcheck(email);
 	}
+	
+	
+	@Override
+	@Transactional(readOnly=true)
+	public int nicknamecheck(String nickname) {
+		return memberdao.nicknamecheck(nickname);
+	}
 
 
 	@Override
