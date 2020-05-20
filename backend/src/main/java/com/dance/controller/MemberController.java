@@ -109,10 +109,13 @@ public class MemberController {
 		Map<String, Object> resultMap = new HashMap<>();
 		
 		memberservice.signup(member);
+		
+		String token = jwtService.create(member);
+		headers.set("Authorization", token);
 
 		resultMap.put("signup", "ok");
 
-		return new ResponseEntity<Map<String, Object>>(resultMap, HttpStatus.OK);
+		return new ResponseEntity<Map<String, Object>>(resultMap, headers, HttpStatus.OK);
 	}
 	
 	@ApiOperation(value = "아바타 페이지", response = Member.class)
