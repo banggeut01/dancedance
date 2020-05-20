@@ -3,9 +3,9 @@
     <!-- / link button -->
     <div v-if="!islogin" class="logo-div">
       <v-btn 
-      depressed 
-      style="background-color: rgba(0,0,0,0);" 
-      to="/">
+        depressed 
+        style="background-color: rgba(0,0,0,0);" 
+        to="/">
         <p class="neon">DANCE_DANCE</p>
       </v-btn>
     </div>
