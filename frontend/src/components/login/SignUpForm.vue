@@ -64,6 +64,7 @@
     methods: {
       resetForm() {
         this.formHasErrors = false
+        console.log(this.$refs['email'])
         Object.keys(this.form).forEach(f => {
           this.$refs[f].reset()
         })
@@ -78,7 +79,16 @@
           console.log('error')
         } else {
           console.log('no error')
-          // 회원가입 요청쓰
+          // 회원가입 요청
+          // const payload = {email: this.email, nickname: this.nickname, password: this.password}
+          // this.$axios.get(this.$store.state.host + '/signup', payload)
+          // .then(res => {
+          //   const token = res.header.authorization
+          //   const user = res.data
+          //   this.$store.commit('getUserInfo', {token: token, user : user})
+          //   this.$router.push('/main')
+          // })
+          // 세션에 저장 하기
         }
       },
     },
