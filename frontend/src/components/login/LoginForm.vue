@@ -66,6 +66,15 @@ export default {
         } else {
           console.log('no error')
           // 로그인 요청
+          // const payload = {email: this.email, password: this.password}
+          // this.$axios.get(this.$store.state.host + '/login', payload)
+          // .then(res => {
+          //   const token = res.header.authorization
+          //   const user = res.data
+          //   this.$store.commit('getUserInfo', {token: token, user : user})
+          //   this.$router.push('/main')
+          // })
+          // 세션에 저장 하기
         }
       },
     },
