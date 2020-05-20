@@ -2,7 +2,12 @@
   <div>
     <!-- / link button -->
     <div v-if="!islogin" class="logo-div">
-      <v-btn style="background-color: rgba(0,0,0,0);" to="/"><p class="neon">DANCE_DANCE</p></v-btn>
+      <v-btn 
+      depressed 
+      style="background-color: rgba(0,0,0,0);" 
+      to="/">
+        <p class="neon">DANCE_DANCE</p>
+      </v-btn>
     </div>
     <!-- background img -->
     <video autoplay muted loop id="login-video">
