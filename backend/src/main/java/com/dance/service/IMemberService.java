@@ -19,4 +19,6 @@ public interface IMemberService {
 
 	List<Avatar> not_obtained(int member_id);
 
+	int nicknamecheck(String nickname);
+
 }

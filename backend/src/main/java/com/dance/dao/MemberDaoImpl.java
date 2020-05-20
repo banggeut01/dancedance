@@ -26,6 +26,11 @@ public class MemberDaoImpl {
 	public int emailcheck(String email) {
 		return sqlSession.selectOne(ns+"emailcheck", email);
 	}
+	
+	
+	public int nicknamecheck(String nickname) {
+		return sqlSession.selectOne(ns+"nicknamecheck", nickname);
+	}
 
 
 	public void signup(Member member) {
