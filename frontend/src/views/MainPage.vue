@@ -16,19 +16,23 @@ export default {
       dances: [{
         id: 0,
         title: 'BTS',
-        src: "BTS.jpg"
+        src: "PickMeDance.webm",
+        thumbnail: "BTS.jpg"
       }, {
         id: 1,
         title: 'IZONE',
-        src: "IZONE.jpg"
+        src: "PickMeDance.webm",
+        thumbnail: "IZONE.jpg"
       }, {
         id: 2,
         title: 'TWICE',
-        src: "TWICE.jpg"
+        src: "PickMeDance.webm",
+        thumbnail: "TWICE.jpg"
       }, {
         id: 3,
         title: 'GANG',
-        src: "GANG.jpg"
+        src: "PickMeDance.webm",
+        thumbnail: "GANG.jpg"
       }]
     }
   },

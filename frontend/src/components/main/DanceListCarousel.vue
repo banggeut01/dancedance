@@ -16,7 +16,7 @@
       >
         <div 
           class="thumbnail" 
-          :style="'background: url(' + require(`@/assets/${dance.src}`) + ') no-repeat center; background-size: cover;'"
+          :style="'background: url(' + require(`@/assets/${dance.thumbnail}`) + ') no-repeat center; background-size: cover;'"
           v-on:click="openDetail" @click="nowDance=dance"
         >
           
