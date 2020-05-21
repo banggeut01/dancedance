@@ -29,7 +29,6 @@ import com.dance.service.IJwtService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 
-//http://localhost:8197/humans/swagger-ui.html
 @CrossOrigin(origins = { "*" }, maxAge = 6000, exposedHeaders = "Authorization", allowedHeaders = "*")
 @RestController
 @RequestMapping("/api")

@@ -25,7 +25,6 @@ public class JwtInterceptor implements HandlerInterceptor{
 		final String token = request.getHeader(HEADER_AUTH);
 		//Member member = jwtService.get(request);
 		//System.out.println("login : "+member+" / token : "+token);
-		//request.setAttribute("loginMember", member);
 		return true;
 //		if(token != null && jwtService.isUsable(token)){
 //			return true;
