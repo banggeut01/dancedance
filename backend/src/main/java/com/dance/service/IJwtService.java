@@ -13,7 +13,7 @@ public interface IJwtService {
 
 //	String signin(Member data);
 
-	Member get(HttpServletRequest req);
+	Member get(String jwt);
 
 	String create(Member data);
 

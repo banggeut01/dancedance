@@ -73,8 +73,7 @@ public class JwtServiceImpl implements IJwtService{
 	}
 	
 	@Override
-	public Member get(HttpServletRequest req) {
-		String jwt = req.getHeader("Authorization");
+	public Member get(String jwt) {
 		Jws<Claims> claims = null;
 		try {
 			claims = Jwts.parser()
