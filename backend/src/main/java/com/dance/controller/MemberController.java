@@ -16,6 +16,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -120,11 +121,20 @@ public class MemberController {
 	@ApiOperation(value = "아바타 페이지", response = Member.class)
 	@RequestMapping(value = "/avatar/{member_id}", method = RequestMethod.GET)
 	public ResponseEntity<Map<String, Object>> avatar(@PathVariable int member_id) throws Exception {
+//	@RequestMapping(value = "/avatar", method = RequestMethod.GET)
+//	public ResponseEntity<Map<String, Object>> avatar(@RequestHeader(value="Authorization") String token) throws Exception {
 		logger.info("1-------------avatar-----------------------------" + new Date());
 		HttpHeaders headers = new HttpHeaders();
 		Map<String, Object> resultMap = new HashMap<>();
 		
-		Avatar myavatar = memberservice.myavatar(member_id);
+//		Member member = jwtService.get(token);
+//		
+//		if(member==null) {
+//			resultMap.put("status", "fail");
+//			return new ResponseEntity<Map<String, Object>>(resultMap, HttpStatus.OK);
+//		}
+		
+		Avatar myavatar = memberservice.myavatar(member_id);	//member.getMember_id();
 		List<Avatar> obtained = memberservice.obtained(member_id);
 		List<Avatar> not_obtained = memberservice.not_obtained(member_id);
 
