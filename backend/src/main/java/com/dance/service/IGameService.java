@@ -16,7 +16,7 @@ public interface IGameService {
 
 	String getVideoLink(int video_id);
 
-	String getMyAvatarName(int member_id);
+	String getMyAvatarName(int avatar_now);
 
 	List<Icon> getIcon(int video_id);
 
