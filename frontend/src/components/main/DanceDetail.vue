@@ -16,6 +16,7 @@
       >
         <v-icon>play_arrow</v-icon>
       </v-btn>
+      <h1> 가수 / 제목</h1>
       
     </div>
     <carousel class="otherDances" :paginationEnabled="false" :perPage="4">
@@ -31,7 +32,7 @@ import { Carousel, Slide } from 'vue-carousel';
 
 export default {
     name: 'DanceDetail',
-    props: ['dances', 'nowDance', 'closeDetail'],
+    props: ['dances', 'nowDance'],
     components: {
       Carousel,
       Slide
@@ -42,6 +43,7 @@ export default {
       }
     },
     mounted() {
+      console.log(this.nowDance)
       document.getElementById('danceVideo').volume = 0.1;
     }
 }
@@ -64,6 +66,7 @@ export default {
 }
 .dancePlayInfo {
   position: static;
+  display: inline;
 }
 .otherDances {
   position: fixed;
