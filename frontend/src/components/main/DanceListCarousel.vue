@@ -17,7 +17,7 @@
         <div 
           class="thumbnail" 
           :style="'background: url(' + require(`@/assets/danceList/${dance.thumbnail}`) + ') no-repeat center; background-size: cover;'"
-          v-on:click="openDetail" @click="nowDance=dance"
+          v-on:click="openDetail" v-on:mouseover="nowDance=dance"
         >
         </div>
       </CarouselCardItem>
