@@ -41,8 +41,8 @@ public class GameServiceImpl implements IGameService {
 
 	@Override
 	@Transactional(readOnly=true)
-	public String getMyAvatarName(int member_id) {
-		return gamedao.getMyAvatarName(member_id);
+	public String getMyAvatarName(int avatar_now) {
+		return gamedao.getMyAvatarName(avatar_now);
 	}
 
 	@Override

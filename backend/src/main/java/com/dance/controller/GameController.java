@@ -91,10 +91,10 @@ public class GameController {
 //			return new ResponseEntity<Map<String, Object>>(resultMap, HttpStatus.OK);
 //		}
 		
-		int member_id = 1;
+		int avatar_now = 1;
 		
 		String video = gameservice.getVideoLink(video_id);
-		String avatar = gameservice.getMyAvatarName(member_id);
+		String avatar = gameservice.getMyAvatarName(avatar_now);
 		List<Icon> icon = gameservice.getIcon(video_id);
 
 		resultMap.put("video", video);

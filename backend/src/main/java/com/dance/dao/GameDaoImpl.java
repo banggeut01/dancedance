@@ -37,8 +37,8 @@ public class GameDaoImpl {
 		return sqlSession.selectOne(ns+"getVideoLink", video_id);
 	}
 
-	public String getMyAvatarName(int member_id) {
-		return sqlSession.selectOne(ns+"getMyAvatarName", member_id);
+	public String getMyAvatarName(int avatar_now) {
+		return sqlSession.selectOne(ns+"getMyAvatarName", avatar_now);
 	}
 
 	public List<Icon> getIcon(int video_id) {
