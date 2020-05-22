@@ -7,6 +7,7 @@ import MainPage from '@/views/MainPage.vue'
 import PlayPage from '@/views/PlayPage.vue'
 import RankPage from '@/views/RankPage.vue'
 import ResultPage from '@/views/ResultPage.vue'
+import TmpFaceMeshPage from '@/views/TmpFaceMeshPage.vue'
 
 Vue.use(VueRouter)
 
@@ -45,6 +46,11 @@ Vue.use(VueRouter)
     path: '/result',
     name: 'ResultPage',
     component: ResultPage
+  },
+  {
+    path: '/faceMesh',
+    name: 'TmpFaceMeshPage',
+    component: TmpFaceMeshPage
   }
 ]
 
