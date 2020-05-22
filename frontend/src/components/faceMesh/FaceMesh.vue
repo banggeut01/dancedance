@@ -231,7 +231,7 @@
 			},
 			async parseSVG(target) {
 				let svgScope = await SVGUtils.importSVG(target /* SVG string or file path */ );
-				let skeleton = new Skeleton(svgScope);
+                let skeleton = new Skeleton(svgScope);
 				this.illustration = new PoseIllustration(this.canvasScope);
 				this.illustration.bindSkeleton(skeleton, svgScope);
 			}
