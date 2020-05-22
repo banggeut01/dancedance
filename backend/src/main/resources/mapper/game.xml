@@ -20,4 +20,28 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		limit 1
 	</select>
 	
+	<select id="getVideoLink"
+		parameterType="java.lang.Integer"
+		resultType="java.lang.String">
+		select file
+		from video
+		where video_id=#{video_id}
+	</select>
+	
+	<select id="getMyAvatarName"
+		parameterType="java.lang.Integer"
+		resultType="java.lang.String">
+		select a.name
+		from members m, avatar a
+		where m.member_id=#{member_id} and m.avatar_now=a.avatar_id
+	</select>
+	
+	<select id="getIcon"
+		parameterType="java.lang.Integer"
+		resultType="com.dance.dto.Icon">
+		select icon_id, img, sec
+		from icon
+		where video_id=#{video_id}
+	</select>
+	
 </mapper>
