@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper 
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"   
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="dance.game">
+
+	<select id="getVideoList"
+		resultType="com.dance.dto.Video">
+		select video_id, thumbnail, title, file, length, difficulty
+		from video
+	</select>
+	
+	<select id="getVideoMyPoint"
+		parameterType="com.dance.dto.Play"
+		resultType="java.lang.Integer">
+		select point
+		from play
+		where member_id=#{member_id} and video_id=#{video_id}
+		order by point desc
+		limit 1
+	</select>
+	
+	<select id="getVideoLink"
+		parameterType="java.lang.Integer"
+		resultType="java.lang.String">
+		select file
+		from video
+		where video_id=#{video_id}
+	</select>
+	
+	<select id="getMyAvatarName"
+		parameterType="java.lang.Integer"
+		resultType="java.lang.String">
+		select name
+		from avatar
+		where avatar_id=#{avatar_now}
+	</select>
+	
+	<select id="getIcon"
+		parameterType="java.lang.Integer"
+		resultType="com.dance.dto.Icon">
+		select icon_id, img, sec
+		from icon
+		where video_id=#{video_id}
+	</select>
+	
+</mapper>

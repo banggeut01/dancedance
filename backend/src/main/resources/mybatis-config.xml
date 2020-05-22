@@ -11,6 +11,7 @@
         "http://mybatis.org/dtd/mybatis-3-config.dtd">
 <configuration>
 	<mappers>
-		<mapper resource="mapper/test.xml" />
+		<mapper resource="mapper/member.xml" />
+		<mapper resource="mapper/game.xml" />
 	</mappers>
 </configuration>

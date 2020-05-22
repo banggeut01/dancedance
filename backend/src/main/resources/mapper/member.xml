@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper 
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"   
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="dance.member">
+
+	<select id="login"
+		parameterType="com.dance.dto.Member"
+		resultType="com.dance.dto.Member">
+		select member_id, email, nickname, avatar_now
+		from members
+		where email=#{email} and password=hex(aes_encrypt(#{password}, 'human'))
+	</select>
+	
+	<select id="emailcheck"
+		parameterType="java.lang.String"
+		resultType="java.lang.Integer">
+		select count(*)
+		from members
+		where email=#{email}
+	</select>
+	
+	<select id="nicknamecheck"
+		parameterType="java.lang.String"
+		resultType="java.lang.Integer">
+		select count(*)
+		from members
+		where nickname=#{nickname}
+	</select>
+	
+	<insert id="signup"
+		parameterType="com.dance.dto.Member">
+		insert into members (`email`, `password`, `nickname`) VALUES (#{email}, hex(aes_encrypt(#{password}, 'human')), #{nickname});
+	</insert>
+	
+	<select id="myavatar"
+		parameterType="java.lang.Integer"
+		resultType="com.dance.dto.Avatar">
+		select avatar_id, name, img
+		from members m, avatar a
+		where m.member_id=#{member_id} and m.avatar_now=a.avatar_id
+	</select>
+	
+	<select id="obtained"
+		parameterType="java.lang.Integer"
+		resultType="com.dance.dto.Avatar">
+		select a.avatar_id, name, img
+		from gets g, avatar a
+		where g.member_id=#{member_id} and g.avatar_id=a.avatar_id
+	</select>
+	
+	<select id="not_obtained"
+		parameterType="java.lang.Integer"
+		resultType="com.dance.dto.Avatar">
+		select avatar_id, name, img
+		from avatar 
+		where avatar_id not in (select avatar_id from gets where member_id=#{member_id})
+	</select>
+	
+	<update id="updateMyAvatar"
+		parameterType="com.dance.dto.Member">
+		update members set avatar_now=#{avatar_now} where member_id=#{member_id}
+	</update>
+	
+</mapper>
