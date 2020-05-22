@@ -16,14 +16,14 @@
       >
         <div 
           class="thumbnail" 
-          :style="'background: url(' + require(`@/assets/${dance.thumbnail}`) + ') no-repeat center; background-size: cover;'"
+          :style="'background: url(' + require(`@/assets/danceList/${dance.thumbnail}`) + ') no-repeat center; background-size: cover;'"
           v-on:click="openDetail" @click="nowDance=dance"
         >
           
         </div>
       </CarouselCardItem>
     </CarouselCard>
-    <DanceDetail v-if="isDetail" :nowDance="nowDance" :closeDetail="closeDetail"></DanceDetail>
+    <DanceDetail v-if="isDetail" :dances.sync="dances" :nowDance.sync="nowDance" :closeDetail.sync="closeDetail"></DanceDetail>
   </div>
 </template>
 
@@ -41,12 +41,7 @@ export default {
       nowDance: {},
     }
   },
-  props: {
-    dances: {
-      type: Array,
-      default: () => ([]),
-    }
-  },
+  props: ['dances'],
   components: {
     DanceDetail,
     CarouselCard,

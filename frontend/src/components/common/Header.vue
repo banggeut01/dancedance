@@ -1,5 +1,5 @@
 <template>
-  <v-app-bar color="rgba(0, 0, 0, 0)" bottom="true">
+  <v-app-bar class="header" color="rgba(0, 0, 0, 0)" bottom="true">
     <v-toolbar-title class="neon">DANCE_DANCE</v-toolbar-title>
     <v-spacer></v-spacer>
     <v-toolbar-items class="hidden-sm-and-down">
@@ -42,6 +42,14 @@
 </script>
 
 <style>
+.header {
+  z-index: 1;
+}
+
+.v-toolbar__content > .v-toolbar__title {
+  overflow: visible;
+}
+
 @font-face {
   font-family: neon;
   src: url(https://s3-us-west-2.amazonaws.com/s.cdpn.io/707108/neon.ttf);
@@ -49,6 +57,7 @@
 
 .neon {
   font-family: neon;
+  overflow: visible;
   color: #FB4264;
   font-size: 2rem;
   line-height: 2rem;

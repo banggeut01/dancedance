@@ -1,7 +1,7 @@
 <template>
   <div class="main">
     <Header></Header>
-    <DanceListCarousel :dances="dances"></DanceListCarousel>
+    <DanceListCarousel :dances.sync="dances"></DanceListCarousel>
   </div>
 </template>
 
@@ -16,22 +16,22 @@ export default {
       dances: [{
         id: 0,
         title: 'BTS',
-        src: "PickMeDance.webm",
-        thumbnail: "BTS.jpg"
+        src: "BTS_Boy_With_Luv.webm",
+        thumbnail: "BTS.png"
       }, {
         id: 1,
-        title: 'IZONE',
+        title: 'PICKME',
         src: "PickMeDance.webm",
-        thumbnail: "IZONE.jpg"
+        thumbnail: "PICKME.jpg"
       }, {
         id: 2,
-        title: 'TWICE',
-        src: "PickMeDance.webm",
-        thumbnail: "TWICE.jpg"
+        title: 'CHUNGHA',
+        src: "CHUNGHA_Stay_Tonight.webm",
+        thumbnail: "CHUNGHA.jpg"
       }, {
         id: 3,
         title: 'GANG',
-        src: "PickMeDance.webm",
+        src: "RAIN_GANG.webm",
         thumbnail: "GANG.jpg"
       }]
     }
@@ -44,5 +44,7 @@ export default {
 </script>
 
 <style>
-
+.main {
+  height: 100%;
+}
 </style>
