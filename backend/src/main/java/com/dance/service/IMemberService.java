@@ -21,4 +21,6 @@ public interface IMemberService {
 
 	int nicknamecheck(String nickname);
 
+	void updateMyAvatar(Member member);
+
 }

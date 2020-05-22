@@ -57,4 +57,9 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		where avatar_id not in (select avatar_id from gets where member_id=#{member_id})
 	</select>
 	
+	<update id="updateMyAvatar"
+		parameterType="com.dance.dto.Member">
+		update members set avatar_now=#{avatar_now} where member_id=#{member_id}
+	</update>
+	
 </mapper>

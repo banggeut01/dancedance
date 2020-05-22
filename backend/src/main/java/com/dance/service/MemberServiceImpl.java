@@ -67,4 +67,11 @@ public class MemberServiceImpl implements IMemberService {
 	}
 
 
+	@Override
+	@Transactional
+	public void updateMyAvatar(Member member) {
+		memberdao.updateMyAvatar(member);
+	}
+
+
 }

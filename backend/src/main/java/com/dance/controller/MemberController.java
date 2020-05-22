@@ -138,6 +138,36 @@ public class MemberController {
 		List<Avatar> obtained = memberservice.obtained(member_id);
 		List<Avatar> not_obtained = memberservice.not_obtained(member_id);
 
+		resultMap.put("status", "ok");
+		resultMap.put("myavatar", myavatar);
+		resultMap.put("obtained", obtained);
+		resultMap.put("not_obtained", not_obtained);
+
+		return new ResponseEntity<Map<String, Object>>(resultMap, HttpStatus.OK);
+	}
+	
+	@ApiOperation(value = "아바타 페이지", response = Member.class)
+	@RequestMapping(value = "/avatar", method = RequestMethod.POST)
+	public ResponseEntity<Map<String, Object>> updateAvatar(@RequestBody int avatar_id, @RequestHeader(value="Authorization") String token) throws Exception {
+		logger.info("1-------------updateAvatar-----------------------------" + new Date());
+		HttpHeaders headers = new HttpHeaders();
+		Map<String, Object> resultMap = new HashMap<>();
+		
+		Member member = jwtService.get(token);
+		
+		if(member==null) {
+			resultMap.put("status", "fail");
+			return new ResponseEntity<Map<String, Object>>(resultMap, HttpStatus.OK);
+		}
+		
+		member.setAvatar_now(avatar_id);
+		memberservice.updateMyAvatar(member);
+		
+		Avatar myavatar = memberservice.myavatar(member.getMember_id());
+		List<Avatar> obtained = memberservice.obtained(member.getMember_id());
+		List<Avatar> not_obtained = memberservice.not_obtained(member.getMember_id());
+
+		resultMap.put("status", "ok");
 		resultMap.put("myavatar", myavatar);
 		resultMap.put("obtained", obtained);
 		resultMap.put("not_obtained", not_obtained);

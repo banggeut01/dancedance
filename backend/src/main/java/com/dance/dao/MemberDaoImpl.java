@@ -51,5 +51,10 @@ public class MemberDaoImpl {
 	public List<Avatar> not_obtained(int member_id) {
 		return sqlSession.selectList(ns+"not_obtained", member_id);
 	}
+
+
+	public void updateMyAvatar(Member member) {
+		sqlSession.update(ns+"updateMyAvatar", member);
+	}
 	
 }
