@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import com.dance.dto.Avatar;
+import com.dance.dto.Icon;
 import com.dance.dto.Member;
 import com.dance.dto.Play;
 import com.dance.dto.Video;
@@ -30,6 +31,18 @@ public class GameDaoImpl {
 		}catch(Exception e) {
 			return 0;
 		}
+	}
+
+	public String getVideoLink(int video_id) {
+		return sqlSession.selectOne(ns+"getVideoLink", video_id);
+	}
+
+	public String getMyAvatarName(int member_id) {
+		return sqlSession.selectOne(ns+"getMyAvatarName", member_id);
+	}
+
+	public List<Icon> getIcon(int video_id) {
+		return sqlSession.selectList(ns+"getIcon", video_id);
 	}
 
 	

@@ -9,6 +9,7 @@ import org.springframework.transaction.annotation.Transactional;
 import com.dance.dao.GameDaoImpl;
 import com.dance.dao.MemberDaoImpl;
 import com.dance.dto.Avatar;
+import com.dance.dto.Icon;
 import com.dance.dto.Member;
 import com.dance.dto.Play;
 import com.dance.dto.Video;
@@ -32,5 +33,22 @@ public class GameServiceImpl implements IGameService {
 		return gamedao.getVideoMyPoint(play);
 	}
 
+	@Override
+	@Transactional(readOnly=true)
+	public String getVideoLink(int video_id) {
+		return gamedao.getVideoLink(video_id);
+	}
+
+	@Override
+	@Transactional(readOnly=true)
+	public String getMyAvatarName(int member_id) {
+		return gamedao.getMyAvatarName(member_id);
+	}
+
+	@Override
+	@Transactional(readOnly=true)
+	public List<Icon> getIcon(int video_id) {
+		return gamedao.getIcon(video_id);
+	}
 
 }

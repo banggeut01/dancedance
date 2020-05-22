@@ -23,6 +23,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.dance.dto.Avatar;
+import com.dance.dto.Icon;
 import com.dance.dto.Member;
 import com.dance.dto.Play;
 import com.dance.dto.Video;
@@ -72,6 +73,33 @@ public class GameController {
 
 		resultMap.put("status", "ok");
 		resultMap.put("video", video);
+
+		return new ResponseEntity<Map<String, Object>>(resultMap, HttpStatus.OK);
+	}
+		
+	@ApiOperation(value = "게임 play", response = Member.class)
+	@RequestMapping(value = "/play/{video_id}", method = RequestMethod.GET)
+	public ResponseEntity<Map<String, Object>> play(@PathVariable int video_id, @RequestHeader(value="Authorization") String token) throws Exception {
+		logger.info("1-------------play-----------------------------" + new Date());
+		
+		Map<String, Object> resultMap = new HashMap<>();
+	
+//		Member member = jwtService.get(token);
+//
+//		if(member==null) {
+//			resultMap.put("status", "fail");
+//			return new ResponseEntity<Map<String, Object>>(resultMap, HttpStatus.OK);
+//		}
+		
+		int member_id = 1;
+		
+		String video = gameservice.getVideoLink(video_id);
+		String avatar = gameservice.getMyAvatarName(member_id);
+		List<Icon> icon = gameservice.getIcon(video_id);
+
+		resultMap.put("video", video);
+		resultMap.put("avatar", avatar);
+		resultMap.put("icon", icon);
 
 		return new ResponseEntity<Map<String, Object>>(resultMap, HttpStatus.OK);
 	}
