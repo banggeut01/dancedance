@@ -17,19 +17,15 @@
         <div 
           class="thumbnail" 
           :style="'background: url(' + require(`@/assets/danceList/${dance.thumbnail}`) + ') no-repeat center; background-size: cover;'"
-          v-on:click="openDetail" @click="nowDance=dance"
+          v-on:click="openDetail" v-on:mouseover="nowDance=dance"
         >
-          
         </div>
       </CarouselCardItem>
     </CarouselCard>
-    <DanceDetail v-if="isDetail" :dances.sync="dances" :nowDance.sync="nowDance" :closeDetail.sync="closeDetail"></DanceDetail>
   </div>
 </template>
 
 <script>
-import DanceDetail from '@/components/main/DanceDetail.vue'
-
 import { CarouselCard, CarouselCardItem } from 'vue-carousel-card'
 import 'vue-carousel-card/styles/index.css'
 
@@ -37,22 +33,17 @@ export default {
   name: 'Carousel',
   data() {
     return {
-      isDetail: false,
       nowDance: {},
     }
   },
   props: ['dances'],
   components: {
-    DanceDetail,
     CarouselCard,
     CarouselCardItem,
   },
   methods: {
     openDetail() {
-      this.isDetail = true
-    },
-    closeDetail() {
-      this.isDetail = false
+      this.$router.push({ name: 'DanceDetailPage', params: {'dances': this.dances, 'nowDance': this.nowDance}})
     }
   }
 }
