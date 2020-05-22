@@ -4,6 +4,7 @@ import AvatarPage from '@/views/AvatarPage.vue'
 import IntroPage from '@/views/IntroPage.vue'
 import LoginPage from '@/views/LoginPage.vue'
 import MainPage from '@/views/MainPage.vue'
+import DanceDetailPage from '@/views/DanceDetailPage.vue'
 import PlayPage from '@/views/PlayPage.vue'
 import RankPage from '@/views/RankPage.vue'
 import ResultPage from '@/views/ResultPage.vue'
@@ -31,6 +32,14 @@ Vue.use(VueRouter)
     path: '/main',
     name: 'MainPage',
     component: MainPage
+  },
+  {
+    path: '/danceDetail',
+    name: 'DanceDetailPage',
+    component: DanceDetailPage,
+    props: (route) => ({
+      ...route.params
+    })
   },
   {
     path: '/play',
