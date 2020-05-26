@@ -48,8 +48,8 @@ public class MemberServiceImpl implements IMemberService {
 
 	@Override
 	@Transactional(readOnly=true)
-	public Avatar myavatar(int member_id) {
-		return memberdao.myavatar(member_id);
+	public Avatar myavatar(int avatar_now) {
+		return memberdao.myavatar(avatar_now);
 	}
 
 
