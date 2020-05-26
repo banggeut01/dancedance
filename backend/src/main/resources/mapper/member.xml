@@ -37,8 +37,8 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		parameterType="java.lang.Integer"
 		resultType="com.dance.dto.Avatar">
 		select avatar_id, name, img
-		from members m, avatar a
-		where m.member_id=#{member_id} and m.avatar_now=a.avatar_id
+		from avatar
+		where avatar_id=#{avatar_now}
 	</select>
 	
 	<select id="obtained"

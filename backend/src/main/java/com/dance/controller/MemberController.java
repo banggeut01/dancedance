@@ -119,24 +119,22 @@ public class MemberController {
 	}
 	
 	@ApiOperation(value = "아바타 페이지", response = Member.class)
-	@RequestMapping(value = "/avatar/{member_id}", method = RequestMethod.GET)
-	public ResponseEntity<Map<String, Object>> avatar(@PathVariable int member_id) throws Exception {
-//	@RequestMapping(value = "/avatar", method = RequestMethod.GET)
-//	public ResponseEntity<Map<String, Object>> avatar(@RequestHeader(value="Authorization") String token) throws Exception {
+	@RequestMapping(value = "/avatar", method = RequestMethod.GET)
+	public ResponseEntity<Map<String, Object>> avatar(@RequestHeader(value="Authorization") String token) throws Exception {
 		logger.info("1-------------avatar-----------------------------" + new Date());
 		HttpHeaders headers = new HttpHeaders();
 		Map<String, Object> resultMap = new HashMap<>();
 		
-//		Member member = jwtService.get(token);
-//		
-//		if(member==null) {
-//			resultMap.put("status", "fail");
-//			return new ResponseEntity<Map<String, Object>>(resultMap, HttpStatus.OK);
-//		}
+		Member member = jwtService.get(token);
 		
-		Avatar myavatar = memberservice.myavatar(member_id);	//member.getMember_id();
-		List<Avatar> obtained = memberservice.obtained(member_id);
-		List<Avatar> not_obtained = memberservice.not_obtained(member_id);
+		if(member==null) {
+			resultMap.put("status", "fail");
+			return new ResponseEntity<Map<String, Object>>(resultMap, HttpStatus.OK);
+		}
+		
+		Avatar myavatar = memberservice.myavatar(member.getAvatar_now());
+		List<Avatar> obtained = memberservice.obtained(member.getMember_id());
+		List<Avatar> not_obtained = memberservice.not_obtained(member.getMember_id());
 
 		resultMap.put("status", "ok");
 		resultMap.put("myavatar", myavatar);
@@ -163,7 +161,7 @@ public class MemberController {
 		member.setAvatar_now(avatar_id);
 		memberservice.updateMyAvatar(member);
 		
-		Avatar myavatar = memberservice.myavatar(member.getMember_id());
+		Avatar myavatar = memberservice.myavatar(member.getAvatar_now());
 		List<Avatar> obtained = memberservice.obtained(member.getMember_id());
 		List<Avatar> not_obtained = memberservice.not_obtained(member.getMember_id());
 

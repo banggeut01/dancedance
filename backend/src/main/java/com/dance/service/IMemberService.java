@@ -13,7 +13,7 @@ public interface IMemberService {
 
 	void signup(Member member);
 
-	Avatar myavatar(int member_id);
+	Avatar myavatar(int avatar_now);
 
 	List<Avatar> obtained(int member_id);
 

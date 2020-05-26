@@ -38,8 +38,8 @@ public class MemberDaoImpl {
 	}
 
 
-	public Avatar myavatar(int member_id) {
-		return sqlSession.selectOne(ns+"myavatar", member_id);
+	public Avatar myavatar(int avatar_now) {
+		return sqlSession.selectOne(ns+"myavatar", avatar_now);
 	}
 
 
