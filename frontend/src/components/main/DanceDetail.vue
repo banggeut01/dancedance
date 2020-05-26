@@ -43,7 +43,6 @@ export default {
       }
     },
     mounted() {
-      console.log(this.nowDance)
       document.getElementById('danceVideo').volume = 0.1;
     }
 }
@@ -51,7 +50,7 @@ export default {
 
 <style>
 .danceDetail {
-  z-index: 0;
+  z-index: -1;
   position: fixed;
   top: 0;
   left: 0;
