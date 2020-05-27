@@ -71,7 +71,7 @@ public class GameController {
 
 		for (int i = 0; i < video.size(); i++) {
 			play.setVideo_id(video.get(i).getVideo_id());
-			video.get(i).setPoint(gameservice.getVideoMyPoint(play));
+			video.get(i).setMyPoint(gameservice.getVideoMyPoint(play));
 		}
 
 		resultMap.put("status", "ok");
@@ -122,13 +122,15 @@ public class GameController {
 		
 		List<Rank> rank = new ArrayList<>();
 		List<Video> video = gameservice.getVideoList();
-		Play play = new Play();
-		play.setMember_id(member.getMember_id());
 		
 		for (int i = 0; i < video.size(); i++) {
 			List<Ranking> ranking = gameservice.getRankingByVideo(video.get(i).getVideo_id());
-			play.setVideo_id(video.get(i).getVideo_id());
-			Ranking myRanking = gameservice.getMyRankingByVideo(play);
+			Ranking myRanking = null;
+			for (int j = 0; j < ranking.size(); j++) {
+				if(ranking.get(j).getMember_id()==member.getMember_id()) {
+					myRanking = ranking.get(j);
+				}
+			}
 			rank.add(new Rank(video.get(i), ranking, myRanking));
 		}
 		

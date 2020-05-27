@@ -15,7 +15,7 @@ public class Video implements Serializable {
 	private String file;
 	private int difficulty;
 	private int length;
-	private int point;
+	private int myPoint;
 	
 	
 	public Video() {
@@ -35,7 +35,7 @@ public class Video implements Serializable {
 	}
 
 
-	public Video(int video_id, String thumbnail, String title, String file, int difficulty, int length, int point) {
+	public Video(int video_id, String thumbnail, String title, String file, int difficulty, int length, int myPoint) {
 		super();
 		this.video_id = video_id;
 		this.thumbnail = thumbnail;
@@ -43,7 +43,7 @@ public class Video implements Serializable {
 		this.file = file;
 		this.difficulty = difficulty;
 		this.length = length;
-		this.point = point;
+		this.myPoint = myPoint;
 	}
 
 
@@ -107,13 +107,13 @@ public class Video implements Serializable {
 	}
 
 
-	public int getPoint() {
-		return point;
+	public int getMyPoint() {
+		return myPoint;
 	}
 
 
-	public void setPoint(int point) {
-		this.point = point;
+	public void setMyPoint(int myPoint) {
+		this.myPoint = myPoint;
 	}
 
 
@@ -125,7 +125,7 @@ public class Video implements Serializable {
 	@Override
 	public String toString() {
 		return "Video [video_id=" + video_id + ", thumbnail=" + thumbnail + ", title=" + title + ", file=" + file
-				+ ", difficulty=" + difficulty + ", length=" + length + ", point=" + point + "]";
+				+ ", difficulty=" + difficulty + ", length=" + length + ", myPoint=" + myPoint + "]";
 	}
 
 

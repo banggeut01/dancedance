@@ -23,6 +23,4 @@ public interface IGameService {
 
 	List<Ranking> getRankingByVideo(int video_id);
 
-	Ranking getMyRankingByVideo(Play play);
-
 }
