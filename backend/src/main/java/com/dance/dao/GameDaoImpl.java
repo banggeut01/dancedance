@@ -10,6 +10,7 @@ import com.dance.dto.Avatar;
 import com.dance.dto.Icon;
 import com.dance.dto.Member;
 import com.dance.dto.Play;
+import com.dance.dto.Ranking;
 import com.dance.dto.Video;
 
 
@@ -45,5 +46,12 @@ public class GameDaoImpl {
 		return sqlSession.selectList(ns+"getIcon", video_id);
 	}
 
-	
+	public List<Ranking> getRankingByVideo(int video_id) {
+		return sqlSession.selectList(ns+"getRankingByVideo", video_id);
+	}
+
+	public List<Ranking> getRankingByScore() {
+		return sqlSession.selectList(ns+"getRankingByScore");
+	}
+
 }
