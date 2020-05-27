@@ -140,4 +140,28 @@ public class GameController {
 		return new ResponseEntity<Map<String, Object>>(resultMap, HttpStatus.OK);
 	}
 	
+	@ApiOperation(value = "총 score 랭킹", response = Member.class)
+	@RequestMapping(value = "/ranking/score", method = RequestMethod.GET)
+	public ResponseEntity<Map<String, Object>> rankingByScore(@RequestHeader(value="Authorization") String token) throws Exception {
+		logger.info("1-------------rankingByScore-----------------------------" + new Date());
+		
+		Map<String, Object> resultMap = new HashMap<>();
+	
+		Member member = jwtService.get(token);
+
+		if(member==null) {
+			resultMap.put("status", "fail");
+			return new ResponseEntity<Map<String, Object>>(resultMap, HttpStatus.OK);
+		}
+		
+		List<Rank> rank = new ArrayList<>();
+		
+		List<Ranking> ranking = gameservice.getRankingByScore();
+		
+		resultMap.put("status", "ok");
+		resultMap.put("ranking", ranking);
+
+		return new ResponseEntity<Map<String, Object>>(resultMap, HttpStatus.OK);
+	}
+	
 }

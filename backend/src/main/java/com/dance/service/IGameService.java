@@ -23,4 +23,6 @@ public interface IGameService {
 
 	List<Ranking> getRankingByVideo(int video_id);
 
+	List<Ranking> getRankingByScore();
+
 }
