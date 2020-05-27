@@ -1,19 +1,18 @@
 <template>
     <div class="avatar">
         <div class="div1">
-            <SelectedAvatar if="isSelected" :avatar="avatar" />
+            <SelectedAvatar v-if="isSelected" :avatar="avatar" />
         </div>
         <div class="div2">
             <div class="btnLayer" style="margin-top: 5px">
                 <v-btn @click="changeAcquired" x-large color="primary" dark>Change Category</v-btn>
-                <!-- <v-btn v-else @click="changeAcquired" x-large color="error" dark>획득 아바타</v-btn> -->
             </div>
             <div class="wrapper rightside" style="margin-top: 10px">
                 <div v-if="isAcquired">
                     <h1 class="avatarTitle">Available Dancers</h1>
                     <ul class="img-grid">
                         <li v-for="avatar in yAvatars" :key="avatar.id" @click="changeAvatar(avatar)">
-                            <Avatar :avatar="avatar" />
+                            <Avatar :avatar="avatar" :selected="avatar.selected" />
                         </li>
                     </ul>
                 </div>
@@ -33,7 +32,7 @@
         </div>
     </div>
 </template>
-S02P31B102-21
+
 
 <script>
     import SelectedAvatar from './SelectedAvatar.vue'
@@ -50,92 +49,43 @@ S02P31B102-21
                 isSelected: false,
                 isAcquired: true,
                 avatar: {},
+                selectedId: 0,
                 yAvatars: [{
-                        id: 1,
-                        name: 'Ssafyin',
+                        id: 0,
+                        name: 'MR.Yeom',
                         explanation: '',
-                        url: './avatarImages/1.gif',
+                        url: './avatarImages/yeom.svg',
+                        selected: false
+                    },
+                    {
+                        id: 1,
+                        name: 'Owl',
+                        explanation: '',
+                        url: './avatarImages/owl.svg',
                         selected: false
                     },
                     {
                         id: 2,
-                        name: 'Heotdool',
+                        name: 'Boy',
                         explanation: '',
-                        url: './avatarImages/2.gif',
-                        selected: false
-                    },
-                    {
-                        id: 3,
-                        name: 'Santa',
-                        explanation: '',
-                        url: './avatarImages/3.gif',
+                        url: './avatarImages/boy.svg',
                         selected: true
                     },
                     {
-                        id: 4,
-                        name: 'Gaegool',
+                        id: 3,
+                        name: 'Girl',
                         explanation: '',
-                        url: './avatarImages/4.gif',
-                        selected: false
-                    },
-                    {
-                        id: 5,
-                        name: 'Baeksoo',
-                        explanation: '',
-                        url: './avatarImages/5.gif',
-                        selected: false
-                    },
-                    {
-                        id: 6,
-                        name: 'Wadadada',
-                        explanation: '',
-                        url: './avatarImages/6.gif',
+                        url: './avatarImages/girl.svg',
                         selected: false
                     },
                 ],
                 nAvatars: [{
-                        id: 7,
-                        name: 'Chang',
-                        explanation: '',
-                        url: './avatarImages/7.gif',
-                        selected: false
-                    },
-                    {
-                        id: 8,
-                        name: 'Pong',
-                        explanation: '',
-                        url: './avatarImages/8.gif',
-                        selected: false
-                    },
-                    {
-                        id: 9,
-                        name: 'Seonbi',
-                        explanation: '',
-                        url: './avatarImages/9.gif',
-                        selected: false
-                    },
-                    {
-                        id: 10,
-                        name: 'Mizal',
-                        explanation: '',
-                        url: './avatarImages/10.gif',
-                        selected: false
-                    },
-                    {
-                        id: 11,
-                        name: 'Shrimp',
-                        explanation: '',
-                        url: './avatarImages/11.gif',
-                        selected: false
-                    },
-                    {
-                        id: 12,
-                        name: 'Kyeong-Ho',
-                        explanation: '',
-                        url: './avatarImages/12.gif',
-                        selected: false
-                    },
-                ]
+                    id: 0,
+                    name: 'Raccoon',
+                    explanation: '',
+                    url: './avatarImages/raccoon.svg',
+                    selected: false
+                }, ]
             }
         },
         methods: {
@@ -144,11 +94,17 @@ S02P31B102-21
                     if (this.yAvatars[i].selected === true) {
                         this.avatar = this.yAvatars[i]
                         this.isSelected = true
+                        this.selectedId = this.yAvatars[i].id
                     }
                 }
             },
             changeAvatar(avatar) {
-                this.avatar = avatar
+                if (this.yAvatars[avatar.id].selected === false) {
+                    this.avatar = avatar
+                    this.yAvatars[avatar.id].selected = !this.yAvatars[avatar.id].selected
+                    this.yAvatars[this.selectedId].selected = false
+                    this.selectedId = this.avatar.id
+                }
             },
             changeAcquired() {
                 this.isAcquired = !this.isAcquired
