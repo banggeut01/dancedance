@@ -122,12 +122,17 @@ public class GameController {
 		
 		List<Rank> rank = new ArrayList<>();
 		List<Video> video = gameservice.getVideoList();
+		Play play = new Play();
+		play.setMember_id(member.getMember_id());
 		
 		for (int i = 0; i < video.size(); i++) {
 			List<Ranking> ranking = gameservice.getRankingByVideo(video.get(i).getVideo_id());
-			rank.add(new Rank(video.get(i), ranking));
+			play.setVideo_id(video.get(i).getVideo_id());
+			Ranking myRanking = gameservice.getMyRankingByVideo(play);
+			rank.add(new Rank(video.get(i), ranking, myRanking));
 		}
 		
+		resultMap.put("status", "ok");
 		resultMap.put("ranking", rank);
 
 		return new ResponseEntity<Map<String, Object>>(resultMap, HttpStatus.OK);

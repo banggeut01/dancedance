@@ -58,4 +58,10 @@ public class GameServiceImpl implements IGameService {
 		return gamedao.getRankingByVideo(video_id);
 	}
 
+	@Override
+	@Transactional(readOnly=true)
+	public Ranking getMyRankingByVideo(Play play) {
+		return gamedao.getMyRankingByVideo(play);
+	}
+
 }

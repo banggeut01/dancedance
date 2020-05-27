@@ -51,10 +51,25 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		from (select @rownum := 0) r, 
 			(select member_id, max(point) point 
 			from play 
-			where video_id=1 
+			where video_id=#{video_id}
 			group by member_id 
 			order by point desc 
 			limit 10) s
+	</select>
+	
+	<select id="getMyRankingByVideo"
+		parameterType="com.dance.dto.Play"
+		resultType="com.dance.dto.Ranking">
+		select ranking, member_id, point
+		from (select @rownum:=@rownum+1 ranking, member_id, point
+			from (select @rownum := 0) r, 
+				(select member_id, max(point) point 
+				from play 
+				where video_id=#{video_id} 
+				group by member_id 
+				order by point desc 
+				limit 10) s) my
+		where member_id=#{member_id}
 	</select>
 	
 </mapper>

@@ -50,5 +50,9 @@ public class GameDaoImpl {
 		return sqlSession.selectList(ns+"getRankingByVideo", video_id);
 	}
 
+	public Ranking getMyRankingByVideo(Play play) {
+		return sqlSession.selectOne(ns+"getMyRankingByVideo", play);
+	}
+
 	
 }

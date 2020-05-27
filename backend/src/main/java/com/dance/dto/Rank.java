@@ -12,6 +12,7 @@ public class Rank implements Serializable {
 	
 	private Video video;
 	private List<Ranking> rank;
+	private Ranking myRanking;
 	
 	
 	public Rank() {
@@ -20,10 +21,11 @@ public class Rank implements Serializable {
 	}
 
 
-	public Rank(Video video, List<Ranking> rank) {
+	public Rank(Video video, List<Ranking> rank, Ranking myRanking) {
 		super();
 		this.video = video;
 		this.rank = rank;
+		this.myRanking = myRanking;
 	}
 
 
@@ -47,6 +49,16 @@ public class Rank implements Serializable {
 	}
 
 
+	public Ranking getMyRanking() {
+		return myRanking;
+	}
+
+
+	public void setMyRanking(Ranking myRanking) {
+		this.myRanking = myRanking;
+	}
+
+
 	public static long getSerialversionuid() {
 		return serialVersionUID;
 	}
@@ -54,7 +66,7 @@ public class Rank implements Serializable {
 
 	@Override
 	public String toString() {
-		return "Rank [video=" + video + ", rank=" + rank + "]";
+		return "Rank [video=" + video + ", rank=" + rank + ", myRanking=" + myRanking + "]";
 	}
 
 
