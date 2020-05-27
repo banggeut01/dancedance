@@ -157,9 +157,16 @@ public class GameController {
 		List<Rank> rank = new ArrayList<>();
 		
 		List<Ranking> ranking = gameservice.getRankingByScore();
+		Ranking myRanking = null;
+		for (int i = 0; i < ranking.size(); i++) {
+			if(ranking.get(i).getMember_id()==member.getMember_id()) {
+				myRanking = ranking.get(i);
+			}
+		}
 		
 		resultMap.put("status", "ok");
 		resultMap.put("ranking", ranking);
+		resultMap.put("myRanking", myRanking);
 
 		return new ResponseEntity<Map<String, Object>>(resultMap, HttpStatus.OK);
 	}
