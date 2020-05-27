@@ -1,5 +1,6 @@
 package com.dance.controller;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
@@ -26,6 +27,8 @@ import com.dance.dto.Avatar;
 import com.dance.dto.Icon;
 import com.dance.dto.Member;
 import com.dance.dto.Play;
+import com.dance.dto.Rank;
+import com.dance.dto.Ranking;
 import com.dance.dto.Video;
 import com.dance.service.IMemberService;
 import com.dance.service.IGameService;
@@ -84,19 +87,18 @@ public class GameController {
 		
 		Map<String, Object> resultMap = new HashMap<>();
 	
-//		Member member = jwtService.get(token);
-//
-//		if(member==null) {
-//			resultMap.put("status", "fail");
-//			return new ResponseEntity<Map<String, Object>>(resultMap, HttpStatus.OK);
-//		}
-		
-		int avatar_now = 1;
+		Member member = jwtService.get(token);
+
+		if(member==null) {
+			resultMap.put("status", "fail");
+			return new ResponseEntity<Map<String, Object>>(resultMap, HttpStatus.OK);
+		}
 		
 		String video = gameservice.getVideoLink(video_id);
-		String avatar = gameservice.getMyAvatarName(avatar_now);
+		String avatar = gameservice.getMyAvatarName(member.getAvatar_now());
 		List<Icon> icon = gameservice.getIcon(video_id);
 
+		resultMap.put("status", "ok");
 		resultMap.put("video", video);
 		resultMap.put("avatar", avatar);
 		resultMap.put("icon", icon);
@@ -104,5 +106,31 @@ public class GameController {
 		return new ResponseEntity<Map<String, Object>>(resultMap, HttpStatus.OK);
 	}
 	
+	@ApiOperation(value = "곡별 랭킹", response = Member.class)
+	@RequestMapping(value = "/ranking/video", method = RequestMethod.GET)
+	public ResponseEntity<Map<String, Object>> rankingByVideo(@RequestHeader(value="Authorization") String token) throws Exception {
+		logger.info("1-------------rankingByVideo-----------------------------" + new Date());
+		
+		Map<String, Object> resultMap = new HashMap<>();
+	
+		Member member = jwtService.get(token);
+
+		if(member==null) {
+			resultMap.put("status", "fail");
+			return new ResponseEntity<Map<String, Object>>(resultMap, HttpStatus.OK);
+		}
+		
+		List<Rank> rank = new ArrayList<>();
+		List<Video> video = gameservice.getVideoList();
+		
+		for (int i = 0; i < video.size(); i++) {
+			List<Ranking> ranking = gameservice.getRankingByVideo(video.get(i).getVideo_id());
+			rank.add(new Rank(video.get(i), ranking));
+		}
+		
+		resultMap.put("ranking", rank);
+
+		return new ResponseEntity<Map<String, Object>>(resultMap, HttpStatus.OK);
+	}
 	
 }

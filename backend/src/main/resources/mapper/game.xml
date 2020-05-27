@@ -44,4 +44,17 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		where video_id=#{video_id}
 	</select>
 	
+	<select id="getRankingByVideo"
+		parameterType="java.lang.Integer"
+		resultType="com.dance.dto.Ranking">
+		select @rownum:=@rownum+1 ranking, member_id, point
+		from (select @rownum := 0) r, 
+			(select member_id, max(point) point 
+			from play 
+			where video_id=1 
+			group by member_id 
+			order by point desc 
+			limit 10) s
+	</select>
+	
 </mapper>

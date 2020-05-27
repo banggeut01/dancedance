@@ -12,6 +12,7 @@ import com.dance.dto.Avatar;
 import com.dance.dto.Icon;
 import com.dance.dto.Member;
 import com.dance.dto.Play;
+import com.dance.dto.Ranking;
 import com.dance.dto.Video;
 
 
@@ -49,6 +50,12 @@ public class GameServiceImpl implements IGameService {
 	@Transactional(readOnly=true)
 	public List<Icon> getIcon(int video_id) {
 		return gamedao.getIcon(video_id);
+	}
+
+	@Override
+	@Transactional(readOnly=true)
+	public List<Ranking> getRankingByVideo(int video_id) {
+		return gamedao.getRankingByVideo(video_id);
 	}
 
 }
