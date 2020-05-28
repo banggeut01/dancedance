@@ -145,8 +145,8 @@ public class MemberController {
 	}
 	
 	@ApiOperation(value = "아바타 페이지", response = Member.class)
-	@RequestMapping(value = "/avatar", method = RequestMethod.POST)
-	public ResponseEntity<Map<String, Object>> updateAvatar(@RequestBody int avatar_id, @RequestHeader(value="Authorization") String token) throws Exception {
+	@RequestMapping(value = "/avatar/{avatar_id}", method = RequestMethod.PATCH)
+	public ResponseEntity<Map<String, Object>> updateAvatar(@PathVariable int avatar_id, @RequestHeader(value="Authorization") String token) throws Exception {
 		logger.info("1-------------updateAvatar-----------------------------" + new Date());
 		HttpHeaders headers = new HttpHeaders();
 		Map<String, Object> resultMap = new HashMap<>();
