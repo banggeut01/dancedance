@@ -41,6 +41,29 @@ public class Play implements Serializable {
 	}
 
 
+	public Play(int member_id, int video_id, int excellent, int great, int good, int bad, int point) {
+		super();
+		this.member_id = member_id;
+		this.video_id = video_id;
+		this.excellent = excellent;
+		this.great = great;
+		this.good = good;
+		this.bad = bad;
+		this.point = point;
+	}
+
+
+	public Play(int video_id, int excellent, int great, int good, int bad, int point) {
+		super();
+		this.video_id = video_id;
+		this.excellent = excellent;
+		this.great = great;
+		this.good = good;
+		this.bad = bad;
+		this.point = point;
+	}
+
+
 	public Play(int member_id, int video_id) {
 		super();
 		this.member_id = member_id;

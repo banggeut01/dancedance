@@ -171,4 +171,26 @@ public class GameController {
 		return new ResponseEntity<Map<String, Object>>(resultMap, HttpStatus.OK);
 	}
 	
+	@ApiOperation(value = "결과 저장", response = Member.class)
+	@RequestMapping(value = "/play/result", method = RequestMethod.POST)
+	public ResponseEntity<Map<String, Object>> result(@RequestBody Play play, @RequestHeader(value="Authorization") String token) throws Exception {
+		logger.info("1-------------rankingByScore-----------------------------" + new Date());
+		
+		Map<String, Object> resultMap = new HashMap<>();
+	
+		Member member = jwtService.get(token);
+
+		if(member==null) {
+			resultMap.put("status", "fail");
+			return new ResponseEntity<Map<String, Object>>(resultMap, HttpStatus.OK);
+		}
+		
+		play.setMember_id(member.getMember_id());
+		gameservice.setPlayResult(play);
+		
+		resultMap.put("status", "ok");
+
+		return new ResponseEntity<Map<String, Object>>(resultMap, HttpStatus.OK);
+	}
+	
 }
