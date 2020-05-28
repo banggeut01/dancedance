@@ -109,8 +109,9 @@ public class MemberController {
 		Map<String, Object> resultMap = new HashMap<>();
 		
 		memberservice.signup(member);
+		Member login = memberservice.login(member);
 		
-		String token = jwtService.create(member);
+		String token = jwtService.create(login);
 		headers.set("Authorization", token);
 
 		resultMap.put("signup", "ok");
@@ -161,6 +162,9 @@ public class MemberController {
 		member.setAvatar_now(avatar_id);
 		memberservice.updateMyAvatar(member);
 		
+		token = jwtService.create(member);
+		headers.set("Authorization", token);
+		
 		Avatar myavatar = memberservice.myavatar(member.getAvatar_now());
 		List<Avatar> obtained = memberservice.obtained(member.getMember_id());
 		List<Avatar> not_obtained = memberservice.not_obtained(member.getMember_id());
@@ -170,7 +174,7 @@ public class MemberController {
 		resultMap.put("obtained", obtained);
 		resultMap.put("not_obtained", not_obtained);
 
-		return new ResponseEntity<Map<String, Object>>(resultMap, HttpStatus.OK);
+		return new ResponseEntity<Map<String, Object>>(resultMap, headers, HttpStatus.OK);
 	}
 	
 }
