@@ -24,6 +24,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.dance.dto.Avatar;
 import com.dance.dto.Member;
+import com.dance.dto.SignUpCheck;
 import com.dance.service.IMemberService;
 import com.dance.service.IJwtService;
 
@@ -65,37 +66,28 @@ public class MemberController {
 		return new ResponseEntity<Map<String, Object>>(resultMap, headers, HttpStatus.OK);
 	}
 	
-	@ApiOperation(value = "email 중복 체크", response = Member.class)
-	@RequestMapping(value = "/emailcheck", method = RequestMethod.GET)
-	public ResponseEntity<Map<String, Object>> emailcheck(@RequestParam String email) throws Exception {
-		logger.info("1-------------emailcheck-----------------------------" + new Date());
+	@ApiOperation(value = "이메일, 닉네임 중복 체크", response = Member.class)
+	@RequestMapping(value = "/signup/check", method = RequestMethod.POST)
+	public ResponseEntity<Map<String, Object>> signupcheck(@RequestBody SignUpCheck member) throws Exception {
+		logger.info("1-------------signupcheck-----------------------------" + new Date());
 		HttpHeaders headers = new HttpHeaders();
 		Map<String, Object> resultMap = new HashMap<>();
 		
-		int cnt = memberservice.emailcheck(email);
+		int emailCheck = memberservice.emailcheck(member.getEmail());
+		int nicknameCheck = memberservice.nicknamecheck(member.getNickname());
 
-		if(cnt==0) {
-			resultMap.put("emailcheck", "ok");
+		if(emailCheck==0 && nicknameCheck==0) {
+			resultMap.put("email", true);
+			resultMap.put("nickname", true);
+		}else if(emailCheck>0 && nicknameCheck==0){
+			resultMap.put("email", false);
+			resultMap.put("nickname", true);
+		}else if(emailCheck==0 && nicknameCheck>0) {
+			resultMap.put("email", true);
+			resultMap.put("nickname", false);
 		}else {
-			resultMap.put("emailcheck", "fail");
-		}
-
-		return new ResponseEntity<Map<String, Object>>(resultMap, HttpStatus.OK);
-	}
-	
-	@ApiOperation(value = "닉네임 중복 체크", response = Member.class)
-	@RequestMapping(value = "/nicknamecheck", method = RequestMethod.GET)
-	public ResponseEntity<Map<String, Object>> nicknamecheck(@RequestParam String nickname) throws Exception {
-		logger.info("1-------------nicknamecheck-----------------------------" + new Date());
-		HttpHeaders headers = new HttpHeaders();
-		Map<String, Object> resultMap = new HashMap<>();
-		
-		int cnt = memberservice.nicknamecheck(nickname);
-
-		if(cnt==0) {
-			resultMap.put("nicknamecheck", "ok");
-		}else {
-			resultMap.put("nicknamecheck", "fail");
+			resultMap.put("email", false);
+			resultMap.put("nickname", false);
 		}
 
 		return new ResponseEntity<Map<String, Object>>(resultMap, HttpStatus.OK);
