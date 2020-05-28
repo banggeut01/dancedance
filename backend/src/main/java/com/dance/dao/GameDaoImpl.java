@@ -54,4 +54,8 @@ public class GameDaoImpl {
 		return sqlSession.selectList(ns+"getRankingByScore");
 	}
 
+	public void setPlayResult(Play play) {
+		sqlSession.insert(ns+"setPlayResult", play);
+	}
+
 }

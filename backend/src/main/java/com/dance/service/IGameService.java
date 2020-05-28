@@ -25,4 +25,6 @@ public interface IGameService {
 
 	List<Ranking> getRankingByScore();
 
+	void setPlayResult(Play play);
+
 }

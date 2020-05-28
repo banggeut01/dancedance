@@ -64,4 +64,10 @@ public class GameServiceImpl implements IGameService {
 		return gamedao.getRankingByScore();
 	}
 
+	@Override
+	@Transactional
+	public void setPlayResult(Play play) {
+		gamedao.setPlayResult(play);
+	}
+
 }
