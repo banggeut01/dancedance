@@ -1,5 +1,9 @@
 <template>
   <div>
+    <!-- background sound -->
+    <audio class="rank-audio" autoplay loop>
+      <source src="../assets/rank_bgm.mp3" type="audio/mpeg">
+    </audio>
     <Header class="header-pos header-color"></Header>
     <v-row class="rankpage-div">
       <v-col cols="6" class="rank-border">
@@ -33,6 +37,11 @@ export default {
 </script>
 
 <style>
+.rank-audio {
+  position: absolute;
+  bottom: 10px;
+  left: 10px;
+}
 .header-pos {
   position: absolute;
   top: 0px !important;
