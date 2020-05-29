@@ -14,8 +14,8 @@
             display: none;
             ">
 				</video>
-				<canvas id="output" class="camera-canvas"></canvas>
-				<canvas id="keypoints" class="camera-canvas"></canvas>
+				<canvas id="output" class="camera-canvas" style="display: none"></canvas>
+				<canvas id="keypoints" class="camera-canvas" style="display: none"></canvas>
 			</div>
 			<canvas class="illustration-canvas"></canvas>
 		</div>
@@ -25,20 +25,41 @@
 <script>
 	import * as posenet_module from '@tensorflow-models/posenet';
 	import * as facemesh_module from '@tensorflow-models/facemesh';
-	import * as tf from '@tensorflow/tfjs'
+	// import * as tf from '@tensorflow/tfjs'
 	import * as paper from 'paper'
-	import "babel-polyfill"
+	// import "babel-polyfill"
 
-	import { drawKeypoints, drawPoint, drawSkeleton, toggleLoadingUI, setStatusText } from './utils/demoUtils';
-	import { SVGUtils } from './utils/svgUtils'
-	import { PoseIllustration } from './illustrationGen/illustration';
-	import { Skeleton, facePartName2Index } from './illustrationGen/skeleton';
+	import {
+		// drawKeypoints,
+		// drawPoint,
+		// drawSkeleton,
+		toggleLoadingUI,
+		setStatusText
+	} from './utils/demoUtils';
+	import {
+		SVGUtils
+	} from './utils/svgUtils'
+	import {
+		PoseIllustration
+	} from './illustrationGen/illustration';
+	import {
+		Skeleton,
+		// facePartName2Index
+	} from './illustrationGen/skeleton';
 
 	import * as girlSVG from './resources/illustration/girl.svg';
 	import * as boySVG from './resources/illustration/boy.svg';
+	import * as owlSVG from './resources/illustration/owl.svg';
+	import * as raccoonSVG from './resources/illustration/raccoon.svg';
+	import * as yeomSVG from './resources/illustration/yeom.svg';
 
 	export default {
 		name: 'FaceMesh',
+		props: {
+			name: {
+				type: String
+			}
+		},
 		data() {
 			return {
 				// Camera stream video element
@@ -54,6 +75,7 @@
 				// ML models
 				facemesh: null,
 				posenet: null,
+				tf: null,
 				minPoseConfidence: 0.15,
 				minPartConfidence: 0.1,
 				nmsRadius: 30.0,
@@ -61,7 +83,11 @@
 				avatarSvgs: {
 					'girl': girlSVG.default,
 					'boy': boySVG.default,
+					'owl': owlSVG.default,
+					'raccoon': raccoonSVG.default,
+					'yeom': yeomSVG.default
 				},
+				selected: {},
 				// PoseNet 설정(?)
 				defaultPoseNetArchitecture: 'MobileNetV1',
 				defaultQuantBytes: 2,
@@ -127,7 +153,7 @@
 					videoCtx.restore();
 
 					// Creates a tensor from an image
-					const input = tf.browser.fromPixels(canvas);
+					const input = th.tf.browser.fromPixels(canvas);
 					th.faceDetection = await th.facemesh.estimateFaces(input, false, false);
 					let all_poses = await th.posenet.estimatePoses(video, {
 						flipHorizontal: true,
@@ -142,23 +168,23 @@
 
 					keypointCtx.clearRect(0, 0, th.videoWidth, th.videoHeight);
 					// 사용자 keypoints에 빨간, 파란 점 찍는 부분
-					if (th.guiState.debug.showDetectionDebug) {
-						poses.forEach(({
-							score,
-							keypoints
-						}) => {
-							if (score >= th.minPoseConfidence) {
-								drawKeypoints(keypoints, th.minPartConfidence, keypointCtx);
-								drawSkeleton(keypoints, th.minPartConfidence, keypointCtx);
-							}
-						});
-						th.faceDetection.forEach(face => {
-							Object.values(facePartName2Index).forEach(index => {
-								let p = face.scaledMesh[index];
-								drawPoint(keypointCtx, p[1], p[0], 2, 'red');
-							});
-						});
-					}
+					// if (th.guiState.debug.showDetectionDebug) {
+					// 	poses.forEach(({
+					// 		score,
+					// 		keypoints
+					// 	}) => {
+					// 		if (score >= th.minPoseConfidence) {
+					// 			drawKeypoints(keypoints, th.minPartConfidence, keypointCtx);
+					// 			drawSkeleton(keypoints, th.minPartConfidence, keypointCtx);
+					// 		}
+					// 	});
+					// 	th.faceDetection.forEach(face => {
+					// 		Object.values(facePartName2Index).forEach(index => {
+					// 			let p = face.scaledMesh[index];
+					// 			drawPoint(keypointCtx, p[1], p[0], 2, 'red');
+					// 		});
+					// 	});
+					// }
 
 					th.canvasScope.project.clear();
 					// 아바타가 따라할 수 있도록 그리는 부분
@@ -213,7 +239,7 @@
 
 				setStatusText('Loading Avatar file...');
 				// 아바타 불러오기
-				await this.parseSVG(Object.values(this.avatarSvgs)[0]);
+				await this.parseSVG(Object.values(this.selected)[0]);
 
 				setStatusText('Setting up camera...');
 				try {
@@ -231,23 +257,82 @@
 			},
 			async parseSVG(target) {
 				let svgScope = await SVGUtils.importSVG(target /* SVG string or file path */ );
-                let skeleton = new Skeleton(svgScope);
+				let skeleton = new Skeleton(svgScope);
 				this.illustration = new PoseIllustration(this.canvasScope);
 				this.illustration.bindSkeleton(skeleton, svgScope);
 			}
 		},
+		watch: {
+			name: function () {
+				if (this.name === 'Boy') {
+					this.selected = {
+						'boy': boySVG.default
+					}
+				} else if (this.name === 'Girl') {
+					this.selected = {
+						'girl': girlSVG.default
+					}
+				} else if (this.name === 'Owl') {
+					this.selected = {
+						'owl': owlSVG.default
+					}
+				} else if (this.name === 'Raccoon') {
+					this.selected = {
+						'raccoon': raccoonSVG.default
+					}
+				} else if (this.name === 'Yeom') {
+					this.selected = {
+						'yeom': yeomSVG.default
+					}
+				}
+				this.guiState = {
+					avatarSVG: Object.keys(this.selected)[0],
+					debug: {
+						showDetectionDebug: true,
+						showIllustrationDebug: false,
+					},
+				}
+				this.bindPage();
+			},
+		},
 		mounted() {
-			this.guiState = {
-				avatarSVG: Object.keys(this.avatarSvgs)[0],
-				debug: {
-					showDetectionDebug: true,
-					showIllustrationDebug: false,
-				},
-			}
-			navigator.getUserMedia = navigator.getUserMedia ||
-				navigator.webkitGetUserMedia || navigator.mozGetUserMedia;
+			import('@tensorflow/tfjs').then((tf) => {
+				this.tf = tf
+				import("babel-polyfill").then(() => {
+					if (this.name === 'Boy') {
+						this.selected = {
+							'boy': boySVG.default
+						}
+					} else if (this.name === 'Girl') {
+						this.selected = {
+							'girl': girlSVG.default
+						}
+					} else if (this.name === 'Owl') {
+						this.selected = {
+							'owl': owlSVG.default
+						}
+					} else if (this.name === 'Raccoon') {
+						this.selected = {
+							'raccoon': raccoonSVG.default
+						}
+					} else if (this.name === 'Yeom') {
+						this.selected = {
+							'yeom': yeomSVG.default
+						}
+					}
+					this.guiState = {
+						avatarSVG: Object.keys(this.selected)[0],
+						debug: {
+							showDetectionDebug: true,
+							showIllustrationDebug: false,
+						},
+					}
+					navigator.getUserMedia = navigator.getUserMedia ||
+						navigator.webkitGetUserMedia || navigator.mozGetUserMedia;
 
-			this.bindPage();
+					this.bindPage();
+				})
+			})
 		}
 	}
 </script>
@@ -259,6 +344,7 @@
 		align-items: center;
 		justify-content: center;
 	}
+
 	.canvas-container {
 		width: 800px;
 		max-width: 100%;
@@ -266,6 +352,7 @@
 		justify-content: center;
 		position: relative;
 	}
+
 	.camera-canvas {
 		position: absolute;
 		transform: scale(0.5, 0.5);
@@ -273,14 +360,17 @@
 		left: 10px;
 		top: 10px;
 	}
+
 	#main {
 		left: 0;
 		top: 0;
 		position: absolute;
 	}
+
 	.illustration-canvas {
 		border: 1px solid #eeeeee;
 	}
+
 	.footer {
 		position: fixed;
 		left: 0;
@@ -288,11 +378,13 @@
 		width: 100%;
 		color: black;
 	}
+
 	.footer-text {
 		max-width: 600px;
 		text-align: center;
 		margin: auto;
 	}
+
 	@media only screen and (max-width: 600px) {
 
 		.footer-text,
@@ -300,28 +392,33 @@
 			display: none;
 		}
 	}
+
 	@-webkit-keyframes sk-pulseScaleOut {
 		0% {
 			-webkit-transform: scale(0);
 			transform: scale(0);
 		}
+
 		100% {
 			-webkit-transform: scale(1.0);
 			transform: scale(1.0);
 			opacity: 0;
 		}
 	}
+
 	@keyframes sk-pulseScaleOut {
 		0% {
 			-webkit-transform: scale(0);
 			transform: scale(0);
 		}
+
 		100% {
 			-webkit-transform: scale(1.0);
 			transform: scale(1.0);
 			opacity: 0;
 		}
 	}
+
 	.spinner-text {
 		float: left;
 	}

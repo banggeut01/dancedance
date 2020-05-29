@@ -9,7 +9,7 @@
             </div>
             <div class="wrapper rightside" style="margin-top: 10px">
                 <div v-if="isAcquired">
-                    <h1 class="avatarTitle">Available Dancers</h1>
+                    <h1 class="avatarTitle">Available Avatars</h1>
                     <ul class="img-grid">
                         <li v-for="avatar in yAvatars" :key="avatar.id" @click="changeAvatar(avatar)">
                             <Avatar :avatar="avatar" :selected="avatar.selected" />
@@ -17,7 +17,7 @@
                     </ul>
                 </div>
                 <div v-else id="style-1">
-                    <h1 class="avatarTitle">Unvailable Dancers</h1>
+                    <h1 class="avatarTitle">Unvailable Avatars</h1>
                     <ul class="img-grid">
                         <li v-for="avatar in nAvatars" :key="avatar.id">
                             <Avatar :avatar="avatar" />
@@ -26,7 +26,7 @@
                 </div>
             </div>
             <div class="btnLayer btnDiv">
-                <v-btn v-if="isAcquired" dark style="margin-right:2px">change dancer</v-btn>
+                <v-btn v-if="isAcquired" dark style="margin-right:2px">change avatar</v-btn>
                 <v-btn dark>return</v-btn>
             </div>
         </div>
@@ -52,7 +52,7 @@
                 selectedId: 0,
                 yAvatars: [{
                         id: 0,
-                        name: 'MR.Yeom',
+                        name: 'Yeom',
                         explanation: '',
                         url: './avatarImages/yeom.svg',
                         selected: false
