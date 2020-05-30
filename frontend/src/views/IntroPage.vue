@@ -105,6 +105,8 @@ export default {
     } 
   },
   mounted () {
+    this.$store.dispatch('isLogin', this.$axios)
+    console.log(this.$store.getters.user)
     this.scrollmagic()
   },
 }
