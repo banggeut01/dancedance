@@ -12,7 +12,7 @@
       </v-col>
       <v-col cols="6" class="rank-border">
         <!-- 총 score 랭킹 -->
-        <TotalRank :ranking="ranking" class="rank-backcolor"></TotalRank>
+        <TotalRank :ranking="ranking" :myRanking="myRanking" class="rank-backcolor"></TotalRank>
       </v-col>
     </v-row>
   </div> 
@@ -31,7 +31,8 @@ export default {
   },
   data () {
     return {
-      ranking : [],
+      ranking: [],
+      myRanking: {}
     }
   },
   methods: {
@@ -43,6 +44,7 @@ export default {
         }
       }).then((res) => {
         this.ranking = res.data.ranking
+        this.myRanking = res.data.myRanking
       })
     },
   },
