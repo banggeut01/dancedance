@@ -20,13 +20,13 @@ export default new Vuex.Store({
     //세션에 저장하기 및 로그인 상태인지 확인하기
     isLogin(context, payload) {
       if (sessionStorage.getItem('token')) {
-        payload.defaults.headers.common['Autherization'] = sessionStorage.getItem('token')
+        payload.defaults.headers.common['Authorization'] = sessionStorage.getItem('token')
         context.state.token = sessionStorage.getItem('token')
         console.log(context.state.token)
         return true
       }
       else {
-        payload.defaults.headers.common['Autherization'] = null
+        payload.defaults.headers.common['Authorization'] = null
         context.state.token = null
         return false
       }
