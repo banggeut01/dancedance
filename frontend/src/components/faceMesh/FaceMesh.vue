@@ -1,8 +1,8 @@
 <template>
 	<div class="illustrationDiv">
-		<div id="loading" style='position: relative; left: 0'>
+		<div id="loading">
 			<span class="spinner-text" id="status">
-				Loading PoseNet model...
+				곧 당신의 아바타를 움직일 수 있어요!
 			</span>
 		</div>
 		<div class="canvas-container">
@@ -25,14 +25,8 @@
 <script>
 	import * as posenet_module from '@tensorflow-models/posenet';
 	import * as facemesh_module from '@tensorflow-models/facemesh';
-	// import * as tf from '@tensorflow/tfjs'
 	import * as paper from 'paper'
-	// import "babel-polyfill"
-
 	import {
-		// drawKeypoints,
-		// drawPoint,
-		// drawSkeleton,
 		toggleLoadingUI,
 		setStatusText
 	} from './utils/demoUtils';
@@ -43,8 +37,7 @@
 		PoseIllustration
 	} from './illustrationGen/illustration';
 	import {
-		Skeleton,
-		// facePartName2Index
+		Skeleton
 	} from './illustrationGen/skeleton';
 
 	import * as girlSVG from './resources/illustration/girl.svg';
@@ -70,8 +63,8 @@
 				faceDetection: null,
 				illustration: null,
 				canvasScope: null,
-				canvasWidth: 800,
-				canvasHeight: 800,
+				canvasWidth: 550,
+				canvasHeight: 550,
 				// ML models
 				facemesh: null,
 				posenet: null,
@@ -167,25 +160,6 @@
 					input.dispose();
 
 					keypointCtx.clearRect(0, 0, th.videoWidth, th.videoHeight);
-					// 사용자 keypoints에 빨간, 파란 점 찍는 부분
-					// if (th.guiState.debug.showDetectionDebug) {
-					// 	poses.forEach(({
-					// 		score,
-					// 		keypoints
-					// 	}) => {
-					// 		if (score >= th.minPoseConfidence) {
-					// 			drawKeypoints(keypoints, th.minPartConfidence, keypointCtx);
-					// 			drawSkeleton(keypoints, th.minPartConfidence, keypointCtx);
-					// 		}
-					// 	});
-					// 	th.faceDetection.forEach(face => {
-					// 		Object.values(facePartName2Index).forEach(index => {
-					// 			let p = face.scaledMesh[index];
-					// 			drawPoint(keypointCtx, p[1], p[0], 2, 'red');
-					// 		});
-					// 	});
-					// }
-
 					th.canvasScope.project.clear();
 					// 아바타가 따라할 수 있도록 그리는 부분
 					if (poses.length >= 1 && th.illustration) {
@@ -224,7 +198,7 @@
 				this.setupCanvas();
 
 				toggleLoadingUI(true);
-				setStatusText('Loading PoseNet model...');
+				setStatusText('곧 당신의 아바타를 움직일 수 있어요!');
 				// PoseNet 모델 불러오기
 				this.posenet = await posenet_module.load({
 					architecture: this.defaultPoseNetArchitecture,
@@ -233,15 +207,15 @@
 					multiplier: this.defaultMultiplier,
 					quantBytes: this.defaultQuantBytes
 				});
-				setStatusText('Loading FaceMesh model...');
+				setStatusText('FaceMesh 모델을 불러오고 있어요! 인내심을 가져주세요...');
 				// FaceMesh 모델 불러오기
 				this.facemesh = await facemesh_module.load();
 
-				setStatusText('Loading Avatar file...');
+				setStatusText('선택한 아바타 이미지를 입력하고 있어요! 거의 다 되었어요!');
 				// 아바타 불러오기
 				await this.parseSVG(Object.values(this.selected)[0]);
 
-				setStatusText('Setting up camera...');
+				setStatusText('캠을 연동하고 있어요! 이제 아바타를 조종할 수 있어요!');
 				try {
 					this.video = await this.loadVideo();
 				} catch (e) {
@@ -367,9 +341,9 @@
 		position: absolute;
 	}
 
-	.illustration-canvas {
+	/* .illustration-canvas {
 		border: 1px solid #eeeeee;
-	}
+	} */
 
 	.footer {
 		position: fixed;
@@ -421,5 +395,7 @@
 
 	.spinner-text {
 		float: left;
+		font-size: 20px;
+		color: white;
 	}
 </style>
