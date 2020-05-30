@@ -63,8 +63,8 @@
 				faceDetection: null,
 				illustration: null,
 				canvasScope: null,
-				canvasWidth: 550,
-				canvasHeight: 550,
+				canvasWidth: 500,
+				canvasHeight: 500,
 				// ML models
 				facemesh: null,
 				posenet: null,

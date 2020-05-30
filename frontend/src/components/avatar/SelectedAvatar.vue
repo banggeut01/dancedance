@@ -1,13 +1,13 @@
 <template>
     <div class="centered">
-        <h1 style="color:white">Your Avatar</h1>
-        <FaceMesh :name="avatar.name"/>
+        <h1 class="glow">Your Avatar</h1>
+        <FaceMesh :name="avatar.name" />
         <h1 style="color:white">{{ avatar.name }}</h1>
     </div>
 </template>
 
 <script>
-import FaceMesh from '@/components/faceMesh/FaceMesh.vue'
+    import FaceMesh from '@/components/faceMesh/FaceMesh.vue'
 
     export default {
         name: 'SelectedAvatar',
