@@ -4,8 +4,8 @@
             <SelectedAvatar v-if="isSelected" :avatar="avatar" />
         </div>
         <div class="div2">
-            <div class="btnLayer" style="margin-top: 5px">
-                <v-btn @click="changeAcquired" x-large color="primary" dark>Change Category</v-btn>
+            <div class="btnLayer glow" style="margin-top: 5px">
+                <h3 style="color:white; text-align:center" @click="changeAcquired">change category</h3>
             </div>
             <div class="wrapper rightside" style="margin-top: 10px">
                 <div v-if="isAcquired">
@@ -17,7 +17,7 @@
                     </ul>
                 </div>
                 <div v-else id="style-1">
-                    <h1 class="avatarTitle">Unvailable Avatars</h1>
+                    <h1 class="avatarTitle">Unavailable Avatars</h1>
                     <ul class="img-grid">
                         <li v-for="avatar in nAvatars" :key="avatar.id">
                             <Avatar :avatar="avatar" />
@@ -25,9 +25,9 @@
                     </ul>
                 </div>
             </div>
-            <div class="btnLayer btnDiv">
-                <v-btn v-if="isAcquired" dark style="margin-right:2px">change avatar</v-btn>
-                <v-btn dark>return</v-btn>
+            <div class="bottomBtnLayer btnDiv">
+                <a href="#" class="button changeButton" v-if="isAcquired">change avatar</a>
+                <a href="#" class="button returnButton">return</a>
             </div>
         </div>
     </div>
@@ -143,6 +143,20 @@
     .btnLayer {
         display: flex;
         justify-content: center;
+        font-family: 'Montserrat', Helvetica, sans-serif;
+        flex-direction: row;
+        align-items: center;
+        cursor: pointer;
+        height: 5vh;
+    }
+
+    .bottomBtnLayer {
+        display: flex;
+        justify-content: center;
+        font-family: 'Montserrat', Helvetica, sans-serif;
+        flex-direction: row;
+        align-items: center;
+        cursor: pointer;
     }
 
     .btnDiv {
@@ -172,5 +186,60 @@
         overflow-y: scroll;
         height: 500px;
         width: 100%;
+    }
+
+    .button {
+        border-radius: 100px;
+        padding: 10px 30px;
+        color: #fff;
+        text-decoration: none;
+        font-size: 1.45em;
+        margin: 0 15px;
+    }
+
+    .btnLayer:hover {
+        background-color: #CA3433;
+    }
+
+    .changeButton {
+        background: gray;
+    }
+
+    .returnButton {
+        background: #D2D2D2;
+    }
+
+    /* Hover state animation applied here */
+    .button:hover {
+        -webkit-animation: hover 1200ms linear 2 alternate;
+        animation: hover 1200ms linear 2 alternate;
+    }
+
+    /* Active state animation applied here */
+    .button:active {
+        -webkit-animation: active 1200ms ease 1 alternate;
+        animation: active 1200ms ease 1 alternate;
+    }
+
+    .glow {
+        color: #fff;
+        box-shadow: 0 0 2px #fff, 0 0 10px #fff, 0 0 20px #C21807, 0 0 30px #C21807,
+            0 0 40px #C21807, 0 0 50px #C21807;
+        -webkit-animation: blink 0.5s infinite alternate;
+        animation: blink 0.5s infinite alternate;
+    }
+
+    @-webkit-keyframes blink {
+        100% {
+            box-shadow: 0 0 3px #fff, 0 0 10px #fff, 0 0 20px #fff, 0 0 40px #0017A8,
+                0 0 70px #0017A8, 0 0 80px #0017A8;
+        }
+    }
+
+    @keyframes blink {
+        100% {
+            box-shadow: 0 0 3px #fff, 0 0 10px #fff, 0 0 20px #fff, 0 0 40px #0017A8,
+                0 0 70px #0017A8, 0 0 80px #0017A8;
+        }
     }
 </style>
