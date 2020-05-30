@@ -47,30 +47,16 @@ public class MemberServiceImpl implements IMemberService {
 
 
 	@Override
-	@Transactional(readOnly=true)
-	public Avatar myavatar(int avatar_now) {
-		return memberdao.myavatar(avatar_now);
-	}
-
-
-	@Override
-	@Transactional(readOnly=true)
-	public List<Avatar> obtained(int member_id) {
-		return memberdao.obtained(member_id);
-	}
-
-
-	@Override
-	@Transactional(readOnly=true)
-	public List<Avatar> not_obtained(int member_id) {
-		return memberdao.not_obtained(member_id);
-	}
-
-
-	@Override
 	@Transactional
 	public void updateMyAvatar(Member member) {
 		memberdao.updateMyAvatar(member);
+	}
+
+
+	@Override
+	@Transactional(readOnly=true)
+	public List<Avatar> getAvatarList() {
+		return memberdao.getAvatarList();
 	}
 
 

@@ -12,6 +12,8 @@ public class Avatar implements Serializable {
 	private int avatar_id;
 	private String name;
 	private String img;
+	private String url;
+	private boolean selected;
 	
 	
 	public Avatar() {
@@ -20,11 +22,30 @@ public class Avatar implements Serializable {
 	}
 
 
+	public Avatar(int avatar_id, String name, String img, String url, boolean selected) {
+		super();
+		this.avatar_id = avatar_id;
+		this.name = name;
+		this.img = img;
+		this.url = url;
+		this.selected = selected;
+	}
+
+
 	public Avatar(int avatar_id, String name, String img) {
 		super();
 		this.avatar_id = avatar_id;
 		this.name = name;
 		this.img = img;
+	}
+
+
+	public Avatar(int avatar_id, String name, String img, String url) {
+		super();
+		this.avatar_id = avatar_id;
+		this.name = name;
+		this.img = img;
+		this.url = url;
 	}
 
 
@@ -58,6 +79,26 @@ public class Avatar implements Serializable {
 	}
 
 
+	public String getUrl() {
+		return url;
+	}
+
+
+	public void setUrl(String url) {
+		this.url = url;
+	}
+
+
+	public boolean isSelected() {
+		return selected;
+	}
+
+
+	public void setSelected(boolean selected) {
+		this.selected = selected;
+	}
+
+
 	public static long getSerialversionuid() {
 		return serialVersionUID;
 	}
@@ -65,7 +106,8 @@ public class Avatar implements Serializable {
 
 	@Override
 	public String toString() {
-		return "Avatar [avatar_id=" + avatar_id + ", name=" + name + ", img=" + img + "]";
+		return "Avatar [avatar_id=" + avatar_id + ", name=" + name + ", img=" + img + ", url=" + url + ", selected="
+				+ selected + "]";
 	}
 
 
