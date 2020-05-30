@@ -126,8 +126,9 @@
     .div1 {
         width: 50%;
         height: 700px;
-        background-image: url("../../assets/stage.png");
+        background-image: url("../../assets/stage2.gif");
         background-size: cover;
+        background-position: center;
         float: left;
         transform: skewY(2deg);
     }
@@ -225,7 +226,7 @@
         color: #fff;
         box-shadow: 0 0 2px #fff, 0 0 10px #fff, 0 0 20px #C21807, 0 0 30px #C21807,
             0 0 40px #C21807, 0 0 50px #C21807;
-        -webkit-animation: blink 0.5s infinite alternate;
+        -webkit-animation: blink 1s infinite alternate;
         animation: blink 0.5s infinite alternate;
     }
 

@@ -215,7 +215,7 @@
 				// 아바타 불러오기
 				await this.parseSVG(Object.values(this.selected)[0]);
 
-				setStatusText('캠을 연동하고 있어요! 이제 아바타를 조종할 수 있어요!');
+				setStatusText('캠을 연동하고 있어요! 이제 아바타를 움직일 수 있어요!');
 				try {
 					this.video = await this.loadVideo();
 				} catch (e) {
