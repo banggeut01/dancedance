@@ -1,5 +1,6 @@
 import Vue from 'vue'
 import Vuex from 'vuex'
+import jwtDecode from 'jwt-decode'
 Vue.use(Vuex)
 
 export default new Vuex.Store({
@@ -21,6 +22,7 @@ export default new Vuex.Store({
       if (sessionStorage.getItem('token')) {
         payload.defaults.headers.common['Autherization'] = sessionStorage.getItem('token')
         context.state.token = sessionStorage.getItem('token')
+        console.log(context.state.token)
         return true
       }
       else {
@@ -38,9 +40,9 @@ export default new Vuex.Store({
     //         }
     //     }        
     // },
-    // user(state) {
-    //     return jwtDecode(state.token).user_id
-    // }
+    user(state) {
+        return jwtDecode(state.token).Authorization
+    }
   },
   modules: {
   }
