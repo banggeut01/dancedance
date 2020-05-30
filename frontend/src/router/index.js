@@ -34,7 +34,7 @@ Vue.use(VueRouter)
     component: MainPage
   },
   {
-    path: '/danceDetail',
+    path: '/danceDetail/:id',
     name: 'DanceDetailPage',
     component: DanceDetailPage,
     props: (route) => ({
