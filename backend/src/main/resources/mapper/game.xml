@@ -58,22 +58,23 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 				where video_id=#{video_id} and date_format(datetime,'%Y-%m')=date_format(now(),'%Y-%m') 
 				group by member_id) s
 			on m.member_id=s.member_id
-			order by point desc) s
+			order by point desc, member_id) s
 	</select>
 	
 	<select id="getRankingByScore"
 		resultType="com.dance.dto.Ranking">
-		select @rownum:=@rownum+1 ranking, member_id, point
+		select @rownum:=@rownum+1 ranking, member_id, nickname, avatar_now, img, point
 		from (select @rownum := 0) R, 
-			(select m.member_id, ifnull(s.point,0) point
-			from members m
+			(select m.member_id, m.nickname, m.avatar_now, m.img, ifnull(s.point,0) point
+			from (select member_id, nickname, avatar_now, img from members m, avatar a 	
+				where m.avatar_now=a.avatar_id) m
 			left join
-			(select member_id, sum(point) point from play 
-			where date(datetime) BETWEEN subdate(curdate(),date_format(curdate(),'%w')-1) 
-			AND subdate(curdate(),date_format(curdate(),'%w')-7) 
-			group by member_id) s
+				(select member_id, sum(point) point from
+					(select member_id, video_id, max(point) point from play 
+                	where date_format(datetime,'%Y-%m')=date_format(now(),'%Y-%m') group by member_id, video_id) p
+				group by member_id) s
 			on m.member_id=s.member_id
-			order by point desc) s
+			order by point desc, member_id) o
 	</select>
 	
 	<insert id="setPlayResult"
