@@ -135,14 +135,17 @@ public class MemberController {
 			return new ResponseEntity<Map<String, Object>>(resultMap, HttpStatus.OK);
 		}
 		
-		Avatar myavatar = memberservice.myavatar(member.getAvatar_now());
-		List<Avatar> obtained = memberservice.obtained(member.getMember_id());
-		List<Avatar> not_obtained = memberservice.not_obtained(member.getMember_id());
+		List<Avatar> myavatar = memberservice.getAvatarList();
+		for (int i = 0; i < myavatar.size(); i++) {
+			if(myavatar.get(i).getAvatar_id() == member.getAvatar_now()) {
+				myavatar.get(i).setSelected(true);
+			}else {
+				myavatar.get(i).setSelected(false);
+			}
+		}
 
 		resultMap.put("status", "ok");
 		resultMap.put("myavatar", myavatar);
-		resultMap.put("obtained", obtained);
-		resultMap.put("not_obtained", not_obtained);
 
 		return new ResponseEntity<Map<String, Object>>(resultMap, HttpStatus.OK);
 	}
@@ -167,14 +170,17 @@ public class MemberController {
 		token = jwtService.create(member);
 		headers.set("Authorization", token);
 		
-		Avatar myavatar = memberservice.myavatar(member.getAvatar_now());
-		List<Avatar> obtained = memberservice.obtained(member.getMember_id());
-		List<Avatar> not_obtained = memberservice.not_obtained(member.getMember_id());
+		List<Avatar> myavatar = memberservice.getAvatarList();
+		for (int i = 0; i < myavatar.size(); i++) {
+			if(myavatar.get(i).getAvatar_id() == member.getAvatar_now()) {
+				myavatar.get(i).setSelected(true);
+			}else {
+				myavatar.get(i).setSelected(false);
+			}
+		}
 
 		resultMap.put("status", "ok");
 		resultMap.put("myavatar", myavatar);
-		resultMap.put("obtained", obtained);
-		resultMap.put("not_obtained", not_obtained);
 
 		return new ResponseEntity<Map<String, Object>>(resultMap, headers, HttpStatus.OK);
 	}

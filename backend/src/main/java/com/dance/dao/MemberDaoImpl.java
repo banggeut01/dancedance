@@ -38,23 +38,14 @@ public class MemberDaoImpl {
 	}
 
 
-	public Avatar myavatar(int avatar_now) {
-		return sqlSession.selectOne(ns+"myavatar", avatar_now);
-	}
-
-
-	public List<Avatar> obtained(int member_id) {
-		return sqlSession.selectList(ns+"obtained", member_id);
-	}
-
-
-	public List<Avatar> not_obtained(int member_id) {
-		return sqlSession.selectList(ns+"not_obtained", member_id);
-	}
-
-
 	public void updateMyAvatar(Member member) {
 		sqlSession.update(ns+"updateMyAvatar", member);
 	}
+
+
+	public List<Avatar> getAvatarList() {
+		return sqlSession.selectList(ns+"getAvatarList");
+	}
+
 	
 }

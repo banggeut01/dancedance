@@ -13,14 +13,10 @@ public interface IMemberService {
 
 	void signup(Member member);
 
-	Avatar myavatar(int avatar_now);
-
-	List<Avatar> obtained(int member_id);
-
-	List<Avatar> not_obtained(int member_id);
-
 	int nicknamecheck(String nickname);
 
 	void updateMyAvatar(Member member);
+
+	List<Avatar> getAvatarList();
 
 }
