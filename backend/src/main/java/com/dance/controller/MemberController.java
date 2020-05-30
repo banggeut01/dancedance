@@ -66,32 +66,42 @@ public class MemberController {
 		return new ResponseEntity<Map<String, Object>>(resultMap, headers, HttpStatus.OK);
 	}
 	
-	@ApiOperation(value = "이메일, 닉네임 중복 체크", response = Member.class)
-	@RequestMapping(value = "/signup/check", method = RequestMethod.POST)
-	public ResponseEntity<Map<String, Object>> signupcheck(@RequestBody SignUpCheck member) throws Exception {
-		logger.info("1-------------signupcheck-----------------------------" + new Date());
+	@ApiOperation(value = "email 중복 체크", response = Member.class)
+	@RequestMapping(value = "/emailcheck", method = RequestMethod.GET)
+	public ResponseEntity<Map<String, Object>> emailcheck(@RequestParam String email) throws Exception {
+		logger.info("1-------------emailcheck-----------------------------" + new Date());
 		HttpHeaders headers = new HttpHeaders();
 		Map<String, Object> resultMap = new HashMap<>();
 		
-		int emailCheck = memberservice.emailcheck(member.getEmail());
-		int nicknameCheck = memberservice.nicknamecheck(member.getNickname());
+		int cnt = memberservice.emailcheck(email);
 
-		if(emailCheck==0 && nicknameCheck==0) {
-			resultMap.put("email", true);
-			resultMap.put("nickname", true);
-		}else if(emailCheck>0 && nicknameCheck==0){
-			resultMap.put("email", false);
-			resultMap.put("nickname", true);
-		}else if(emailCheck==0 && nicknameCheck>0) {
-			resultMap.put("email", true);
-			resultMap.put("nickname", false);
+		if(cnt==0) {
+			resultMap.put("emailcheck", true);
 		}else {
-			resultMap.put("email", false);
-			resultMap.put("nickname", false);
+			resultMap.put("emailcheck", false);
 		}
 
 		return new ResponseEntity<Map<String, Object>>(resultMap, HttpStatus.OK);
 	}
+	
+	@ApiOperation(value = "닉네임 중복 체크", response = Member.class)
+	@RequestMapping(value = "/nicknamecheck", method = RequestMethod.GET)
+	public ResponseEntity<Map<String, Object>> nicknamecheck(@RequestParam String nickname) throws Exception {
+		logger.info("1-------------nicknamecheck-----------------------------" + new Date());
+		HttpHeaders headers = new HttpHeaders();
+		Map<String, Object> resultMap = new HashMap<>();
+		
+		int cnt = memberservice.nicknamecheck(nickname);
+
+		if(cnt==0) {
+			resultMap.put("nicknamecheck", true);
+		}else {
+			resultMap.put("nicknamecheck", false);
+		}
+
+		return new ResponseEntity<Map<String, Object>>(resultMap, HttpStatus.OK);
+	}
+
 	
 	@ApiOperation(value = "회원가입", response = Member.class)
 	@RequestMapping(value = "/signup", method = RequestMethod.POST)
