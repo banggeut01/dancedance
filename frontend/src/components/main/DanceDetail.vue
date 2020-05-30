@@ -1,37 +1,79 @@
 <template>
   <div 
     class="danceDetail"
-    :style="'background: url(' + require('@/assets/danceDetailBackgroundImg.png') + ') no-repeat'"
+    :style="'background: url(' + require('@/assets/danceDetailBackgroundImg.png') + ') no-repeat 100%;'"
   >
-    <video id="danceVideo" autoplay loop>
-      <source src="@/assets/PickMeDance.webm" type="video/webm">
-    </video>
-    <v-btn class="mx-2" fab dark large color="purple" @click="play">
-      <v-icon dark>play_arrow</v-icon>
-    </v-btn>
+    <div id="dancePlayInfo" >
+      <video id="danceVideo" autoplay loop>
+        <source :src="require('@/assets/danceList/' + nowDance.src)" type="video/webm">
+      </video>
+      <v-btn 
+        class="mx-2" 
+        color="purple" 
+        fab dark large 
+        @click="dancePlay" 
+        style="left: -4vw; top: -3vh; background: #E7E600"
+      >
+        <v-icon>play_arrow</v-icon>
+      </v-btn>
+      <h1> 가수 / 제목</h1>
+      
+    </div>
+    <carousel class="otherDances" :paginationEnabled="false" :perPage="4">
+      <slide v-for="dance in dances" :key="dance.id">
+        <img class="otherDanceThumbnail" :src="require('@/assets/danceList/' + dance.thumbnail)" :alt="dance.title" style="width: 20vw">
+      </slide>
+    </carousel>
   </div>
 </template>
 
 <script>
+import { Carousel, Slide } from 'vue-carousel';
+
 export default {
     name: 'DanceDetail',
-    props: {
-        id: Number,
-        title: String,
-        src: String,
-        closeDetail: Function,
+    props: ['dances', 'nowDance'],
+    components: {
+      Carousel,
+      Slide
+    },
+    methods: {
+      dancePlay() {
+        this.$router.push('/play')
+      }
+    },
+    mounted() {
+      document.getElementById('danceVideo').volume = 0.1;
     }
 }
 </script>
 
 <style>
-.DanceDetail {
+.danceDetail {
+  z-index: -1;
   position: fixed;
   top: 0;
   left: 0;
-  height: 100vh;
+  width: 100%;
+  height: 100%;
 }
-#danceVideo{
+#danceVideo {
+  position: static;
+  margin-top: 20vh;
+  margin-left: 10vw;
   width: 30vw;
+}
+.dancePlayInfo {
+  position: static;
+  display: inline;
+}
+.otherDances {
+  position: fixed;
+  bottom: 5vh;
+  left: 2vw;
+  width: 100%;
+}
+.otherDanceThumbnail {
+  height: 25vh;
 }
 </style>

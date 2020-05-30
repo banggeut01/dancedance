@@ -11,6 +11,6 @@
   width: 100%;
   height: 100%;
   background-color: black;
-  position: fixed;
+  // position: fixed;
 }
 </style>

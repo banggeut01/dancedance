@@ -3,15 +3,35 @@
     <v-col cols="12">
       <v-form ref="form">
         <v-card-text color="white">
-          <v-text-field autocomplete="new-password" ref="email" v-model="email" :rules="[
-                () => !!email || '이메일을 입력해주세요',
-                () => /^[A-Za-z0-9_\.\-]+@[A-Za-z0-9\-]+\.[A-Za-z0-9\-]+/.test(email) || '이메일 형식이 아닙니다!'
-              ]" lazy-validation label="E-mail" color="success" dark background-color="success" required>
-          </v-text-field>
-          <v-text-field autocomplete="new-password" ref="nickname" v-model="nickname" :rules="[
-              () => !!nickname || '닉네임을 입력해주세요',
-              () => !!nickname && nickname.length <= 10 || '10글자 이하로 닉네임을 만드세요'
-            ]" label="NickName" counter="10" maxlength="10" dark required></v-text-field>
+          <div>
+            <v-text-field style="width: 80%; display: inline-block; padding-right: 8px;" autocomplete="new-password" ref="email" v-model="email" :rules="[
+                  () => !!email || '이메일을 입력해주세요',
+                  () => /^[A-Za-z0-9_\.\-]+@[A-Za-z0-9\-]+\.[A-Za-z0-9\-]+/.test(email) || '이메일 형식이 아닙니다!',
+                  () => emailcheck || '이메일 중복을 확인해주세요!'
+                ]" lazy-validation label="E-mail" color="success" dark background-color="success" required>
+            </v-text-field>
+            <div style="width: 20%; display: inline-block;">
+              <v-btn :class="{'reset-neon-btn': !emailcheck, 'signup-neon-btn': emailcheck}" text @click="getEmailCheck">
+                <span :class="{'reset-neon-span': !emailcheck, 'signup-neon-span': emailcheck}">
+                  <v-icon>done_outline</v-icon>
+                </span>
+              </v-btn>
+            </div>
+          </div>
+          <div>
+            <v-text-field style="width: 80%; display: inline-block; padding-right: 8px;" autocomplete="new-password" ref="nickname" v-model="nickname" :rules="[
+                () => !!nickname || '닉네임을 입력해주세요',
+                () => !!nickname && nickname.length <= 10 || '10글자 이하로 닉네임을 만드세요',
+                () => !!nicknamecheck || '닉네임 중복을 확인해주세요!'
+              ]" label="NickName" counter="10" maxlength="10" dark required></v-text-field>
+              <div style="width: 20%; display: inline-block;">
+                <v-btn :class="{'reset-neon-btn': !nicknamecheck, 'signup-neon-btn': nicknamecheck}" text @click="getNicknameCheck">
+                  <span :class="{'reset-neon-span': !nicknamecheck, 'signup-neon-span': nicknamecheck}">
+                    <v-icon>done_outline</v-icon>
+                  </span>
+                </v-btn>
+              </div>
+          </div>
           <v-text-field autocomplete="new-password" ref="password" v-model="password" :rules="[() => !!password || '패스워드를 입력해주세요']" label="Password"
             type="password" dark required></v-text-field>
           <v-text-field autocomplete="new-password" ref="passwordcheck" v-model="passwordcheck" :rules="[
@@ -48,7 +68,9 @@
         password: null,
         passwordcheck: null,
         emailRules: [],
-        formHasErrors: false
+        formHasErrors: false,
+        emailcheck: false,
+        nicknamecheck: false
       }
     },
     computed: {
@@ -79,17 +101,42 @@
           console.log('error')
         } else {
           console.log('no error')
-          // 회원가입 요청
-          // const payload = {email: this.email, nickname: this.nickname, password: this.password}
-          // this.$axios.get(this.$store.state.host + '/signup', payload)
-          // .then(res => {
-          //   const token = res.header.authorization
-          //   const user = res.data
-          //   this.$store.commit('getUserInfo', {token: token, user : user})
-          //   this.$router.push('/main')
-          // })
-          // 세션에 저장 하기
+          console.log('둘다 오케이')
+          const payload = {email: this.email, nickname: this.nickname, password: this.password}
+          this.$axios.post(this.$store.state.host + '/signup/', payload)
+          .then(res => {
+            console.log(res)
+            const token = res.headers.authorization
+            sessionStorage.setItem('token', token)
+            this.$store.commit('setToken', token)
+            this.$router.push('/main')
+            return
+          })
         }
+      },
+      getEmailCheck() {
+        this.$axios.get(this.$store.state.host + '/emailcheck', {params: {email : this.email}})
+        .then(res => {
+          this.emailcheck = res.data.emailcheck
+          this.$refs['email'].validate()
+          return
+        })
+      },
+      getNicknameCheck() {
+        this.$axios.get(this.$store.state.host + '/nicknamecheck', {params:{nickname: this.nickname}})
+        .then(res => {
+          this.nicknamecheck = res.data.nicknamecheck
+          this.$refs['nickname'].validate()
+          return
+        })
+      }
+    },
+    watch: {
+      email() {
+        this.emailcheck = false
+      },
+      nickname() {
+        this.nicknamecheck= false
       },
     },
   }
