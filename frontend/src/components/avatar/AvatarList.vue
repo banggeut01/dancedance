@@ -8,14 +8,14 @@
                 <div>
                     <h1 class="glow">Available Avatars</h1>
                     <ul class="img-grid">
-                        <li v-for="avatar in avatars" :key="avatar.id" @click="changeAvatar(avatar)">
+                        <li v-for="avatar in avatars" :key="avatar.avatar_id" @click="changeAvatar(avatar)">
                             <Avatar :avatar="avatar" :selected="avatar.selected" />
                         </li>
                     </ul>
                 </div>
             </div>
             <div class="bottomBtnLayer btnDiv">
-                <a href="#" class="btn changeBtn" style="margin-right:5px">
+                <a href="#" class="btn changeBtn" @click="setAvatar" style="margin-right:5px">
                     <span></span>
                     <span></span>
                     <span></span>
@@ -50,66 +50,62 @@
                 isSelected: false,
                 avatar: {},
                 selectedId: 0,
-                avatars: [{
-                        id: 0,
-                        name: 'Yeom',
-                        url: './avatarImages/yeom.svg',
-                        selected: false
-                    },
-                    {
-                        id: 1,
-                        name: 'Owl',
-                        url: './avatarImages/owl.svg',
-                        selected: false
-                    },
-                    {
-                        id: 2,
-                        name: 'Boy',
-                        url: './avatarImages/boy.svg',
-                        selected: true
-                    },
-                    {
-                        id: 3,
-                        name: 'Girl',
-                        url: './avatarImages/girl.svg',
-                        selected: false
-                    },
-                    {
-                        id: 4,
-                        name: 'Raccoon',
-                        url: './avatarImages/raccoon.svg',
-                        selected: false
-                    }
-                ],
+                avatars: '',
+                initAvatarId: ''
             }
         },
         methods: {
-            change() {
-                this.$axios.post(this.$store.state.host + '/')
-                    .then(() => {
-
+            getAvatars() {
+                const Authorization =
+                    'eyJ0eXAiOiJKV1QiLCJyZWdEYXRlIjoxNTkwODEyMzE1OTMwLCJhbGciOiJIUzI1NiJ9.eyJleHAiOjE1OTA4OTg3MTUsInN1YiI6IuuhnOq3uOyduO2GoO2BsCIsIkF1dGhvcml6YXRpb24iOnsibWVtYmVyX2lkIjoyLCJlbWFpbCI6ImRlbGlnaHRfam9vQG5hdmVyLmNvbSIsInBhc3N3b3JkIjpudWxsLCJuaWNrbmFtZSI6Iu2drOq1rCIsImF2YXRhcl9ub3ciOjJ9fQ.8J6OWidZ4k3amstIwK7eq_0Q6U_SnQJKyUWz_ULe_7c'
+                this.$axios.get('http://k02b1021.p.ssafy.io:8197/ssafy-dance/api/avatar', {
+                        params: {},
+                        headers: {
+                            'Authorization': Authorization
+                        }
                     })
+                    .then(res => {
+                        console.log(res.data.myavatar)
+                        this.avatars = res.data.myavatar
+                        this.getSelected()
+                    })
+            },
+            setAvatar() {
+                const Authorization =
+                    'eyJ0eXAiOiJKV1QiLCJyZWdEYXRlIjoxNTkwODEyMzE1OTMwLCJhbGciOiJIUzI1NiJ9.eyJleHAiOjE1OTA4OTg3MTUsInN1YiI6IuuhnOq3uOyduO2GoO2BsCIsIkF1dGhvcml6YXRpb24iOnsibWVtYmVyX2lkIjoyLCJlbWFpbCI6ImRlbGlnaHRfam9vQG5hdmVyLmNvbSIsInBhc3N3b3JkIjpudWxsLCJuaWNrbmFtZSI6Iu2drOq1rCIsImF2YXRhcl9ub3ciOjJ9fQ.8J6OWidZ4k3amstIwK7eq_0Q6U_SnQJKyUWz_ULe_7c'
+                // this.$axios.post(this.$store.state.host + '/')
+                if (this.initAvatarId !== this.selectedId) {
+                    console.log(this.selectedId, 123123123123)
+                    this.$axios.patch(`http://k02b1021.p.ssafy.io:8197/ssafy-dance/api/avatar/${this.selectedId}`, {}, {
+                         headers: { 'Authorization': Authorization } }
+                        )
+                        .then(res => {
+                            console.log(res, 123123123123123123)
+                        })
+
+                }
             },
             getSelected() {
                 for (var i = 0; i < this.avatars.length; i++) {
                     if (this.avatars[i].selected === true) {
                         this.avatar = this.avatars[i]
                         this.isSelected = true
-                        this.selectedId = this.avatars[i].id
+                        this.initAvatarId = i
+                        this.selectedId = this.avatars[i].avatar_id
                     }
                 }
             },
             changeAvatar(avatar) {
-                if (this.avatars[avatar.id].selected === false) {
+                if (this.avatars[avatar.avatar_id].selected === false) {
                     this.avatar = avatar
-                    this.avatars[avatar.id].selected = !this.avatars[avatar.id].selected
+                    this.avatars[avatar.avatar_id].selected = !this.avatars[avatar.avatar_id].selected
                     this.avatars[this.selectedId].selected = false
-                    this.selectedId = this.avatar.id
+                    this.selectedId = this.avatar.avatar_id
                 }
             },
         },
         mounted() {
-            this.getSelected(this.avatars)
+            this.getAvatars();
         }
     }
 </script>

@@ -2,7 +2,6 @@
     <div class="centered">
         <h1 class="glow">Your Avatar</h1>
         <FaceMesh :name="avatar.name" />
-        <h1 style="color:white">{{ avatar.name }}</h1>
     </div>
 </template>
 
