@@ -3,6 +3,7 @@
     <div class="totalrank-title">
       <p class="rank-neon-h1">RANKING</p>
     </div>
+    {{ ranking }}
     <div class="totalrank-body">
       <v-row class="totalrank-height">
         <v-col align="center" class="totalrank-width p-zero">
@@ -35,6 +36,12 @@
 <script>
   export default {
     name: 'TotalRank',
+    props: {
+      ranking: {
+        type: Array,
+        default: () => ([])
+      },
+    }
   }
 </script>
 
