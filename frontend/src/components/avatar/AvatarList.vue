@@ -77,8 +77,10 @@
                 if (this.initAvatarId !== this.selectedId) {
                     console.log(this.selectedId, 123123123123)
                     this.$axios.patch(`http://k02b1021.p.ssafy.io:8197/ssafy-dance/api/avatar/${this.selectedId}`, {}, {
-                         headers: { 'Authorization': Authorization } }
-                        )
+                            headers: {
+                                'Authorization': Authorization
+                            }
+                        })
                         .then(res => {
                             console.log(res, 123123123123123123)
                         })
