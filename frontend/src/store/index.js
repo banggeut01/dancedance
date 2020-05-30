@@ -5,6 +5,7 @@ Vue.use(Vuex)
 export default new Vuex.Store({
   state: {
     host : 'http://k02b1021.p.ssafy.io:8197/ssafy-dance/api',
+    token: null
   },
   mutations: {
     setToken(state, payload) {
