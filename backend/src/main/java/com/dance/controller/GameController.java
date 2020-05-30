@@ -124,11 +124,25 @@ public class GameController {
 		List<Video> video = gameservice.getVideoList();
 		
 		for (int i = 0; i < video.size(); i++) {
-			List<Ranking> ranking = gameservice.getRankingByVideo(video.get(i).getVideo_id());
+			List<Ranking> allRanking = gameservice.getRankingByVideo(video.get(i).getVideo_id());
+			List<Ranking> ranking = new ArrayList<>();
 			Ranking myRanking = null;
-			for (int j = 0; j < ranking.size(); j++) {
+			
+			int size = allRanking.size();
+			if(size>10) 
+				size=10;
+			
+			for (int j = 0; j < size; j++) {
+				ranking.add(allRanking.get(j));
 				if(ranking.get(j).getMember_id()==member.getMember_id()) {
 					myRanking = ranking.get(j);
+				}
+			}
+			if(myRanking==null) {
+				for (int j = 0; j < ranking.size(); j++) {
+					if(ranking.get(j).getMember_id()==member.getMember_id()) {
+						myRanking = ranking.get(j);
+					}
 				}
 			}
 			rank.add(new Rank(video.get(i), ranking, myRanking));

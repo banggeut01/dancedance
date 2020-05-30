@@ -11,6 +11,9 @@ public class Ranking implements Serializable {
 	
 	private int ranking;
 	private int member_id;
+	private String nickname;
+	private int avatar_now;
+	private String img;
 	private int point;
 	
 	
@@ -20,10 +23,13 @@ public class Ranking implements Serializable {
 	}
 
 
-	public Ranking(int ranking, int member_id, int point) {
+	public Ranking(int ranking, int member_id, String nickname, int avatar_now, String img, int point) {
 		super();
 		this.ranking = ranking;
 		this.member_id = member_id;
+		this.nickname = nickname;
+		this.avatar_now = avatar_now;
+		this.img = img;
 		this.point = point;
 	}
 
@@ -48,6 +54,36 @@ public class Ranking implements Serializable {
 	}
 
 
+	public String getNickname() {
+		return nickname;
+	}
+
+
+	public void setNickname(String nickname) {
+		this.nickname = nickname;
+	}
+
+
+	public int getAvatar_now() {
+		return avatar_now;
+	}
+
+
+	public void setAvatar_now(int avatar_now) {
+		this.avatar_now = avatar_now;
+	}
+
+
+	public String getImg() {
+		return img;
+	}
+
+
+	public void setImg(String img) {
+		this.img = img;
+	}
+
+
 	public int getPoint() {
 		return point;
 	}
@@ -65,7 +101,8 @@ public class Ranking implements Serializable {
 
 	@Override
 	public String toString() {
-		return "Ranking [ranking=" + ranking + ", member_id=" + member_id + ", point=" + point + "]";
+		return "Ranking [ranking=" + ranking + ", member_id=" + member_id + ", nickname=" + nickname + ", avatar_now="
+				+ avatar_now + ", img=" + img + ", point=" + point + "]";
 	}
 
 
