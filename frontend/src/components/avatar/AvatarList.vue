@@ -1,33 +1,34 @@
 <template>
     <div class="avatar">
-        <div class="div1">
+        <div class="leftDiv">
             <SelectedAvatar v-if="isSelected" :avatar="avatar" />
         </div>
-        <div class="div2">
-            <div class="btnLayer" style="margin-top: 5px">
-                <v-btn @click="changeAcquired" x-large color="primary" dark>Change Category</v-btn>
-            </div>
+        <div class="rightDiv">
             <div class="wrapper rightside" style="margin-top: 10px">
-                <div v-if="isAcquired">
-                    <h1 class="avatarTitle">Available Dancers</h1>
+                <div>
+                    <h1 class="glow">Available Avatars</h1>
                     <ul class="img-grid">
-                        <li v-for="avatar in yAvatars" :key="avatar.id" @click="changeAvatar(avatar)">
+                        <li v-for="avatar in avatars" :key="avatar.avatar_id" @click="changeAvatar(avatar)">
                             <Avatar :avatar="avatar" :selected="avatar.selected" />
                         </li>
                     </ul>
                 </div>
-                <div v-else id="style-1">
-                    <h1 class="avatarTitle">Unvailable Dancers</h1>
-                    <ul class="img-grid">
-                        <li v-for="avatar in nAvatars" :key="avatar.id">
-                            <Avatar :avatar="avatar" />
-                        </li>
-                    </ul>
-                </div>
             </div>
-            <div class="btnLayer btnDiv">
-                <v-btn v-if="isAcquired" dark style="margin-right:2px">change dancer</v-btn>
-                <v-btn dark>return</v-btn>
+            <div class="bottomBtnLayer btnDiv">
+                <a href="#" class="btn changeBtn" @click="setAvatar" style="margin-right:5px">
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                    change avatar
+                </a>
+                <a href="#" class="btn returnBtn">
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                    return
+                </a>
             </div>
         </div>
     </div>
@@ -47,71 +48,66 @@
         data() {
             return {
                 isSelected: false,
-                isAcquired: true,
                 avatar: {},
                 selectedId: 0,
-                yAvatars: [{
-                        id: 0,
-                        name: 'MR.Yeom',
-                        explanation: '',
-                        url: './avatarImages/yeom.svg',
-                        selected: false
-                    },
-                    {
-                        id: 1,
-                        name: 'Owl',
-                        explanation: '',
-                        url: './avatarImages/owl.svg',
-                        selected: false
-                    },
-                    {
-                        id: 2,
-                        name: 'Boy',
-                        explanation: '',
-                        url: './avatarImages/boy.svg',
-                        selected: true
-                    },
-                    {
-                        id: 3,
-                        name: 'Girl',
-                        explanation: '',
-                        url: './avatarImages/girl.svg',
-                        selected: false
-                    },
-                ],
-                nAvatars: [{
-                    id: 0,
-                    name: 'Raccoon',
-                    explanation: '',
-                    url: './avatarImages/raccoon.svg',
-                    selected: false
-                }, ]
+                avatars: '',
+                initAvatarId: ''
             }
         },
         methods: {
+            getAvatars() {
+                const Authorization =
+                    'eyJ0eXAiOiJKV1QiLCJyZWdEYXRlIjoxNTkwODEyMzE1OTMwLCJhbGciOiJIUzI1NiJ9.eyJleHAiOjE1OTA4OTg3MTUsInN1YiI6IuuhnOq3uOyduO2GoO2BsCIsIkF1dGhvcml6YXRpb24iOnsibWVtYmVyX2lkIjoyLCJlbWFpbCI6ImRlbGlnaHRfam9vQG5hdmVyLmNvbSIsInBhc3N3b3JkIjpudWxsLCJuaWNrbmFtZSI6Iu2drOq1rCIsImF2YXRhcl9ub3ciOjJ9fQ.8J6OWidZ4k3amstIwK7eq_0Q6U_SnQJKyUWz_ULe_7c'
+                this.$axios.get('http://k02b1021.p.ssafy.io:8197/ssafy-dance/api/avatar', {
+                        params: {},
+                        headers: {
+                            'Authorization': Authorization
+                        }
+                    })
+                    .then(res => {
+                        console.log(res.data.myavatar)
+                        this.avatars = res.data.myavatar
+                        this.getSelected()
+                    })
+            },
+            setAvatar() {
+                const Authorization =
+                    'eyJ0eXAiOiJKV1QiLCJyZWdEYXRlIjoxNTkwODEyMzE1OTMwLCJhbGciOiJIUzI1NiJ9.eyJleHAiOjE1OTA4OTg3MTUsInN1YiI6IuuhnOq3uOyduO2GoO2BsCIsIkF1dGhvcml6YXRpb24iOnsibWVtYmVyX2lkIjoyLCJlbWFpbCI6ImRlbGlnaHRfam9vQG5hdmVyLmNvbSIsInBhc3N3b3JkIjpudWxsLCJuaWNrbmFtZSI6Iu2drOq1rCIsImF2YXRhcl9ub3ciOjJ9fQ.8J6OWidZ4k3amstIwK7eq_0Q6U_SnQJKyUWz_ULe_7c'
+                // this.$axios.post(this.$store.state.host + '/')
+                if (this.initAvatarId !== this.selectedId) {
+                    console.log(this.selectedId, 123123123123)
+                    this.$axios.patch(`http://k02b1021.p.ssafy.io:8197/ssafy-dance/api/avatar/${this.selectedId}`, {}, {
+                            headers: {
+                                'Authorization': Authorization
+                            }
+                        })
+                        .then(res => {
+                            console.log(res, 123123123123123123)
+                        })
+
+                }
+            },
             getSelected() {
-                for (var i = 0; i < this.yAvatars.length; i++) {
-                    if (this.yAvatars[i].selected === true) {
-                        this.avatar = this.yAvatars[i]
+                for (var i = 0; i < this.avatars.length; i++) {
+                    if (this.avatars[i].selected === true) {
+                        this.avatar = this.avatars[i]
                         this.isSelected = true
-                        this.selectedId = this.yAvatars[i].id
+                        this.initAvatarId = i
+                        this.selectedId = this.avatars[i].avatar_id
                     }
                 }
             },
             changeAvatar(avatar) {
-                if (this.yAvatars[avatar.id].selected === false) {
+                if (this.avatars[avatar.avatar_id].selected === false) {
                     this.avatar = avatar
-                    this.yAvatars[avatar.id].selected = !this.yAvatars[avatar.id].selected
-                    this.yAvatars[this.selectedId].selected = false
-                    this.selectedId = this.avatar.id
+                    this.avatars[avatar.avatar_id].selected = !this.avatars[avatar.avatar_id].selected
+                    this.avatars[this.selectedId].selected = false
+                    this.selectedId = this.avatar.avatar_id
                 }
             },
-            changeAcquired() {
-                this.isAcquired = !this.isAcquired
-            }
         },
         mounted() {
-            this.getSelected(this.avatars)
+            this.getAvatars();
         }
     }
 </script>
@@ -123,16 +119,17 @@
         justify-content: center;
     }
 
-    .div1 {
+    .leftDiv {
         width: 50%;
         height: 700px;
-        background-image: url("../../assets/stage.png");
+        background-image: url("../../assets/stage.gif");
         background-size: cover;
+        background-position: center;
         float: left;
         transform: skewY(2deg);
     }
 
-    .div2 {
+    .rightDiv {
         width: 50%;
         height: 700px;
         float: left;
@@ -143,11 +140,24 @@
     .btnLayer {
         display: flex;
         justify-content: center;
+        font-family: 'Montserrat', Helvetica, sans-serif;
+        flex-direction: row;
+        align-items: center;
+        cursor: pointer;
+        height: 5vh;
+    }
+
+    .bottomBtnLayer {
+        display: flex;
+        justify-content: center;
+        font-family: 'Montserrat', Helvetica, sans-serif;
+        flex-direction: row;
+        align-items: center;
     }
 
     .btnDiv {
         height: auto;
-        margin: 20px auto;
+        margin: 40px auto;
         position: relative;
     }
 
@@ -162,15 +172,155 @@
         max-height: 200px;
     }
 
-    .avatarTitle {
-        color: white;
-        text-align: center;
-    }
-
     .img-grid {
         overflow: hidden;
         overflow-y: scroll;
         height: 500px;
         width: 100%;
+    }
+
+    .btn {
+        position: relative;
+        display: inline-block;
+        padding: 15px 30px;
+        text-transform: uppercase;
+        letter-spacing: 4px;
+        text-decoration: none;
+        font-size: 24px;
+        overflow: hidden;
+        transition: 0.1s;
+    }
+
+    .glow {
+        font-size: 40px;
+        color: #fff;
+        text-align: center;
+        -webkit-animation: glow 1s ease-in-out infinite alternate;
+        -moz-animation: glow 1s ease-in-out infinite alternate;
+        animation: glow 1s ease-in-out infinite alternate;
+    }
+
+    @-webkit-keyframes glow {
+        from {
+            text-shadow: 0 0 10px #fff, 0 0 20px #fff, 0 0 30px #e60073, 0 0 40px #e60073, 0 0 50px #e60073, 0 0 60px #e60073, 0 0 70px #e60073;
+        }
+
+        to {
+            text-shadow: 0 0 20px #fff, 0 0 30px #ff4da6, 0 0 40px #ff4da6, 0 0 50px #ff4da6, 0 0 60px #ff4da6, 0 0 70px #ff4da6, 0 0 80px #ff4da6;
+        }
+    }
+
+    .changeBtn {
+        color: #2196f3;
+    }
+
+    .returnBtn {
+        color: red;
+    }
+
+    .changeBtn:hover {
+        color: #255784;
+        background: skyblue;
+        box-shadow: 0 0 10px #2196f3, 0 0 40px #2196f3, 0 0 80px #2196f3;
+        transition-delay: 0.25s;
+    }
+
+    .returnBtn:hover {
+        color: red;
+        background: pink;
+        box-shadow: 0 0 10px red, 0 0 40px red, 0 0 80px red;
+        transition-delay: 0.25s;
+    }
+
+    .btn span {
+        position: absolute;
+        display: block;
+    }
+
+    .changeBtn span:nth-child(1) {
+        top: 0;
+        left: -100%;
+        width: 100%;
+        height: 2px;
+        background: linear-gradient(90deg, transparent, #2196f3);
+    }
+
+    .returnBtn span:nth-child(1) {
+        top: 0;
+        left: -100%;
+        width: 100%;
+        height: 2px;
+        background: linear-gradient(90deg, transparent, red);
+    }
+
+    .btn:hover span:nth-child(1) {
+        left: 100%;
+        transition: 1s;
+    }
+
+    .changeBtn span:nth-child(2) {
+        bottom: 0;
+        right: -100%;
+        width: 100%;
+        height: 2px;
+        background: linear-gradient(270deg, transparent, #2196f3);
+    }
+
+    .returnBtn span:nth-child(2) {
+        bottom: 0;
+        right: -100%;
+        width: 100%;
+        height: 2px;
+        background: linear-gradient(270deg, transparent, red);
+    }
+
+    .btn:hover span:nth-child(2) {
+        right: 100%;
+        transition: 1s;
+        transition-delay: 0.5s;
+    }
+
+    .changeBtn span:nth-child(3) {
+        top: -100℅;
+        right: 0%;
+        width: 2px;
+        height: 100%;
+        background: linear-gradient(180deg, transparent, #2196f3);
+    }
+
+    .returnBtn span:nth-child(3) {
+        top: -100℅;
+        right: 0%;
+        width: 2px;
+        height: 100%;
+        background: linear-gradient(180deg, transparent, red);
+    }
+
+    .btn:hover span:nth-child(3) {
+        top: 100%;
+        transition: 1s;
+        transition-delay: 0.25s;
+    }
+
+    .changeBtn span:nth-child(4) {
+        bottom: -100℅;
+        left: 0%;
+        width: 2px;
+        height: 100%;
+        background: linear-gradient(360deg, transparent, #2196f3);
+    }
+
+    .returnBtn span:nth-child(4) {
+        bottom: -100℅;
+        left: 0%;
+        width: 2px;
+        height: 100%;
+        background: linear-gradient(360deg, transparent, red);
+    }
+
+    .btn:hover span:nth-child(4) {
+        bottom: 100%;
+        transition: 1s;
+        transition-delay: 0.75s;
     }
 </style>
