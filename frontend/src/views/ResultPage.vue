@@ -6,14 +6,14 @@
     <div class="resultDiv">
       <div class="resultUpper">
         <div class="profileDiv">
-          <img :src="require('@/assets/profileImg/owl.jpg')" alt="" class="profileImg">
+          <img :src="require('@/assets/profileImg/yeom.jpg')" alt="" class="profileImg">
         </div>
         <div class="userInfo">
           <span id="userName" class="glow">
             무무초이<br>
           </span>
           <span id="performedTime">
-            2020년 06월 01일 14시 19분
+            {{ today }}
           </span>
         </div>
       </div>
@@ -26,7 +26,7 @@
         </div>
         <div class="scoreRatings">
           <span style="font-size:1rem; margin-top:10px">Score</span>
-          <span style="font-size:4rem; margin-top:10px" id="point" class="glow">12400</span>pt
+          <span style="font-size:4rem; margin-top:10px" id="point" class="glow">12400</span>pts
         </div>
         <div class="rankingRatings">
           <span style="color: white; font-size:2rem;">
@@ -51,7 +51,8 @@
     name: 'ResultPage',
     data() {
       return {
-        chgNumSpeed: 0.1
+        chgNumSpeed: 0.1,
+        today: ''
       }
     },
     methods: {
@@ -70,10 +71,15 @@
           }, th.chgNumSpeed);
         }
       },
+      getCurrentTime() {
+        var today = new Date();
+        this.today = today.getFullYear() + '년 ' + (today.getMonth() + 1) + '월 ' + today.getDate() + '일 ' + today.getHours() +'시 ' + today.getMinutes() + '분';
+      }
     },
     mounted() {
       this.increaseNum("ranking", 1);
       this.increaseNum("point", 100);
+      this.getCurrentTime();
     }
   }
 </script>
@@ -96,14 +102,14 @@
 
   .buttonA {
     color: #fff;
-      -webkit-animation: neon1 1s ease-in-out infinite alternate;
+    -webkit-animation: neon1 1s ease-in-out infinite alternate;
     -moz-animation: neon1 1s ease-in-out infinite alternate;
     animation: neon1 1s ease-in-out infinite alternate;
   }
 
   .buttonB {
     color: #fff;
-        -webkit-animation: neon2 1s ease-in-out infinite alternate;
+    -webkit-animation: neon2 1s ease-in-out infinite alternate;
     -moz-animation: neon2 1s ease-in-out infinite alternate;
     animation: neon2 1s ease-in-out infinite alternate;
   }
@@ -132,7 +138,7 @@
     }
   }
 
-    @-webkit-keyframes neon2 {
+  @-webkit-keyframes neon2 {
     from {
       text-shadow: 0 0 10px #fff, 0 0 20px #fff, 0 0 30px #fff, 0 0 40px #FF1177, 0 0 70px #FF1177, 0 0 80px #FF1177, 0 0 100px #FF1177, 0 0 150px #FF1177;
     }
