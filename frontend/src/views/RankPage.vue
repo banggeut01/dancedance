@@ -1,5 +1,7 @@
 <template>
   <div>
+    <!-- background video -->
+    <video src="@/assets/rankbg.mp4" autoplay muted loop class="rankbg"></video>
     <!-- background sound -->
     <audio class="rank-audio" autoplay loop>
       <source src="../assets/rank_bgm.mp3" type="audio/mpeg">
@@ -55,6 +57,28 @@ export default {
 </script>
 
 <style>
+#app {
+  background-color: rgba(0, 0, 0, 0) !important;
+}
+.rankbg {
+  /* position: absolute;
+  top:50%; left:50%;
+  transform: translate(-50%, -50%);
+  min-width: 100%;
+  min-height: 100%;
+  object-fit: cover;
+  width: auto;
+  height: auto;
+  z-index: -1000;
+  overflow: hidden; */
+  position: fixed;
+  right: 0;
+  top: 0;
+  width: 100%;
+  min-width: 100%;
+  min-height: 100%;
+  z-index: -1000;
+}
 .rank-audio {
   position: absolute;
   bottom: 10px;
@@ -71,7 +95,7 @@ export default {
 .rankpage-div {
   height: 100vh;
   padding-top:56px;
-  background-color: red; /* 임시 배경 넣으면 바꿀 것! */
+  /* background-color: red; 임시 배경 넣으면 바꿀 것! */
 }
 .rank-border {
   border:20px solid transparent;

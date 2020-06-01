@@ -21,7 +21,7 @@
         </v-col>
         <v-col class="p-zero rank-neon-border1" align="left">
           <!-- 이름 -->
-          <span class="totalrank-text" style="margin-left: 20px;">{{ ranking[i - 1].nickname }}</span>
+          <span class="totalrank-text" style="margin-left: 10px;">{{ ranking[i - 1].nickname }}</span>
         </v-col>
         <v-col class="p-zero rank-neon-border2" align="right">
           <!-- 총 score -->
