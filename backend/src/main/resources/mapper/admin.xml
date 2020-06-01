@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper 
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"   
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="dance.admin">
+	
+	<insert id="setIcon"
+		parameterType="java.util.List">
+		insert into icon (`video_id`, `icon_id`, `img`) 
+		values
+		<foreach collection="list" item="item" separator=" , ">
+		(#{item.video_id}, #{item.icon_id}, #{item.img})
+		</foreach>
+	</insert>
+	
+</mapper>

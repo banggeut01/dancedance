@@ -9,6 +9,7 @@ public class Icon implements Serializable {
 	 */
 	private static final long serialVersionUID = -8469585024456611158L;
 	
+	private int video_id;
 	private int icon_id;
 	private String img;
 	private int sec;
@@ -41,6 +42,24 @@ public class Icon implements Serializable {
 		this.icon_id = icon_id;
 		this.img = img;
 		this.sec = sec;
+	}
+
+
+	public Icon(int video_id, int icon_id, String img) {
+		super();
+		this.video_id = video_id;
+		this.icon_id = icon_id;
+		this.img = img;
+	}
+
+
+	public int getVideo_id() {
+		return video_id;
+	}
+
+
+	public void setVideo_id(int video_id) {
+		this.video_id = video_id;
 	}
 
 
@@ -121,8 +140,8 @@ public class Icon implements Serializable {
 
 	@Override
 	public String toString() {
-		return "Icon [icon_id=" + icon_id + ", img=" + img + ", sec=" + sec + ", excellent=" + excellent + ", great="
-				+ great + ", good=" + good + ", bad=" + bad + "]";
+		return "Icon [video_id=" + video_id + ", icon_id=" + icon_id + ", img=" + img + ", sec=" + sec + ", excellent="
+				+ excellent + ", great=" + great + ", good=" + good + ", bad=" + bad + "]";
 	}
 
 
