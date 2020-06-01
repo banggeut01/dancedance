@@ -2,7 +2,6 @@
   <div class="danceList">
     <CarouselCard 
       class="carousel"
-      v-if="!isDetail"
       :interval="7000" 
       height="70vh" 
       type="card" 
@@ -43,7 +42,7 @@ export default {
   },
   methods: {
     openDetail() {
-      this.$router.push({ name: 'DanceDetailPage', params: {'dances': this.dances, 'nowDance': this.nowDance, 'id': this.nowDance.video_id}})
+      this.$router.push({ name: 'DanceDetailPage', params: {'dances': this.dances, 'nowDance': this.nowDance, 'id': this.nowDance.video_id}, addToHistory:false})
     }
   }
 }

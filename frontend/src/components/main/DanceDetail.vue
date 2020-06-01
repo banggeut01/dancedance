@@ -4,8 +4,8 @@
     :style="'background: url(' + require('@/assets/danceDetailBackgroundImg.png') + ') no-repeat 100%;'"
   >
     <div id="dancePlayInfo" >
-      <video id="danceVideo" autoplay loop width="100%">
-        <source :src="nowDance.file" type="video/mp4">
+      <video id="danceVideo" autoplay loop width="100%" :key="nowDance.id">
+        <source :src="danceVideo" type="video/mp4">
       </video>
       <v-btn 
         class="mx-2" 
@@ -19,7 +19,7 @@
       <section class="danceInfo">{{this.nowDance.title}} / 난이도 {{this.nowDance.difficulty}}</section>
       <section class="myScore"><i id="scoreStar" class="fas fa-star"></i> <p id="scoreBoard">My Score : {{ this.nowDance.myPoint }}</p></section>
     </div>
-    <carousel class="otherDances" :paginationEnabled="false" :perPage="3">
+    <carousel class="otherDances" :paginationEnabled="false" :perPage="4">
       <slide v-for="dance in dances" :key="dance.id">
         <img class="otherDanceThumbnail" :src="dance.thumbnail" :alt="dance.title" v-on:mouseover="nextDance=dance" @click="changeDetail" style="width: 20vw">
       </slide>
@@ -44,15 +44,21 @@ export default {
     },
     methods: {
       dancePlay() {
-        this.$router.push('/play')
+        this.$router.replace('/play')
       },
       changeDetail() {
-        this.$router.push({ name: 'DanceDetailPage', params: {'dances': this.dances, 'nowDance': this.nextDance, 'id': this.nextDance.video_id}})
+        this.$router.replace({ name: 'DanceDetailPage', params: {'dances': this.dances, 'nowDance': this.nextDance, 'id': this.nextDance.video_id}})
       }
     },
     mounted() {
-      document.getElementById('danceVideo').volume = 0.1;
+      document.getElementById('danceVideo').load();
+      document.getElementById('danceVideo').volume = 0;
     },
+    computed: {
+      danceVideo: function () {
+        return this.nowDance.file
+      }
+    }
 }
 </script>
 
