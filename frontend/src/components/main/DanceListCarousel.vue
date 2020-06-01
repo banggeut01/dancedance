@@ -2,7 +2,6 @@
   <div class="danceList">
     <CarouselCard 
       class="carousel"
-      v-if="!isDetail"
       :interval="7000" 
       height="70vh" 
       type="card" 
@@ -16,7 +15,7 @@
       >
         <div 
           class="thumbnail" 
-          :style="'background: url(' + require(`@/assets/danceList/${dance.thumbnail}`) + ') no-repeat center; background-size: cover;'"
+          :style="'background: url(' + dance.thumbnail + ') no-repeat center; background-size: cover;'"
           v-on:click="openDetail" v-on:mouseover="nowDance=dance"
         >
         </div>
@@ -43,7 +42,7 @@ export default {
   },
   methods: {
     openDetail() {
-      this.$router.push({ name: 'DanceDetailPage', params: {'dances': this.dances, 'nowDance': this.nowDance}})
+      this.$router.push({ name: 'DanceDetailPage', params: {'dances': this.dances, 'nowDance': this.nowDance, 'id': this.nowDance.video_id}, addToHistory:false})
     }
   }
 }

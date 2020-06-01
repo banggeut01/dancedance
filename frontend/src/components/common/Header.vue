@@ -42,10 +42,6 @@
 </script>
 
 <style>
-.header {
-  z-index: 1;
-}
-
 .v-toolbar__content > .v-toolbar__title {
   overflow: visible;
 }
