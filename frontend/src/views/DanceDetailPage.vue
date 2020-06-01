@@ -16,6 +16,9 @@ export default {
     Header,
     DanceDetail,
   },
+  mounted() {
+    console.log(history)
+  }
 }
 </script>
 

@@ -1,26 +1,36 @@
 import Vue from 'vue'
 import Vuex from 'vuex'
-
+import jwtDecode from 'jwt-decode'
 Vue.use(Vuex)
 
 export default new Vuex.Store({
   state: {
-    host : 'http://localhost:8197/ssafy-dance/api',
-    token : null,
-    user : {}
+    host : 'http://k02b1021.p.ssafy.io:8197/ssafy-dance/api',
+    token: null
   },
   mutations: {
-    getUserInfo(state, payload) {
-      state.token = payload.token
-      state.user = payload.user
+    setToken(state, payload) {
+      state.token = payload
     },
-    deleteUserInfo(state) {
+    deleteToken(state) {
       state.token = null
-      state.user = {}
     }
   },
   actions: {
     //세션에 저장하기 및 로그인 상태인지 확인하기
+    isLogin(context, payload) {
+      if (sessionStorage.getItem('token')) {
+        payload.defaults.headers.common['Authorization'] = sessionStorage.getItem('token')
+        context.state.token = sessionStorage.getItem('token')
+        console.log(context.state.token)
+        return true
+      }
+      else {
+        payload.defaults.headers.common['Authorization'] = null
+        context.state.token = null
+        return false
+      }
+    }
   },
   getters : {
     // options(state) {
@@ -30,9 +40,9 @@ export default new Vuex.Store({
     //         }
     //     }        
     // },
-    // user(state) {
-    //     return jwtDecode(state.token).user_id
-    // }
+    user(state) {
+        return jwtDecode(state.token).Authorization
+    }
   },
   modules: {
   }

@@ -11,7 +11,11 @@ export default {
   name: 'AvatarPage',
   components: {
     AvatarList
-  }
+  },
+  mounted () {
+    this.$store.dispatch('isLogin', this.$axios)
+    console.log(this.$store.getters.user)
+  },
 }
 </script>
 
