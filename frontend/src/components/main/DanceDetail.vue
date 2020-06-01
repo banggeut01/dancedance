@@ -20,7 +20,7 @@
       <section class="myScore"><i id="scoreStar" class="fas fa-star"></i> <p id="scoreBoard">My Score : {{ this.nowDance.myPoint }}</p></section>
     </div>
     <carousel class="otherDances" :paginationEnabled="false" :perPage="4">
-      <slide v-for="dance in dances" :key="dance.id">
+      <slide v-for="dance in dances" :key="dance.id" v-on:mouseover="cursorOver">
         <img class="otherDanceThumbnail" :src="dance.thumbnail" :alt="dance.title" v-on:mouseover="nextDance=dance" @click="changeDetail" style="width: 20vw">
       </slide>
     </carousel>
@@ -48,10 +48,12 @@ export default {
       },
       changeDetail() {
         this.$router.replace({ name: 'DanceDetailPage', params: {'dances': this.dances, 'nowDance': this.nextDance, 'id': this.nextDance.video_id}})
+      },
+      cursorOver() {
+        
       }
     },
     mounted() {
-      document.getElementById('danceVideo').load();
       document.getElementById('danceVideo').volume = 0;
     },
     computed: {
@@ -89,15 +91,16 @@ export default {
 }
 .otherDanceThumbnail {
   height: 25vh;
+  cursor: pointer;
 }
 .danceInfo {
   display:inline; 
   color: #ffffff;
-  font-size: 4em;
+  font-size: 3em;
 }
 .myScore {
   position: fixed;
-  font-size: 5em;
+  font-size: 4em;
   top: 15vh;
   left: 50vw;
 }
