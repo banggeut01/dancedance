@@ -56,14 +56,7 @@
         },
         methods: {
             getAvatars() {
-                const Authorization =
-                    'eyJ0eXAiOiJKV1QiLCJyZWdEYXRlIjoxNTkwODEyMzE1OTMwLCJhbGciOiJIUzI1NiJ9.eyJleHAiOjE1OTA4OTg3MTUsInN1YiI6IuuhnOq3uOyduO2GoO2BsCIsIkF1dGhvcml6YXRpb24iOnsibWVtYmVyX2lkIjoyLCJlbWFpbCI6ImRlbGlnaHRfam9vQG5hdmVyLmNvbSIsInBhc3N3b3JkIjpudWxsLCJuaWNrbmFtZSI6Iu2drOq1rCIsImF2YXRhcl9ub3ciOjJ9fQ.8J6OWidZ4k3amstIwK7eq_0Q6U_SnQJKyUWz_ULe_7c'
-                this.$axios.get('http://k02b1021.p.ssafy.io:8197/ssafy-dance/api/avatar', {
-                        params: {},
-                        headers: {
-                            'Authorization': Authorization
-                        }
-                    })
+                this.$axios.get('http://k02b1021.p.ssafy.io:8197/ssafy-dance/api/avatar')
                     .then(res => {
                         console.log(res.data.myavatar)
                         this.avatars = res.data.myavatar
@@ -71,18 +64,14 @@
                     })
             },
             setAvatar() {
-                const Authorization =
-                    'eyJ0eXAiOiJKV1QiLCJyZWdEYXRlIjoxNTkwODEyMzE1OTMwLCJhbGciOiJIUzI1NiJ9.eyJleHAiOjE1OTA4OTg3MTUsInN1YiI6IuuhnOq3uOyduO2GoO2BsCIsIkF1dGhvcml6YXRpb24iOnsibWVtYmVyX2lkIjoyLCJlbWFpbCI6ImRlbGlnaHRfam9vQG5hdmVyLmNvbSIsInBhc3N3b3JkIjpudWxsLCJuaWNrbmFtZSI6Iu2drOq1rCIsImF2YXRhcl9ub3ciOjJ9fQ.8J6OWidZ4k3amstIwK7eq_0Q6U_SnQJKyUWz_ULe_7c'
                 // this.$axios.post(this.$store.state.host + '/')
                 if (this.initAvatarId !== this.selectedId) {
                     console.log(this.selectedId, 123123123123)
-                    this.$axios.patch(`http://k02b1021.p.ssafy.io:8197/ssafy-dance/api/avatar/${this.selectedId}`, {}, {
-                            headers: {
-                                'Authorization': Authorization
-                            }
-                        })
+                    this.$axios.patch(`http://k02b1021.p.ssafy.io:8197/ssafy-dance/api/avatar/${this.selectedId}`)
                         .then(res => {
-                            console.log(res, 123123123123123123)
+                            // console.log(res, 123123123123123123)
+                            this.$store.commit("setToken", res.headers.authorization)
+                            sessionStorage.setItem('token', res.headers.authorization)
                         })
 
                 }
@@ -107,6 +96,8 @@
             },
         },
         mounted() {
+            this.$store.dispatch('isLogin', this.$axios)
+            console.log(this.$axios.defaults)
             this.getAvatars();
         }
     }
