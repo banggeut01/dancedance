@@ -24,6 +24,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.dance.dto.Avatar;
 import com.dance.dto.Member;
+import com.dance.dto.SignUpCheck;
 import com.dance.service.IMemberService;
 import com.dance.service.IJwtService;
 
@@ -75,9 +76,9 @@ public class MemberController {
 		int cnt = memberservice.emailcheck(email);
 
 		if(cnt==0) {
-			resultMap.put("emailcheck", "ok");
+			resultMap.put("emailcheck", true);
 		}else {
-			resultMap.put("emailcheck", "fail");
+			resultMap.put("emailcheck", false);
 		}
 
 		return new ResponseEntity<Map<String, Object>>(resultMap, HttpStatus.OK);
@@ -93,13 +94,14 @@ public class MemberController {
 		int cnt = memberservice.nicknamecheck(nickname);
 
 		if(cnt==0) {
-			resultMap.put("nicknamecheck", "ok");
+			resultMap.put("nicknamecheck", true);
 		}else {
-			resultMap.put("nicknamecheck", "fail");
+			resultMap.put("nicknamecheck", false);
 		}
 
 		return new ResponseEntity<Map<String, Object>>(resultMap, HttpStatus.OK);
 	}
+
 	
 	@ApiOperation(value = "회원가입", response = Member.class)
 	@RequestMapping(value = "/signup", method = RequestMethod.POST)
@@ -109,8 +111,9 @@ public class MemberController {
 		Map<String, Object> resultMap = new HashMap<>();
 		
 		memberservice.signup(member);
+		Member login = memberservice.login(member);
 		
-		String token = jwtService.create(member);
+		String token = jwtService.create(login);
 		headers.set("Authorization", token);
 
 		resultMap.put("signup", "ok");
@@ -119,36 +122,37 @@ public class MemberController {
 	}
 	
 	@ApiOperation(value = "아바타 페이지", response = Member.class)
-	@RequestMapping(value = "/avatar/{member_id}", method = RequestMethod.GET)
-	public ResponseEntity<Map<String, Object>> avatar(@PathVariable int member_id) throws Exception {
-//	@RequestMapping(value = "/avatar", method = RequestMethod.GET)
-//	public ResponseEntity<Map<String, Object>> avatar(@RequestHeader(value="Authorization") String token) throws Exception {
+	@RequestMapping(value = "/avatar", method = RequestMethod.GET)
+	public ResponseEntity<Map<String, Object>> avatar(@RequestHeader(value="Authorization") String token) throws Exception {
 		logger.info("1-------------avatar-----------------------------" + new Date());
 		HttpHeaders headers = new HttpHeaders();
 		Map<String, Object> resultMap = new HashMap<>();
 		
-//		Member member = jwtService.get(token);
-//		
-//		if(member==null) {
-//			resultMap.put("status", "fail");
-//			return new ResponseEntity<Map<String, Object>>(resultMap, HttpStatus.OK);
-//		}
+		Member member = jwtService.get(token);
 		
-		Avatar myavatar = memberservice.myavatar(member_id);	//member.getMember_id();
-		List<Avatar> obtained = memberservice.obtained(member_id);
-		List<Avatar> not_obtained = memberservice.not_obtained(member_id);
+		if(member==null) {
+			resultMap.put("status", "fail");
+			return new ResponseEntity<Map<String, Object>>(resultMap, HttpStatus.OK);
+		}
+		
+		List<Avatar> myavatar = memberservice.getAvatarList();
+		for (int i = 0; i < myavatar.size(); i++) {
+			if(myavatar.get(i).getAvatar_id() == member.getAvatar_now()) {
+				myavatar.get(i).setSelected(true);
+			}else {
+				myavatar.get(i).setSelected(false);
+			}
+		}
 
 		resultMap.put("status", "ok");
 		resultMap.put("myavatar", myavatar);
-		resultMap.put("obtained", obtained);
-		resultMap.put("not_obtained", not_obtained);
 
 		return new ResponseEntity<Map<String, Object>>(resultMap, HttpStatus.OK);
 	}
 	
 	@ApiOperation(value = "아바타 페이지", response = Member.class)
-	@RequestMapping(value = "/avatar", method = RequestMethod.POST)
-	public ResponseEntity<Map<String, Object>> updateAvatar(@RequestBody int avatar_id, @RequestHeader(value="Authorization") String token) throws Exception {
+	@RequestMapping(value = "/avatar/{avatar_id}", method = RequestMethod.PATCH)
+	public ResponseEntity<Map<String, Object>> updateAvatar(@PathVariable int avatar_id, @RequestHeader(value="Authorization") String token) throws Exception {
 		logger.info("1-------------updateAvatar-----------------------------" + new Date());
 		HttpHeaders headers = new HttpHeaders();
 		Map<String, Object> resultMap = new HashMap<>();
@@ -163,16 +167,22 @@ public class MemberController {
 		member.setAvatar_now(avatar_id);
 		memberservice.updateMyAvatar(member);
 		
-		Avatar myavatar = memberservice.myavatar(member.getMember_id());
-		List<Avatar> obtained = memberservice.obtained(member.getMember_id());
-		List<Avatar> not_obtained = memberservice.not_obtained(member.getMember_id());
+		token = jwtService.create(member);
+		headers.set("Authorization", token);
+		
+		List<Avatar> myavatar = memberservice.getAvatarList();
+		for (int i = 0; i < myavatar.size(); i++) {
+			if(myavatar.get(i).getAvatar_id() == member.getAvatar_now()) {
+				myavatar.get(i).setSelected(true);
+			}else {
+				myavatar.get(i).setSelected(false);
+			}
+		}
 
 		resultMap.put("status", "ok");
 		resultMap.put("myavatar", myavatar);
-		resultMap.put("obtained", obtained);
-		resultMap.put("not_obtained", not_obtained);
 
-		return new ResponseEntity<Map<String, Object>>(resultMap, HttpStatus.OK);
+		return new ResponseEntity<Map<String, Object>>(resultMap, headers, HttpStatus.OK);
 	}
 	
 }
