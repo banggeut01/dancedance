@@ -128,7 +128,7 @@
     animation: none;
   }
 
-  @-webkit-keyframes neon1 {
+  @keyframes neon1 {
     from {
       text-shadow: 0 0 10px #fff, 0 0 20px #fff, 0 0 30px #fff, 0 0 40px #45b6fe, 0 0 70px #45b6fe, 0 0 80px #45b6fe, 0 0 100px #FF1177, 0 0 150px #FF1177;
     }
@@ -138,7 +138,7 @@
     }
   }
 
-  @-webkit-keyframes neon2 {
+  @keyframes neon2 {
     from {
       text-shadow: 0 0 10px #fff, 0 0 20px #fff, 0 0 30px #fff, 0 0 40px #FF1177, 0 0 70px #FF1177, 0 0 80px #FF1177, 0 0 100px #FF1177, 0 0 150px #FF1177;
     }
