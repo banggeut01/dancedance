@@ -1,5 +1,8 @@
 <template>
   <div class="resultBackground">
+    <video autoplay muted loop id="videoBG">
+      <source :src="require('@/assets/resultBackground.mp4')" type="video/mp4">
+    </video>
     <div class="resultDiv">
       <div class="resultUpper">
         <div class="profileImg">
@@ -41,8 +44,18 @@
 </script>
 
 <style>
+  #videoBG {
+    position: fixed;
+    right: 0;
+    bottom: 0;
+    width: auto;
+    height: 100%;
+    min-width: 100%;
+    min-height: 100%;
+  }
+
   .resultBackground {
-    background-image: url("../assets/avatarBackground.jpg");
+    /* background-image: url("../assets/avatarBackground.jpg"); */
     background-position: center;
     background-repeat: no-repeat;
     background-size: cover;
@@ -54,8 +67,12 @@
 
   .resultDiv {
     position: absolute;
+    height: 55%;
+    width: 60%;
     left: 50%;
     top: 50%;
+    border-radius: 10%;
+    align-content: center;
     -webkit-transform: translate(-50%, -50%);
     transform: translate(-50%, -50%);
     background-color: black;
