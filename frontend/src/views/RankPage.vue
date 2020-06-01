@@ -40,7 +40,7 @@ export default {
       this.$axios.get(`http://k02b1021.p.ssafy.io:8197/ssafy-dance/api/ranking/score`, 
         {
         headers: {
-          'Authorization' : 'eyJ0eXAiOiJKV1QiLCJyZWdEYXRlIjoxNTkwODEyMzE1OTMwLCJhbGciOiJIUzI1NiJ9.eyJleHAiOjE1OTA4OTg3MTUsInN1YiI6IuuhnOq3uOyduO2GoO2BsCIsIkF1dGhvcml6YXRpb24iOnsibWVtYmVyX2lkIjoyLCJlbWFpbCI6ImRlbGlnaHRfam9vQG5hdmVyLmNvbSIsInBhc3N3b3JkIjpudWxsLCJuaWNrbmFtZSI6Iu2drOq1rCIsImF2YXRhcl9ub3ciOjJ9fQ.8J6OWidZ4k3amstIwK7eq_0Q6U_SnQJKyUWz_ULe_7c'
+          'Authorization' : 'eyJ0eXAiOiJKV1QiLCJyZWdEYXRlIjoxNTkwOTc3MzMwMTY4LCJhbGciOiJIUzI1NiJ9.eyJleHAiOjE1OTEwNjM3MzAsInN1YiI6IuuhnOq3uOyduO2GoO2BsCIsIkF1dGhvcml6YXRpb24iOnsibWVtYmVyX2lkIjoyLCJlbWFpbCI6ImRlbGlnaHRfam9vQG5hdmVyLmNvbSIsInBhc3N3b3JkIjpudWxsLCJuaWNrbmFtZSI6Iu2drOq1rCIsImF2YXRhcl9ub3ciOjB9fQ.PSGi0q50Cdn0oELC_SWkxoRRjlqJ7tbRfxldopFE1hY'
         }
       }).then((res) => {
         this.ranking = res.data.ranking
