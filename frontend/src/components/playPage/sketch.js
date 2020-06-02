@@ -61,7 +61,10 @@ export default async function(sketch) {
   async function getNode() {
     return new Promise(function(resolve) {
       axios
-        .get("http://k02b1021.p.ssafy.io:8197/ssafy-dance/api/play/1")
+        .get(
+          "http://k02b1021.p.ssafy.io:8197/ssafy-dance/api/play/" +
+            window.videoId
+        )
         .then((res) => {
           resolve(res.data.icon);
         })
@@ -276,7 +279,6 @@ export default async function(sketch) {
   function drawKeypoints() {
     for (let i = 0; i < camPoseResult.length; i++) {
       let pose = camPoseResult[i].pose;
-
       for (let j = 0; j < pose.keypoints.length; j++) {
         let keypoint = pose.keypoints[j];
         if (keypoint.score > 0.2) {
@@ -286,10 +288,8 @@ export default async function(sketch) {
         }
       }
     }
-
     for (let i = 0; i < videoPoseResult.length; i++) {
       let pose = videoPoseResult[i].pose;
-
       for (let j = 0; j < pose.keypoints.length; j++) {
         let keypoint = pose.keypoints[j];
         if (keypoint.score > 0.2) {
@@ -297,7 +297,6 @@ export default async function(sketch) {
           sketch.ellipse(keypoint.position.x, keypoint.position.y, 10, 10);
         }
       }
-
       sketch.scale(-1.0, -1.0);
     }
   }
