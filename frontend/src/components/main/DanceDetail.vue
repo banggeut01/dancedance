@@ -44,7 +44,7 @@ export default {
     },
     methods: {
       dancePlay() {
-        this.$router.replace('/play')
+        this.$router.replace({ name: 'PlayPage', params: {'id': this.nowDance.video_id}})
       },
       changeDetail() {
         this.$router.replace({ name: 'DanceDetailPage', params: {'dances': this.dances, 'nowDance': this.nextDance, 'id': this.nextDance.video_id}})
