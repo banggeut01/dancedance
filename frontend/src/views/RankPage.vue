@@ -49,7 +49,6 @@ export default {
     getVideoRankData() {
       this.$axios.get('http://k02b1021.p.ssafy.io:8197/ssafy-dance/api/ranking/video')
         .then((res) => {
-          console.log(res)
           this.videoRanking = res.data.ranking
         })
     }
@@ -57,6 +56,7 @@ export default {
   mounted() {
     this.$store.dispatch('isLogin', this.$axios)
     this.getRankData()
+    this.getVideoRankData()
     document.getElementById('rankbgm').volume = 0.05;
   }
 }
