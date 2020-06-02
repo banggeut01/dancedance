@@ -58,18 +58,16 @@
             getAvatars() {
                 this.$axios.get('http://k02b1021.p.ssafy.io:8197/ssafy-dance/api/avatar')
                     .then(res => {
-                        console.log(res.data.myavatar)
                         this.avatars = res.data.myavatar
+                        console.log(res.data)
                         this.getSelected()
                     })
             },
             setAvatar() {
                 // this.$axios.post(this.$store.state.host + '/')
                 if (this.initAvatarId !== this.selectedId) {
-                    console.log(this.selectedId, 123123123123)
                     this.$axios.patch(`http://k02b1021.p.ssafy.io:8197/ssafy-dance/api/avatar/${this.selectedId}`)
                         .then(res => {
-                            // console.log(res, 123123123123123123)
                             this.$store.commit("setToken", res.headers.authorization)
                             sessionStorage.setItem('token', res.headers.authorization)
                         })
@@ -97,7 +95,6 @@
         },
         mounted() {
             this.$store.dispatch('isLogin', this.$axios)
-            console.log(this.$axios.defaults)
             this.getAvatars();
         }
     }
