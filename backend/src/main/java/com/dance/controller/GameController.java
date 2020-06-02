@@ -29,6 +29,7 @@ import com.dance.dto.Member;
 import com.dance.dto.Play;
 import com.dance.dto.Rank;
 import com.dance.dto.Ranking;
+import com.dance.dto.Result;
 import com.dance.dto.Video;
 import com.dance.service.IMemberService;
 import com.dance.service.IGameService;
@@ -50,7 +51,7 @@ public class GameController {
 	@Autowired
 	private IJwtService jwtService;
 	
-	@ApiOperation(value = "메인 - 영상 리스트", response = Member.class)
+	@ApiOperation(value = "메인 - 영상 리스트", response = Video.class)
 	@RequestMapping(value = "/main", method = RequestMethod.GET)
 	public ResponseEntity<Map<String, Object>> main(@RequestHeader(value="Authorization") String token) throws Exception {
 		logger.info("1-------------main-----------------------------" + new Date());
@@ -80,7 +81,7 @@ public class GameController {
 		return new ResponseEntity<Map<String, Object>>(resultMap, HttpStatus.OK);
 	}
 		
-	@ApiOperation(value = "게임 play", response = Member.class)
+	@ApiOperation(value = "게임 play", response = Map.class)
 	@RequestMapping(value = "/play/{video_id}", method = RequestMethod.GET)
 	public ResponseEntity<Map<String, Object>> play(@PathVariable int video_id, @RequestHeader(value="Authorization") String token) throws Exception {
 		logger.info("1-------------play-----------------------------" + new Date());
@@ -106,7 +107,7 @@ public class GameController {
 		return new ResponseEntity<Map<String, Object>>(resultMap, HttpStatus.OK);
 	}
 	
-	@ApiOperation(value = "곡별 랭킹", response = Member.class)
+	@ApiOperation(value = "곡별 랭킹", response = Ranking.class)
 	@RequestMapping(value = "/ranking/video", method = RequestMethod.GET)
 	public ResponseEntity<Map<String, Object>> rankingByVideo(@RequestHeader(value="Authorization") String token) throws Exception {
 		logger.info("1-------------rankingByVideo-----------------------------" + new Date());
@@ -154,7 +155,7 @@ public class GameController {
 		return new ResponseEntity<Map<String, Object>>(resultMap, HttpStatus.OK);
 	}
 	
-	@ApiOperation(value = "총 score 랭킹", response = Member.class)
+	@ApiOperation(value = "총 score 랭킹", response = Ranking.class)
 	@RequestMapping(value = "/ranking/score", method = RequestMethod.GET)
 	public ResponseEntity<Map<String, Object>> rankingByScore(@RequestHeader(value="Authorization") String token) throws Exception {
 		logger.info("1-------------rankingByScore-----------------------------" + new Date());
@@ -185,10 +186,10 @@ public class GameController {
 		return new ResponseEntity<Map<String, Object>>(resultMap, HttpStatus.OK);
 	}
 	
-	@ApiOperation(value = "결과 저장", response = Member.class)
+	@ApiOperation(value = "결과 저장", response = Map.class)
 	@RequestMapping(value = "/play/result", method = RequestMethod.POST)
-	public ResponseEntity<Map<String, Object>> result(@RequestBody Play play, @RequestHeader(value="Authorization") String token) throws Exception {
-		logger.info("1-------------rankingByScore-----------------------------" + new Date());
+	public ResponseEntity<Map<String, Object>> result(@RequestBody Result result, @RequestHeader(value="Authorization") String token) throws Exception {
+		logger.info("1-------------result-----------------------------" + new Date());
 		
 		Map<String, Object> resultMap = new HashMap<>();
 	
@@ -199,7 +200,10 @@ public class GameController {
 			return new ResponseEntity<Map<String, Object>>(resultMap, HttpStatus.OK);
 		}
 		
+		Play play = new Play(result.getVideo_id(), result.getPerfect(), result.getGreat(), result.getGood(), result.getBad());
 		play.setMember_id(member.getMember_id());
+		int point = result.getPerfect()*500 + result.getGreat()*300 + result.getGood()*150;
+		play.setPoint(point);
 		gameservice.setPlayResult(play);
 		
 		resultMap.put("status", "ok");
