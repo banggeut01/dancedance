@@ -31,6 +31,10 @@
                 </a>
             </div>
         </div>
+        <div class="button-container">
+            <button id="button">Click me</button>
+        </div>
+        <div id="alert-container"></div>
     </div>
 </template>
 
@@ -92,10 +96,34 @@
                     this.selectedId = this.avatar.avatar_id
                 }
             },
+            alertHandler() {
+                let alerts = document.getElementById("alert-container");
+
+                if (alerts.childElementCount < 2) {
+                    // Create alert box
+                    let alertBox = document.createElement("div");
+                    alertBox.classList.add("alert-msg", "slide-in");
+
+                    // Add message to alert box
+                    let alertMsg = document.createTextNode("아바타가 변경되었습니다.");
+                    alertBox.appendChild(alertMsg);
+
+                    // Add alert box to parent
+                    alerts.insertBefore(alertBox, alerts.childNodes[0]);
+
+                    // Remove last alert box
+                    alerts.childNodes[1].classList.add("slide-out");
+                    setTimeout(function () {
+                        alerts.removeChild(alerts.lastChild);
+                    }, 600);
+                }
+            }
         },
         mounted() {
             this.$store.dispatch('isLogin', this.$axios)
             this.getAvatars();
+            let button = document.getElementById("button");
+            button.addEventListener("click", this.alertHandler);
         }
     }
 </script>
@@ -310,5 +338,62 @@
         bottom: 100%;
         transition: 1s;
         transition-delay: 0.75s;
+    }
+
+    #alert-container {
+        z-index: 1;
+    }
+
+    #alert-container .alert-msg {
+        background: #fff;
+        border: 1px solid #ddd;
+        bottom: 25px;
+        box-shadow: 5px 5px 10px rgba(0, 0, 0, 0.1);
+        left: 25px;
+        padding: 15px;
+        position: absolute;
+        z-index: 99;
+    }
+
+    #alert-container .alert-msg:before {
+        color: purple;
+        content: "\f06a";
+        font-family: "Font Awesome 5 Free";
+        font-size: 1.5em;
+        font-weight: 600;
+        margin-right: 10px;
+        vertical-align: sub;
+    }
+
+    .slide-in {
+        animation-name: slideIn;
+        animation-duration: 0.8s;
+    }
+
+    @keyframes slideIn {
+        from {
+            transform: translateX(-400px);
+        }
+
+        to {
+            transform: translateX(0);
+        }
+    }
+
+    .slide-out {
+        animation-name: slideOut;
+        animation-duration: 0.8s;
+    }
+
+    @keyframes slideOut {
+        from {
+            transform: translateY(0);
+            opacity: 1;
+        }
+
+        to {
+            transform: translateY(80px);
+            opacity: 0;
+        }
     }
 </style>
