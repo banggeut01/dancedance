@@ -70,4 +70,28 @@ public class GameServiceImpl implements IGameService {
 		gamedao.setPlayResult(play);
 	}
 
+	@Override
+	@Transactional(readOnly=true)
+	public Play getPlayResult(int member_id) {
+		return gamedao.getPlayResult(member_id);
+	}
+
+	@Override
+	@Transactional(readOnly=true)
+	public int getMyRanking(Play play) {
+		return gamedao.getMyRanking(play);
+	}
+
+	@Override
+	@Transactional(readOnly=true)
+	public int getPerfectPoint(int video_id) {
+		return gamedao.getPerfectPoint(video_id);
+	}
+
+	@Override
+	@Transactional(readOnly=true)
+	public String getMyAvatar(int avatar_id) {
+		return gamedao.getMyAvatar(avatar_id);
+	}
+
 }

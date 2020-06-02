@@ -63,6 +63,15 @@ public class Play implements Serializable {
 	}
 
 
+	public Play(int play_id, int video_id, int point, String datetime) {
+		super();
+		this.play_id = play_id;
+		this.video_id = video_id;
+		this.point = point;
+		this.datetime = datetime;
+	}
+
+
 	public Play(int member_id, int video_id) {
 		super();
 		this.member_id = member_id;
