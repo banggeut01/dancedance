@@ -79,8 +79,8 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	
 	<insert id="setPlayResult"
 		parameterType="com.dance.dto.Play">
-		insert into play (`member_id`, `video_id`, `excellent`, `great`, `good`, `bad`, `point`, `datetime`) 
-		VALUES (#{member_id}, #{video_id}, #{excellent}, #{great}, #{good}, #{bad}, #{point}, now())
+		insert into play (`member_id`, `video_id`, `perfect`, `great`, `good`, `bad`, `point`, `datetime`) 
+		VALUES (#{member_id}, #{video_id}, #{perfect}, #{great}, #{good}, #{bad}, #{point}, now())
 	</insert>
 	
 </mapper>
