@@ -65,6 +65,9 @@
         return false
       }
     },
+    mounted() {
+      document.getElementsByClassName('login-audio').volume = 0.1;
+    },
   }
 </script>
 
