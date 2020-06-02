@@ -54,7 +54,7 @@
         </v-col>
         <v-col class="p-zero rank-neon-border1" align="left">
           <!-- 이름 -->
-          <span class="totalrank-text" style="margin-left: 20px;">{{ myRanking.nickname }}</span>
+          <span class="totalrank-text" style="margin-left: 10px;">{{ myRanking.nickname }}</span>
         </v-col>
         <v-col class="p-zero rank-neon-border2" align="right">
           <!-- 총 score -->
@@ -153,7 +153,7 @@
   box-shadow: 0 0 30px #228DFF inset;
 }
 .totalrank-text {
-  line-height: 45px; 
+  line-height: 50px; 
   font-family: 'Black Han Sans', sans-serif; 
   font-size: 25px; 
 }
