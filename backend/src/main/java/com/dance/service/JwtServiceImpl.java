@@ -14,6 +14,7 @@ import org.springframework.web.context.request.RequestContextHolder;
 import org.springframework.web.context.request.ServletRequestAttributes;
 
 import com.dance.controller.UnauthorizedException;
+import com.dance.dto.Member;
 
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jws;
@@ -29,30 +30,19 @@ public class JwtServiceImpl implements IJwtService{
 	public static final Logger logger = LoggerFactory.getLogger(JwtServiceImpl.class);
 	
 	
-//	@Override
-//	public String create(Member data){
-//		String jwt = Jwts.builder()
-//						 .setHeaderParam("typ", "JWT")
-//						 .setHeaderParam("regDate", System.currentTimeMillis())
-//						 .setExpiration(new Date(System.currentTimeMillis() + 1000 * 60 * 60 ))
-//						 .setSubject("로그인토큰")
-//						 .claim("Authorization", data)
-//						 .signWith(SignatureAlgorithm.HS256, this.generateKey())
-//						 .compact();
-//		return jwt;
-//	}	
+	@Override
+	public String create(Member data){
+		String jwt = Jwts.builder()
+						 .setHeaderParam("typ", "JWT")
+						 .setHeaderParam("regDate", System.currentTimeMillis())
+						 .setExpiration(new Date(System.currentTimeMillis() + 1000 * 60 * 60 * 24 ))
+						 .setSubject("로그인토큰")
+						 .claim("Authorization", data)
+						 .signWith(SignatureAlgorithm.HS256, this.generateKey())
+						 .compact();
+		return jwt;
+	}	
 	
-//	@Override
-//	public String create(String key, Member data, String subject){
-//		String jwt = Jwts.builder()
-//						 .setHeaderParam("typ", "JWT")
-//						 .setHeaderParam("regDate", System.currentTimeMillis())
-//						 .setSubject(subject)
-//						 .claim(key, data)
-//						 .signWith(SignatureAlgorithm.HS256, this.generateKey())
-//						 .compact();
-//		return jwt;
-//	}	
 
 	private byte[] generateKey(){
 		byte[] key = null;
@@ -82,26 +72,25 @@ public class JwtServiceImpl implements IJwtService{
 		}
 	}
 	
-//	@Override
-//	public Member get(HttpServletRequest req) {
-//		String jwt = req.getHeader("Authorization");
-//		Jws<Claims> claims = null;
-//		try {
-//			claims = Jwts.parser()
-//						 .setSigningKey(SALT.getBytes("UTF-8"))
-//						 .parseClaimsJws(jwt);
-//		} catch (Exception e) {
-//			return null;
-//			//throw new UnauthorizedException();
-//		}
-//		@SuppressWarnings("unchecked")
-//		Map<String, Object> value = (LinkedHashMap<String, Object>)claims.getBody().get("Authorization");
-//
-//		Member member = new Member(
-//				Integer.parseInt(value.get("memberid").toString()),
-//				value.get("email").toString(),
-//				null,
-//				value.get("name").toString());
-//		return member;
-//	}
+	@Override
+	public Member get(String jwt) {
+		Jws<Claims> claims = null;
+		try {
+			claims = Jwts.parser()
+						 .setSigningKey(SALT.getBytes("UTF-8"))
+						 .parseClaimsJws(jwt);
+		} catch (Exception e) {
+			return null;
+			//throw new UnauthorizedException();
+		}
+		@SuppressWarnings("unchecked")
+		Map<String, Object> value = (LinkedHashMap<String, Object>)claims.getBody().get("Authorization");
+
+		Member member = new Member(
+				Integer.parseInt(value.get("member_id").toString()),
+				value.get("email").toString(),
+				value.get("nickname").toString(),
+				Integer.parseInt(value.get("avatar_now").toString()));
+		return member;
+	}
 }

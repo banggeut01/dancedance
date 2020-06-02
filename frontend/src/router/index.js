@@ -9,10 +9,15 @@ import PlayPage from '@/views/PlayPage.vue'
 import RankPage from '@/views/RankPage.vue'
 import ResultPage from '@/views/ResultPage.vue'
 import TmpFaceMeshPage from '@/views/TmpFaceMeshPage.vue'
+import NotFound from '@/views/errors/NotFound.vue'
 
 Vue.use(VueRouter)
 
   const routes = [
+  { 
+    path: '*', 
+    component: NotFound
+  },
   {
     path: '/',
     name: 'IntroPage',
@@ -34,7 +39,7 @@ Vue.use(VueRouter)
     component: MainPage
   },
   {
-    path: '/danceDetail',
+    path: '/danceDetail/:id',
     name: 'DanceDetailPage',
     component: DanceDetailPage,
     props: (route) => ({
@@ -42,9 +47,12 @@ Vue.use(VueRouter)
     })
   },
   {
-    path: '/play',
+    path: '/play/:id',
     name: 'PlayPage',
-    component: PlayPage
+    component: PlayPage,
+    props: (route) => ({
+      ...route.params
+    })
   },
   {
     path: '/rank',
