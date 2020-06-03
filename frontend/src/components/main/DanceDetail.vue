@@ -19,7 +19,7 @@
       <section class="danceInfo">{{this.nowDance.title}} / 난이도 {{this.nowDance.difficulty}}</section>
       <section class="myScore"><i id="scoreStar" class="fas fa-star"></i> <p id="scoreBoard">My Score : {{ this.nowDance.myPoint }}</p></section>
     </div>
-    <carousel class="otherDances" :paginationEnabled="false" :perPage="4">
+    <carousel class="otherDances" :loop="true" :resistanceCoef="100" :scrollPerPage="false" :paginationEnabled="false" :perPage="4">
       <slide v-for="dance in dances" :key="dance.id" v-on:mouseover="cursorOver">
         <img class="otherDanceThumbnail" :src="dance.thumbnail" :alt="dance.title" v-on:mouseover="nextDance=dance" @click="changeDetail" style="width: 20vw">
       </slide>
