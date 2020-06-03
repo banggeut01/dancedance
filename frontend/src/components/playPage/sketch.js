@@ -25,6 +25,7 @@ export default async function(sketch) {
   }
   let SCORE = [0, 0, 0, 0];
 
+  let endTime = 99999;
   let nodeList = [];
   let barNodeList = [];
 
@@ -67,6 +68,7 @@ export default async function(sketch) {
         )
         .then((res) => {
           resolve(res.data.icon);
+          endTime = res.data.end;
         })
         .catch((err) => {
           console.log(err);
@@ -158,8 +160,8 @@ export default async function(sketch) {
         }
 
         cosineSimilarity *= 100;
-        console.log(cosineSimilarity);
-        console.log(getCurtime() - 2);
+        // console.log(cosineSimilarity);
+        // console.log(getCurtime() - 2);
         if (cosineSimilarity > 96) {
           SCORE[3]++;
           bombEffectOn(3);
@@ -245,19 +247,25 @@ export default async function(sketch) {
     });
   }
 
-  //   function calcScore(){
-  //     const payload = {email: this.email, password: this.password}
-  //     this.$axios.post(this.$store.state.host + '/login', payload)
-  //     .then(res => {
-  //       console.log(res)
-  //       this.$axios.defaults.headers.common['Authorization'] = res.headers.authorization
-  //       console.log(this.$axios.defaults.headers.common)
-  //       const token = res.headers.authorization
-  //       this.$store.commit('setToken', token)
-  //       sessionStorage.setItem('token', token)
-  //       this.$router.push('/main')
-  //     })
-  //   }
+  async function calcScore() {
+    return new Promise((resolve) => {
+      const scoreDate = {
+        video_id: window.videoId,
+        bad: SCORE[0],
+        good: SCORE[1],
+        great: SCORE[2],
+        perfect: SCORE[3],
+      };
+      this.$axios
+        .post(
+          "http://k02b1021.p.ssafy.io:8197/ssafy-dance/api/play/result",
+          scoreDate
+        )
+        .then((res) => {
+          resolve(res.status);
+        });
+    });
+  }
 
   sketch.preload = async function() {
     // await bindPage();
@@ -289,6 +297,11 @@ export default async function(sketch) {
     drawNode();
     drawEffect();
     drawKeypoints();
+    if (endTime != -1 && endTime <= getCurtime() - 2 + 120) {
+      video.pause();
+      var status = await calcScore();
+      console.log(status);
+    }
   };
 
   function drawKeypoints() {
