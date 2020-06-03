@@ -17,7 +17,7 @@
         </v-col>
         <v-col align="center" class="totalrank-width p-zero avatar-neon-div">
           <!-- 아바타 프로필 -->
-          <img src="@/assets/logo.png" style="height: 100%; width: 100%;">
+          <img :src="ranking[i - 1].img" style="height: 100%; width: 100%;">
         </v-col>
         <v-col class="p-zero rank-neon-border1" align="left">
           <!-- 이름 -->
@@ -50,7 +50,7 @@
         </v-col>
         <v-col align="center" class="totalrank-width p-zero avatar-neon-div">
           <!-- 아바타 프로필 -->
-          <img src="@/assets/logo.png" style="height: 100%; width: 100%;">
+          <img :src="myRanking.img" style="height: 100%; width: 100%;">
         </v-col>
         <v-col class="p-zero rank-neon-border1" align="left">
           <!-- 이름 -->
@@ -155,7 +155,7 @@
 .totalrank-text {
   line-height: 50px; 
   font-family: 'Black Han Sans', sans-serif; 
-  font-size: 25px; 
+  font-size: 20px; 
 }
 .skip-neon-div {
   border-style: solid;
