@@ -15,7 +15,7 @@ public interface IGameService {
 
 	int getVideoMyPoint(Play play);
 
-	String getVideoLink(int video_id);
+	Video getVideo(int video_id);
 
 	String getMyAvatarName(int avatar_now);
 

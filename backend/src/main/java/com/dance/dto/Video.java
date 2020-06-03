@@ -47,6 +47,13 @@ public class Video implements Serializable {
 	}
 
 
+	public Video(String file, int length) {
+		super();
+		this.file = file;
+		this.length = length;
+	}
+
+
 	public int getVideo_id() {
 		return video_id;
 	}

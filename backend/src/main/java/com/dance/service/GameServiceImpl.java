@@ -36,8 +36,8 @@ public class GameServiceImpl implements IGameService {
 
 	@Override
 	@Transactional(readOnly=true)
-	public String getVideoLink(int video_id) {
-		return gamedao.getVideoLink(video_id);
+	public Video getVideo(int video_id) {
+		return gamedao.getVideo(video_id);
 	}
 
 	@Override

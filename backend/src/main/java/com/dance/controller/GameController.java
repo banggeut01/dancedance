@@ -95,12 +95,13 @@ public class GameController {
 			return new ResponseEntity<Map<String, Object>>(resultMap, HttpStatus.OK);
 		}
 		
-		String video = gameservice.getVideoLink(video_id);
+		Video video = gameservice.getVideo(video_id);
 		String avatar = gameservice.getMyAvatarName(member.getAvatar_now());
 		List<Icon> icon = gameservice.getIcon(video_id);
 
 		resultMap.put("status", "ok");
-		resultMap.put("video", video);
+		resultMap.put("video", video.getFile());
+		resultMap.put("end", video.getLength());
 		resultMap.put("avatar", avatar);
 		resultMap.put("icon", icon);
 
