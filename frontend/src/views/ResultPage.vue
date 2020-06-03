@@ -28,6 +28,7 @@
           <span style="font-size:1rem; margin-top:10px">Score</span>
           <span id="point" class="glow scoreRank">{{ score }}</span>pts
         </div>
+
         <div class="rankingRatings">
           <span id="ranking" class="glow scoreRank">{{ rank }}</span>th
         </div>
@@ -52,22 +53,36 @@
         chgNumSpeed: 0.1,
         today: '',
         userName: 'moomoochoi',
-        score: 4800,
-        rank: 35,
+        perfectScore: 0,
+        score: 0,
+        rank: 0,
         videoSrc: require('@/assets/resultBackground.mp4'),
-        profileSrc: require('@/components/avatar/avatarImages/1.gif'),
+        profileSrc: '',
+      }
+    },
+    watch: {
+      score: function () {
+        this.increaseNum("point", 100, this.score);
+      },
+      rank: function () {
+        this.increaseNum("ranking", 1, this.rank);
       }
     },
     methods: {
       getResult() {
         this.$axios.get('http://k02b1021.p.ssafy.io:8197/ssafy-dance/api/play/result')
           .then(res => {
-            console.log(res)
+            this.today = res.data.datetime.substring(0, 4) + '년 ' + res.data.datetime.substring(5, 7) + '월 ' + res.data.datetime.substring(8, 10) + '일 '+
+            res.data.datetime.substring(11, 13) + '시 ' + res.data.datetime.substring(14, 16) + '분 ' + res.data.datetime.substring(17, 19) + '초'
+            this.rank = res.data.ranking
+            this.score = res.data.point
+            this.perfectScore = res.data.perfect
+            this.profileSrc = require('@/components/avatar' + `${res.data.img.substring(1, res.data.img.length)}`)
+            this.fillStar(this.score, this.perfectScore);
           })
       },
-      increaseNum(id, unit) {
+      increaseNum(id, unit, endNbr) {
         var elt = document.getElementById(id);
-        var endNbr = Number(document.getElementById(id).innerHTML);
         this.incNumRecur(0, endNbr, elt, unit);
       },
       incNumRecur(i, endNbr, elt, unit) {
@@ -84,8 +99,8 @@
         this.today = today.getFullYear() + '년 ' + (today.getMonth() + 1) + '월 ' + today.getDate() + '일 ' + today
           .getHours() + '시 ' + today.getMinutes() + '분';
       },
-      fillStar(score) {
-        const rate = parseInt((score / 10000) * 100);
+      fillStar(score, perfectScore) {
+        const rate = parseInt((score / perfectScore) * 100);
         var cssAnimation = document.createElement('style');
         cssAnimation.type = 'text/css';
 
@@ -104,11 +119,9 @@
       }
     },
     mounted() {
-      // this.getResult();
-      this.increaseNum("ranking", 1);
-      this.increaseNum("point", 100);
+      this.$store.dispatch('isLogin', this.$axios);
+      this.getResult();
       this.getCurrentTime();
-      this.fillStar(this.score);
     }
   }
 </script>
