@@ -101,9 +101,9 @@
   height: 100%;
 }
 .totalrank-width {
-  width: 50px;
-  max-width: 50px !important;
+  width: 50x;
   height: 100%;
+  max-width: 75px !important;
 }
 .p-zero {
   padding: 0px !important;
