@@ -4,7 +4,7 @@
       <v-form ref="form">
         <v-card-text color="white">
           <div>
-            <v-text-field style="width: 80%; display: inline-block; padding-right: 8px;" autocomplete="new-password" ref="email" v-model="email" :rules="[
+            <v-text-field autocomplete="off" style="width: 80%; display: inline-block; padding-right: 8px;" ref="email" v-model="email" :rules="[
                   () => !!email || '이메일을 입력해주세요',
                   () => /^[A-Za-z0-9_\.\-]+@[A-Za-z0-9\-]+\.[A-Za-z0-9\-]+/.test(email) || '이메일 형식이 아닙니다!',
                   () => emailcheck || '이메일 중복을 확인해주세요!'
@@ -19,7 +19,7 @@
             </div>
           </div>
           <div>
-            <v-text-field style="width: 80%; display: inline-block; padding-right: 8px;" autocomplete="new-password" ref="nickname" v-model="nickname" :rules="[
+            <v-text-field style="width: 80%; display: inline-block; padding-right: 8px;" autocomplete="off" ref="nickname" v-model="nickname" :rules="[
                 () => !!nickname || '닉네임을 입력해주세요',
                 () => !!nickname && nickname.length <= 10 || '10글자 이하로 닉네임을 만드세요',
                 () => !!nicknamecheck || '닉네임 중복을 확인해주세요!'

@@ -22,7 +22,6 @@ export default new Vuex.Store({
       if (sessionStorage.getItem('token')) {
         payload.defaults.headers.common['Authorization'] = sessionStorage.getItem('token')
         context.state.token = sessionStorage.getItem('token')
-        console.log(context.state.token)
         return true
       }
       else {

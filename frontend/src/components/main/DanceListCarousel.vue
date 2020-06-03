@@ -2,9 +2,8 @@
   <div class="danceList">
     <CarouselCard 
       class="carousel"
-      v-if="!isDetail"
       :interval="7000" 
-      height="70vh" 
+      height="60vh"
       type="card" 
       arrow="hover" 
       indicatorPosition="none"
@@ -14,9 +13,10 @@
         :key="dance.id"
         v-model="nowDance"
       >
+        <div v-if="hasActive" class="danceTitleDiv">{{dance.title}}</div>
         <div 
           class="thumbnail" 
-          :style="'background: url(' + require(`@/assets/danceList/${dance.thumbnail}`) + ') no-repeat center; background-size: cover;'"
+          :style="'background: url(' + dance.thumbnail + ') no-repeat center; background-size: cover;'"
           v-on:click="openDetail" v-on:mouseover="nowDance=dance"
         >
         </div>
@@ -43,7 +43,10 @@ export default {
   },
   methods: {
     openDetail() {
-      this.$router.push({ name: 'DanceDetailPage', params: {'dances': this.dances, 'nowDance': this.nowDance}})
+      this.$router.push({ name: 'DanceDetailPage', params: {'dances': this.dances, 'nowDance': this.nowDance, 'id': this.nowDance.video_id}, addToHistory:false})
+    },
+    hasActive() {
+      
     }
   }
 }
@@ -57,9 +60,13 @@ export default {
   top: 0;
   left: 0;
 }
+.danceTitleDiv{
+  background-color: rgba(0, 0, 0, 0.3);
+  text-align: center;
+}
 .carousel {
   width: 90vw;
-  top: 20vh;
+  top: 30vh;
   margin: auto;
 }
 .thumbnail {

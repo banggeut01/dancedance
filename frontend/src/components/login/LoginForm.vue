@@ -3,7 +3,7 @@
     <v-col cols="12">
       <v-form ref="form">
         <v-card-text color="white">
-          <v-text-field ref="email" v-model="email" :rules="[
+          <v-text-field autocomplete="off" ref="email" v-model="email" :rules="[
                 () => !!email || '이메일을 입력해주세요',
                 () => /^[A-Za-z0-9_\.\-]+@[A-Za-z0-9\-]+\.[A-Za-z0-9\-]+/.test(email) || '이메일 형식이 아닙니다!'
               ]" lazy-validation label="E-mail" color="success" dark background-color="success" required>
