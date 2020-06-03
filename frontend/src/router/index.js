@@ -44,18 +44,15 @@ Vue.use(VueRouter)
     component: DanceDetailPage,
     props: (route) => ({
       ...route.params
-    }),
-    beforeRouteEnter(to, from, next) {
-      if (from.path == "/play") {
-        next('/main')
-      }
-       next();
-    },
+    })
   },
   {
-    path: '/play',
+    path: '/play/:id',
     name: 'PlayPage',
-    component: PlayPage
+    component: PlayPage,
+    props: (route) => ({
+      ...route.params
+    })
   },
   {
     path: '/rank',
