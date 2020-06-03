@@ -20,10 +20,10 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		limit 1
 	</select>
 	
-	<select id="getVideoLink"
+	<select id="getVideo"
 		parameterType="java.lang.Integer"
-		resultType="java.lang.String">
-		select file
+		resultType="com.dance.dto.Video">
+		select file, length
 		from video
 		where video_id=#{video_id}
 	</select>
