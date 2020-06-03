@@ -24,10 +24,11 @@ export default {
     DanceListCarousel,
   },
   mounted() {
-    this.$store.dispatch('isLogin', this.$axios.get("http://k02b1021.p.ssafy.io:8197/ssafy-dance/api/main")
+    this.$store.dispatch('isLogin', this.$axios);
+    this.$axios.get("http://k02b1021.p.ssafy.io:8197/ssafy-dance/api/main")
       .then((response) => {
         this.dances = response.data.video;
-      }))
+      })
   },
 };
 </script>
