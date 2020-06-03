@@ -109,6 +109,10 @@
             const token = res.headers.authorization
             sessionStorage.setItem('token', token)
             this.$store.commit('setToken', token)
+            this.eamil = null
+            this.password = null
+            this.passwordcheck = null
+            this.nicknamecheck = null
             this.$router.push('/main')
             return
           })

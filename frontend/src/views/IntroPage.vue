@@ -35,6 +35,7 @@ export default {
               roundProps : 'curImg',
               immediateRender: true,
               ease: Linear.easeNone,
+              repeat: 3,
               onUpdate: function () {
                   img.src = imageArray[obj.curImg * 1].src
               }
@@ -42,14 +43,21 @@ export default {
       );
       // intro pin set
       const scene = this.$scrollmagic.scene({
-        duration: '5000',
+        duration: '10000',
         triggerElement: '.intro',
-        triggerHook: '0'
+        triggerHook: '0',
       })
       .setPin('.intro')
-      .setTween(tween)
       .addIndicators()
 
+      const scene4 = this.$scrollmagic.scene({
+        duration: '1000',
+        triggerElement: '.intro',
+        triggerHook: '0',
+        offset: '3000',
+      })
+      .setTween(tween)
+      .addIndicators()
       
       //text1
       let scene2 = this.$scrollmagic.scene({
@@ -58,7 +66,7 @@ export default {
         triggerHook: '0'
       }).setTween(TweenLite.fromTo('#text1', 2, 
       {opacity: 1},
-      {opacity: 0}
+      {opacity: 0},
       ))
       .addIndicators()
 
@@ -68,8 +76,8 @@ export default {
       tl.from(text2, 1, { opacity:0, y:200});
       tl.to(text2, 1, { opacity:0 ,y:-200}, 3);
       let scene3 = this.$scrollmagic.scene({
-        duration: '1000',
-        offset: '1500',
+        duration: '3000',
+        offset: '1000',
         triggerElement: '.intro',
         triggerHook: 0
       })
@@ -78,6 +86,7 @@ export default {
       this.$scrollmagic.addScene(scene2)
       this.$scrollmagic.addScene(scene)
       this.$scrollmagic.addScene(scene3)
+      this.$scrollmagic.addScene(scene4)
       // let accelamount = 0.1;
       // let scrollpos = 0;
       // let delay = 0;
@@ -106,7 +115,7 @@ export default {
   },
   mounted () {
     this.$store.dispatch('isLogin', this.$axios)
-    console.log(this.$store.getters.user)
+    // console.log(this.$store.getters.user)
     this.scrollmagic()
   },
 }
