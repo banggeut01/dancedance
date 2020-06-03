@@ -188,8 +188,8 @@ public class GameController {
 	
 	@ApiOperation(value = "결과 저장", response = Map.class)
 	@RequestMapping(value = "/play/result", method = RequestMethod.POST)
-	public ResponseEntity<Map<String, Object>> result(@RequestBody Result result, @RequestHeader(value="Authorization") String token) throws Exception {
-		logger.info("1-------------result-----------------------------" + new Date());
+	public ResponseEntity<Map<String, Object>> setResult(@RequestBody Result result, @RequestHeader(value="Authorization") String token) throws Exception {
+		logger.info("1-------------setResult-----------------------------" + new Date());
 		
 		Map<String, Object> resultMap = new HashMap<>();
 	
@@ -206,6 +206,36 @@ public class GameController {
 		play.setPoint(point);
 		gameservice.setPlayResult(play);
 		
+		resultMap.put("status", "ok");
+
+		return new ResponseEntity<Map<String, Object>>(resultMap, HttpStatus.OK);
+	}
+	
+	@ApiOperation(value = "결과 리턴", response = Map.class)
+	@RequestMapping(value = "/play/result", method = RequestMethod.GET)
+	public ResponseEntity<Map<String, Object>> getResult(@RequestHeader(value="Authorization") String token) throws Exception {
+		logger.info("1-------------getResult-----------------------------" + new Date());
+		
+		Map<String, Object> resultMap = new HashMap<>();
+	
+		Member member = jwtService.get(token);
+
+		if(member==null) {
+			resultMap.put("status", "fail");
+			return new ResponseEntity<Map<String, Object>>(resultMap, HttpStatus.OK);
+		}
+		
+		Play play = gameservice.getPlayResult(member.getMember_id());
+		int ranking = gameservice.getMyRanking(new Play(member.getMember_id(), play.getVideo_id()));
+		int perfect = gameservice.getPerfectPoint(play.getVideo_id())*500;
+		String img = gameservice.getMyAvatar(member.getAvatar_now());
+		
+		resultMap.put("play_id",play.getPlay_id());
+		resultMap.put("img",img);
+		resultMap.put("datetime",play.getDatetime());
+		resultMap.put("ranking",ranking);
+		resultMap.put("point",play.getPoint());
+		resultMap.put("perfect",perfect);
 		resultMap.put("status", "ok");
 
 		return new ResponseEntity<Map<String, Object>>(resultMap, HttpStatus.OK);

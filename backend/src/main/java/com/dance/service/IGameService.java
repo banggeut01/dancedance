@@ -27,4 +27,12 @@ public interface IGameService {
 
 	void setPlayResult(Play play);
 
+	Play getPlayResult(int member_id);
+
+	int getMyRanking(Play play);
+
+	int getPerfectPoint(int video_id);
+
+	String getMyAvatar(int avatar_id);
+
 }
