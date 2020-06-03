@@ -22,7 +22,7 @@
                     <span></span>
                     change avatar
                 </a>
-                <a href="#" class="btn returnBtn">
+                <a href="#" class="btn returnBtn" @click="returnTomain">
                     <span></span>
                     <span></span>
                     <span></span>
@@ -30,9 +30,6 @@
                     return
                 </a>
             </div>
-        </div>
-        <div class="button-container">
-            <button id="button">Click me</button>
         </div>
         <div id="alert-container"></div>
     </div>
@@ -63,17 +60,39 @@
                 this.$axios.get('http://k02b1021.p.ssafy.io:8197/ssafy-dance/api/avatar')
                     .then(res => {
                         this.avatars = res.data.myavatar
-                        console.log(res.data)
                         this.getSelected()
                     })
             },
             setAvatar() {
                 // this.$axios.post(this.$store.state.host + '/')
                 if (this.initAvatarId !== this.selectedId) {
+                    var th = this
                     this.$axios.patch(`http://k02b1021.p.ssafy.io:8197/ssafy-dance/api/avatar/${this.selectedId}`)
                         .then(res => {
                             this.$store.commit("setToken", res.headers.authorization)
                             sessionStorage.setItem('token', res.headers.authorization)
+
+                            let alerts = document.getElementById("alert-container");
+
+                            if (alerts.childElementCount < 2) {
+                                // Create alert box
+                                let alertBox = document.createElement("div");
+                                alertBox.classList.add("alert-msg", "slide-in");
+
+                                // Add message to alert box
+                                let alertMsg = document.createTextNode("아바타가 변경되었습니다.");
+                                alertBox.appendChild(alertMsg);
+
+                                // Add alert box to parent
+                                alerts.insertBefore(alertBox, alerts.childNodes[0]);
+
+                                // Remove last alert box
+                                alerts.childNodes[0].classList.add("slide-out");
+                                setTimeout(function () {
+                                    alerts.removeChild(alerts.lastChild);
+                                    th.$router.push('/main')
+                                }, 2000);
+                            }
                         })
 
                 }
@@ -96,34 +115,13 @@
                     this.selectedId = this.avatar.avatar_id
                 }
             },
-            alertHandler() {
-                let alerts = document.getElementById("alert-container");
-
-                if (alerts.childElementCount < 2) {
-                    // Create alert box
-                    let alertBox = document.createElement("div");
-                    alertBox.classList.add("alert-msg", "slide-in");
-
-                    // Add message to alert box
-                    let alertMsg = document.createTextNode("아바타가 변경되었습니다.");
-                    alertBox.appendChild(alertMsg);
-
-                    // Add alert box to parent
-                    alerts.insertBefore(alertBox, alerts.childNodes[0]);
-
-                    // Remove last alert box
-                    alerts.childNodes[1].classList.add("slide-out");
-                    setTimeout(function () {
-                        alerts.removeChild(alerts.lastChild);
-                    }, 600);
-                }
+            returnTomain() {
+                this.$router.push('/main')
             }
         },
         mounted() {
             this.$store.dispatch('isLogin', this.$axios)
             this.getAvatars();
-            let button = document.getElementById("button");
-            button.addEventListener("click", this.alertHandler);
         }
     }
 </script>
@@ -367,7 +365,7 @@
 
     .slide-in {
         animation-name: slideIn;
-        animation-duration: 0.8s;
+        animation-duration: 0.2s;
     }
 
     @keyframes slideIn {
