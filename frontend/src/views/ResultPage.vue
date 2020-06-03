@@ -50,14 +50,15 @@
     name: 'ResultPage',
     data() {
       return {
-        chgNumSpeed: 0.1,
+        chgNumSpeed: 3,
         today: '',
-        userName: 'moomoochoi',
+        userName: '',
         perfectScore: 0,
         score: 0,
         rank: 0,
         videoSrc: require('@/assets/resultBackground.mp4'),
         profileSrc: '',
+        replayId: null,
       }
     },
     watch: {
@@ -72,6 +73,8 @@
       getResult() {
         this.$axios.get('http://k02b1021.p.ssafy.io:8197/ssafy-dance/api/play/result')
           .then(res => {
+            this.replayId = res.data.video_id
+            this.userName = res.data.nickname
             this.today = res.data.datetime.substring(0, 4) + '년 ' + res.data.datetime.substring(5, 7) + '월 ' + res.data.datetime.substring(8, 10) + '일 '+
             res.data.datetime.substring(11, 13) + '시 ' + res.data.datetime.substring(14, 16) + '분 ' + res.data.datetime.substring(17, 19) + '초'
             this.rank = res.data.ranking
@@ -112,7 +115,7 @@
         document.getElementsByTagName("head")[0].appendChild(cssAnimation);
       },
       replay() {
-
+        this.$router.push(`/play/${this.replayId}`)
       },
       goToMain() {
         this.$router.push('/main')
