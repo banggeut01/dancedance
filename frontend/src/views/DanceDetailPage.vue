@@ -1,5 +1,8 @@
 <template>
-  <div class="danceDetail">
+  <div 
+    class="danceDetail" 
+    style="background: linear-gradient(#000000 62%, #ffffff 38%);"
+  >
     <Header></Header>
     <DanceDetail :dances.sync="dances" :nowDance.sync="nowDance"></DanceDetail>
   </div>

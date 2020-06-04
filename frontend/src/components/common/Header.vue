@@ -43,6 +43,7 @@
         this.$router.push({ name: 'MainPage' })
       },
       logout() {
+        this.$router.push({ name: 'IntroPage' })
         sessionStorage.removeItem('token')
         this.$store.commit('deleteToken')
       }
