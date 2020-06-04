@@ -1,7 +1,7 @@
 <template>
     <div class="imgDiv" :class="{selectedGlow: selected, unselectedGlow: !selected}">
         <img :src="require(`${avatar.url}`)" class="avatarImg">
-        <h3 style="color:white; text-align:center">{{ avatar.name }}</h3>
+        <h3 style="color:white; text-align:center">{{ avatar.name }} </h3>
     </div>
 </template>
 
