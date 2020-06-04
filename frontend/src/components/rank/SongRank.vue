@@ -1,12 +1,30 @@
 <template>
-  <div style="width:100%">
+  <div style="width:100%;">
     <div class="slider-box">
         <div class="slider-list clearfix"></div>  
         <button id="pree" @click="preSlide"><i class="fas fa-caret-left fa-5x"></i></button>
         <button id="nextt" @click="nextSlide"><i class="fas fa-caret-right fa-5x"></i></button>
     </div>
-    
-      <!-- {{ videoRanking }} -->
+    <div style="width: 90%;margin-left: 30px;">
+      <div style="margin-top: 10px;"></div>
+      <v-row class="video-rank" v-for="i in rank.length > 3 ? 3 : rank.length" :key="i">
+        <v-col class="pad-zero width-40">
+          <span v-if="myRanking !== null && rank[i - 1].ranking === myRanking.ranking" class="its-mine ">ME</span>
+        </v-col>
+        <v-col class="pad-zero width-40">
+          <p class="ranknum-neon2" style="vertical-align: middle; font-size: 2em;">{{ rank[i -1].ranking }}</p>
+        </v-col>
+        <v-col class="avatar-neon-div2 pad-zero width-40">
+          <img :src="rank[i - 1].img" style="height: 100%; width: 100%;">
+        </v-col>
+        <v-col class="rank-neon-border1-2 pad-zero">
+          <span class="videorank-text" style="margin-left: 10px;">{{ rank[i - 1].nickname }}</span>
+        </v-col>
+        <v-col class="rank-neon-border2-2 pad-zero" style="text-align: right;">
+          <span class="videorank-text" style="margin-right: 10px;">{{ rank[i - 1].point }} SCORES</span>
+        </v-col>
+      </v-row>
+    </div>
   </div>
 </template>
 
@@ -21,9 +39,12 @@
     },
     data() {
       return {
-        path1: [require('@/assets/introImg/scene00001.jpg'), require('@/assets/introImg/scene00002.jpg'), require('@/assets/introImg/scene00003.jpg')],
+        // path1: [require('@/assets/introImg/scene00001.jpg'), require('@/assets/introImg/scene00002.jpg'), require('@/assets/introImg/scene00003.jpg')],
         path: [],
         curidx: 0,
+        video: {},
+        rank: [],
+        myRanking: {}
       }
     },
     methods: {
@@ -68,7 +89,6 @@
             stardiv.appendChild(star)
           }
 
-          console.log(this.videoRanking[i].video.difficulty)
           div.style.width = `${100 / this.videoRanking.length}%`
           img.style.width = '100%'
           infodiv.style.width = '100%'
@@ -151,6 +171,19 @@
         for (let i=0 ; i < this.videoRanking.length ; i ++) {
           this.path.push(this.videoRanking[i].video.thumbnail)
         }
+      },
+      setVideo() {
+        this.video = this.videoRanking[this.curidx].video
+      },
+      setRank() {
+        let tmp = []
+        for (let i=0 ; i < Math.min(this.videoRanking[this.curidx].rank.length, 3); i ++){
+          tmp.push(this.videoRanking[this.curidx].rank[i])
+        }
+        this.rank = tmp
+      },
+      setMyRanking() {
+        this.myRanking = this.videoRanking[this.curidx].myRanking
       }
     },
     mounted () {
@@ -160,12 +193,29 @@
     watch: {
       videoRanking: function() {
         this.setPath()
+        this.setVideo()
+        this.setRank()
+        this.setMyRanking()
         this.createImgList();
+      },
+      curidx: function() {
+        this.setVideo()
+        this.setRank()
+        this.setMyRanking()
       }
     },
     computed: {
       spath() {
         return this.path
+      },
+      svideo() {
+        return this.video
+      },
+      srank() {
+        return this.rank
+      },
+      smyRanking() {
+        return this.myRanking
       }
     }
   }
@@ -242,5 +292,52 @@
 .itag2 {
   color: purple;
   text-shadow: 0 0 10px purple, 0 0 20px purple;
+}
+.video-rank {
+  height: 40px;
+  margin-bottom: 10px;
+}
+.pad-zero {
+  padding: 0px !important;
+  margin: 0px 2px 0px 2px;
+}
+.width-40 {
+  width: 40px;
+  max-width: 40px !important;
+}
+.ranknum-neon2 {
+  color: #fff;
+  text-shadow: 0 0 10px rgb(255, 34, 200), 0 0 20px rgb(255, 34, 200);
+  font-family: Iceland;
+  text-align: center;
+  font-weight: bold;
+}
+.videorank-text {
+  line-height: 40px; 
+  font-family: 'Black Han Sans', sans-serif; 
+  font-size: 20px;
+  color: white;
+}
+.avatar-neon-div2 {
+  border: 2px solid white;
+  box-shadow: 0 0 30px rgb(255, 34, 200) inset;
+}
+.rank-neon-border1-2 {
+  border-style: solid;
+  border-image-width: 1px;
+  border-image: linear-gradient(to right, #fff 0%, rgb(253, 142, 225) 100%);
+  border-image-slice: 1;
+  box-shadow: 0 0 30px rgb(255, 34, 200) inset;
+}
+.rank-neon-border2-2 {
+  border-style: solid;
+  border-image-width: 1px;
+  border-image: linear-gradient(to right, rgb(253, 142, 225) 0%, rgb(255, 34, 200) 100%);
+  border-image-slice: 1;
+  box-shadow: 0 0 30px rgb(255, 34, 200) inset;
+}
+.its-mine {
+  color: #fff;
+  text-shadow: 0 0 10px rgb(255, 0, 98), 0 0 20px rgb(255, 0, 98);
 }
 </style>
