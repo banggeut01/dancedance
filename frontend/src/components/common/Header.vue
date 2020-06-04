@@ -1,26 +1,26 @@
 <template>
-  <v-app-bar flat class="header" color="rgba(0, 0, 0, 0)" bottom="true">
-    <v-toolbar-title class="neon">DANCE_DANCE</v-toolbar-title>
+  <v-app-bar flat color="rgba(0, 0, 0, 0)">
+    <v-toolbar-title class="neon" @click="moveMain">DANCE_DANCE</v-toolbar-title>
     <v-spacer></v-spacer>
     <v-toolbar-items class="hidden-sm-and-down">
-      <div class="my-auto mx-2" @click="moveMain">
-        <div>
-          GO
-        </div>
+      <div v-if="islogin" class="my-auto mx-2">
+        <v-btn large text to="/avatar" class="logInOutBtn">
+          AVATAR
+        </v-btn>
       </div>
       <div v-if="islogin" class="my-auto mx-2">
-        <v-btn v-if="user.name !='test'" key="MY PAGE" to="/userinfo" large text color="white">
-          MY PAGE
+        <v-btn large text to="/rank" class="logInOutBtn">
+          RANK
         </v-btn>
       </div>
       <div v-if="!islogin" class="my-auto mx-2">
-        <v-btn large color="#FF7033" key="LOG IN" to="/login" style="color: white;">
-          LOG IN
+        <v-btn large text to="/login" class="logInOutBtn">
+          LOGIN
         </v-btn>
       </div>
       <div v-if="islogin" class="my-auto mx-2">
-        <v-btn large color="#FF7033" key="LOG OUT" @click="logout" style="color: white;">
-          LOG OUT
+        <v-btn large text @click="logout" class="logInOutBtn">
+          LOGOUT
         </v-btn>
       </div>
     </v-toolbar-items>
@@ -35,13 +35,23 @@
     },
     computed: {
       islogin() {
-        return false
+        return this.$store.state.token
       }
     },
+    methods: {
+      moveMain() {
+        this.$router.push({ name: 'MainPage' })
+      },
+      logout() {
+        sessionStorage.removeItem('token')
+        this.$store.commit('deleteToken')
+      }
+    }
   }
 </script>
 
 <style>
+
 .v-toolbar__content > .v-toolbar__title {
   overflow: visible;
 }
@@ -55,9 +65,10 @@
   font-family: neon;
   overflow: visible;
   color: #FB4264;
-  font-size: 2rem;
-  line-height: 2rem;
+  font-size: 3rem;
+  line-height: 3rem;
   text-shadow: 0 0 3vw #F40A35;
+  cursor: pointer;
 }
 
 .neon {
@@ -75,6 +86,42 @@
   50% {
     text-shadow: 0 0 .5vw #800E0B, 0 0 1.5vw #800E0B, 0 0 5vw #800E0B, 0 0 5vw #800E0B, 0 0 .2vw #800E0B, .5vw .5vw .1vw #40340A;
     color: #806914;
+  }
+}
+
+.logInOutBtn {
+  color: #B6FF00 !important;
+  font-family: "Press Start 2P" !important;
+  font-size: 0.8em;
+}
+.logInOutBtn:hover {
+  color: #ffffff !important;
+  -webkit-animation: neon4 1.5s ease-in-out infinite alternate;
+  -moz-animation: neon4 1.5s ease-in-out infinite alternate;
+  animation: neon4 1.5s ease-in-out infinite alternate;
+}
+@-webkit-keyframes neon4 {
+  from {
+    text-shadow: 0 0 10px #fff, 0 0 20px #fff, 0 0 30px #fff, 0 0 40px #B6FF00, 0 0 70px #B6FF00, 0 0 80px #B6FF00, 0 0 100px #B6FF00, 0 0 150px #B6FF00;
+  }
+  to {
+    text-shadow: 0 0 5px #fff, 0 0 10px #fff, 0 0 15px #fff, 0 0 20px #B6FF00, 0 0 35px #B6FF00, 0 0 40px #B6FF00, 0 0 50px #B6FF00, 0 0 75px #B6FF00;
+  }
+}
+@-moz-keyframes neon4 {
+  from {
+    text-shadow: 0 0 10px #fff, 0 0 20px #fff, 0 0 30px #fff, 0 0 40px #B6FF00, 0 0 70px #B6FF00, 0 0 80px #B6FF00, 0 0 100px #B6FF00, 0 0 150px #B6FF00;
+  }
+  to {
+    text-shadow: 0 0 5px #fff, 0 0 10px #fff, 0 0 15px #fff, 0 0 20px #B6FF00, 0 0 35px #B6FF00, 0 0 40px #B6FF00, 0 0 50px #B6FF00, 0 0 75px #B6FF00;
+  }
+}
+@keyframes neon4 {
+  from {
+    text-shadow: 0 0 10px #fff, 0 0 20px #fff, 0 0 30px #fff, 0 0 40px #B6FF00, 0 0 70px #B6FF00, 0 0 80px #B6FF00, 0 0 100px #B6FF00, 0 0 150px #B6FF00;
+  }
+  to {
+    text-shadow: 0 0 5px #fff, 0 0 10px #fff, 0 0 15px #fff, 0 0 20px #B6FF00, 0 0 35px #B6FF00, 0 0 40px #B6FF00, 0 0 50px #B6FF00, 0 0 75px #B6FF00;
   }
 }
 </style>
