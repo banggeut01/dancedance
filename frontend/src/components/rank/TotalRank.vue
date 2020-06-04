@@ -98,7 +98,9 @@
   /* height: 50px; */
 }
 .totalrank-height {
-  height: 100%;
+  /* height: 100%; */
+  height: 55px;
+  margin-bottom: 3px;
 }
 .totalrank-width {
   width: 50x;
