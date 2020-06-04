@@ -14,7 +14,7 @@
       <source src="../assets/login_back_img.mp4" type="video/mp4">
     </video>
     <!-- background sound -->
-    <audio class="login-audio" controls autoplay loop>
+    <audio id="loginbgm" class="login-audio" controls autoplay loop>
       <source src="../assets/login_bgsound.mp3" type="audio/mpeg">
     </audio>
     <!-- slide login/signup -->
@@ -66,7 +66,7 @@
       }
     },
     mounted() {
-      document.getElementsByClassName('login-audio').volume = 0.1;
+      document.getElementById('loginbgm').volume = 0.05;
     },
   }
 </script>

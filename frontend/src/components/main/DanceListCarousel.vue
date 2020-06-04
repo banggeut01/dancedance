@@ -3,7 +3,7 @@
     <CarouselCard 
       class="carousel"
       :interval="7000" 
-      height="70vh" 
+      height="60vh"
       type="card" 
       arrow="hover" 
       indicatorPosition="none"
@@ -13,6 +13,7 @@
         :key="dance.id"
         v-model="nowDance"
       >
+        <div v-if="hasActive" class="danceTitleDiv">{{dance.title}}</div>
         <div 
           class="thumbnail" 
           :style="'background: url(' + dance.thumbnail + ') no-repeat center; background-size: cover;'"
@@ -43,6 +44,9 @@ export default {
   methods: {
     openDetail() {
       this.$router.push({ name: 'DanceDetailPage', params: {'dances': this.dances, 'nowDance': this.nowDance, 'id': this.nowDance.video_id}, addToHistory:false})
+    },
+    hasActive() {
+      
     }
   }
 }
@@ -52,14 +56,19 @@ export default {
 .danceList {
   position: fixed;
   width: 100%;
-  height: 100%;
-  top: 0;
+  height: 90vh;
+  top: 10vh;
   left: 0;
+}
+.danceTitleDiv{
+  background-color: rgba(0, 0, 0, 0.3);
+  text-align: center;
 }
 .carousel {
   width: 90vw;
   top: 20vh;
   margin: auto;
+  z-index: 1;
 }
 .thumbnail {
   width: 100%;

@@ -16,9 +16,11 @@ export default {
     Header,
     DanceDetail,
   },
-  mounted() {
-    console.log(history)
-  }
+  created() {
+    window.addEventListener('beforeunload', function() {
+        this.$router.replace({ name: 'MainPage' })
+    })
+  },
 }
 </script>
 
