@@ -231,7 +231,8 @@ public class GameController {
 		int perfect = gameservice.getPerfectPoint(play.getVideo_id())*500;
 		String img = gameservice.getMyAvatar(member.getAvatar_now());
 		
-		resultMap.put("play_id",play.getPlay_id());
+		resultMap.put("nickname", member.getNickname());
+		resultMap.put("video_id",play.getVideo_id());
 		resultMap.put("img",img);
 		resultMap.put("datetime",play.getDatetime());
 		resultMap.put("ranking",ranking);
