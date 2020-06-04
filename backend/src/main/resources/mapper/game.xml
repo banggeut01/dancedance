@@ -6,7 +6,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 
 	<select id="getVideoList"
 		resultType="com.dance.dto.Video">
-		select video_id, thumbnail, title, file, length, difficulty
+		select video_id, thumbnail, title, singer, file, length, difficulty
 		from video
 	</select>
 	
