@@ -7,9 +7,34 @@
     </div>
     <div style="width: 90%;margin-left: 30px;">
       <div style="margin-top: 10px;"></div>
+      <v-row class="video-rank" v-if="myRanking !== null && myRanking.ranking > 3">
+        <v-col class="pad-zero width-40">
+          <i
+          class="its-mine 
+          animated infinite swing 
+          fas fa-mitten fa-2x
+          "></i>
+        </v-col>
+        <v-col class="pad-zero width-40">
+          <p class="ranknum-neon2" style="vertical-align: middle; font-size: 2em;">{{ myRanking.ranking }}</p>
+        </v-col>
+        <v-col class="avatar-neon-div2 pad-zero width-40">
+          <img :src="myRanking.img" style="height: 100%; width: 100%;">
+        </v-col>
+        <v-col class="rank-neon-border1-2 pad-zero">
+          <span class="videorank-text" style="margin-left: 10px;">{{ myRanking.nickname }}</span>
+        </v-col>
+        <v-col class="rank-neon-border2-2 pad-zero" style="text-align: right;">
+          <span class="videorank-text" style="margin-right: 10px;">{{ myRanking.point }} SCORES</span>
+        </v-col>
+      </v-row>
       <v-row class="video-rank" v-for="i in rank.length > 3 ? 3 : rank.length" :key="i">
         <v-col class="pad-zero width-40">
-          <span v-if="myRanking !== null && rank[i - 1].ranking === myRanking.ranking" class="its-mine ">ME</span>
+          <i v-if="myRanking !== null && rank[i - 1].ranking === myRanking.ranking" 
+          class="its-mine 
+          animated infinite swing 
+          fas fa-mitten fa-2x
+          "></i>
         </v-col>
         <v-col class="pad-zero width-40">
           <p class="ranknum-neon2" style="vertical-align: middle; font-size: 2em;">{{ rank[i -1].ranking }}</p>
