@@ -59,11 +59,14 @@
           itag2.classList.add('fa-3x')
           itag2.classList.add('itag2')
 
-          let tmp = ''
-          for (let i=0; i<this.videoRanking[i].video.difficulty; i++) {
-            tmp = tmp + '<i class="star-style fas fa-star fa-2x">'
+          for (let j=0; j<this.videoRanking[i].video.difficulty; j++) {
+            let star = document.createElement("i")
+            star.classList.add('star-style')
+            star.classList.add('fas')
+            star.classList.add('fa-star')
+            star.classList.add('fa-2x')
+            stardiv.appendChild(star)
           }
-          stardiv.innerHTML = tmp
 
           console.log(this.videoRanking[i].video.difficulty)
           div.style.width = `${100 / this.videoRanking.length}%`
