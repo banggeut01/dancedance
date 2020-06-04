@@ -94,7 +94,7 @@ export default {
   /* background-color: red; 임시 배경 넣으면 바꿀 것! */
 }
 .rank-border {
-  border:20px solid transparent;
+  border:10px solid transparent;
 }
 .rank-backcolor {
   background-color: rgba(0, 0, 0, .8);
