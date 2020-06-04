@@ -1,8 +1,9 @@
 <template>
   <div>
      <div class="intro">
-      <h1 id="text1">아무 말이나 적어야지</h1>
+      <h1 id="text1" class="neon">DANCE_DANCE</h1>
       <h1 id="text2">아무말 아무말</h1>
+
       <img id="myimg">
     </div>
     <section class="test">
@@ -25,7 +26,7 @@ export default {
       // img
       const img = document.querySelector('#myimg')
       const imageArray = new Array;
-      this.preloading(79, imageArray)
+      this.preloading(644, imageArray)
       console.log(imageArray)
       let obj = {curImg: 1};
       let maxlength = imageArray.length - 1;
@@ -35,7 +36,6 @@ export default {
               roundProps : 'curImg',
               immediateRender: true,
               ease: Linear.easeNone,
-              repeat: 3,
               onUpdate: function () {
                   img.src = imageArray[obj.curImg * 1].src
               }
@@ -43,7 +43,7 @@ export default {
       );
       // intro pin set
       const scene = this.$scrollmagic.scene({
-        duration: '10000',
+        duration: '25000',
         triggerElement: '.intro',
         triggerHook: '0',
       })
@@ -51,10 +51,10 @@ export default {
       .addIndicators()
 
       const scene4 = this.$scrollmagic.scene({
-        duration: '1000',
+        duration: '20000',
         triggerElement: '.intro',
         triggerHook: '0',
-        offset: '3000',
+        offset: '2000',
       })
       .setTween(tween)
       .addIndicators()
@@ -138,6 +138,9 @@ export default {
   left: 50%;
   transform: translate(-50%, -50%);
   font-size: 80px;
+}
+
+#text2 {
   color: white;
 }
 
@@ -145,5 +148,30 @@ export default {
   width: 100%;
   height: 100vh;
   color: white;
+}
+.neon {
+  font-family: neon;
+  overflow: visible;
+  color: #FB4264;
+  font-size: 2rem;
+  line-height: 2rem;
+  text-shadow: 0 0 3vw #F40A35;
+}
+.neon {
+  animation: neon 1s ease infinite;
+  -moz-animation: neon 1s ease infinite;
+  -webkit-animation: neon 1s ease infinite;
+}
+
+@keyframes neon {
+  0%,
+  100% {
+    text-shadow: 0 0 1vw #FA1C16, 0 0 3vw #FA1C16, 0 0 10vw #FA1C16, 0 0 10vw #FA1C16, 0 0 .4vw #FED128, .5vw .5vw .1vw #806914;
+    color: #FED128;
+  }
+  50% {
+    text-shadow: 0 0 .5vw #800E0B, 0 0 1.5vw #800E0B, 0 0 5vw #800E0B, 0 0 5vw #800E0B, 0 0 .2vw #800E0B, .5vw .5vw .1vw #40340A;
+    color: #806914;
+  }
 }
 </style>
