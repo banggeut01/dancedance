@@ -328,32 +328,32 @@ export default async function(sketch) {
       addBarNode();
       drawNode();
       drawEffect();
-      drawKeypoints();
+      // drawKeypoints();
     }
   };
 
-  function drawKeypoints() {
-    for (let i = 0; i < camPoseResult.length; i++) {
-      let pose = camPoseResult[i].pose;
-      for (let j = 0; j < pose.keypoints.length; j++) {
-        let keypoint = pose.keypoints[j];
-        if (keypoint.score > 0.2) {
-          sketch.fill(255, 0, 0);
-          sketch.noStroke();
-          sketch.ellipse(keypoint.position.x, keypoint.position.y, 10, 10);
-        }
-      }
-    }
-    for (let i = 0; i < videoPoseResult.length; i++) {
-      let pose = videoPoseResult[i].pose;
-      for (let j = 0; j < pose.keypoints.length; j++) {
-        let keypoint = pose.keypoints[j];
-        if (keypoint.score > 0.2) {
-          sketch.fill(255, 0, 0);
-          sketch.ellipse(keypoint.position.x, keypoint.position.y, 10, 10);
-        }
-      }
-      sketch.scale(-1.0, -1.0);
-    }
-  }
+  // function drawKeypoints() {
+  //   for (let i = 0; i < camPoseResult.length; i++) {
+  //     let pose = camPoseResult[i].pose;
+  //     for (let j = 0; j < pose.keypoints.length; j++) {
+  //       let keypoint = pose.keypoints[j];
+  //       if (keypoint.score > 0.2) {
+  //         sketch.fill(255, 0, 0);
+  //         sketch.noStroke();
+  //         sketch.ellipse(keypoint.position.x, keypoint.position.y, 10, 10);
+  //       }
+  //     }
+  //   }
+  //   for (let i = 0; i < videoPoseResult.length; i++) {
+  //     let pose = videoPoseResult[i].pose;
+  //     for (let j = 0; j < pose.keypoints.length; j++) {
+  //       let keypoint = pose.keypoints[j];
+  //       if (keypoint.score > 0.2) {
+  //         sketch.fill(255, 0, 0);
+  //         sketch.ellipse(keypoint.position.x, keypoint.position.y, 10, 10);
+  //       }
+  //     }
+  //     sketch.scale(-1.0, -1.0);
+  //   }
+  // }
 }
