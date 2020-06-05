@@ -8,9 +8,11 @@ import bombEffect1 from "../../assets/playImg/bombEffect1.gif";
 import bombEffect2 from "../../assets/playImg/bombEffect2.gif";
 import bombEffect3 from "../../assets/playImg/bombEffect3.gif";
 import bombEffect4 from "../../assets/playImg/bombEffect4.gif";
+import endEffect from "../../assets/playImg/EndEffect.gif";
 
 import ml5 from "ml5";
 import axios from "axios";
+import router from "../../router";
 import { poseSimilarity } from "posenet-similarity";
 
 export default async function(sketch) {
@@ -23,10 +25,14 @@ export default async function(sketch) {
       this.pose = pose;
     }
   }
+  const TOKEN = sessionStorage.getItem("token");
+
   let SCORE = [0, 0, 0, 0];
 
+  let endTime = 99999;
   let nodeList = [];
   let barNodeList = [];
+  let req = 0;
 
   let video;
   let videoPosenet;
@@ -37,6 +43,8 @@ export default async function(sketch) {
   let camPoseResult = [];
 
   let sig = [false, false, false, false];
+
+  let ENDEffect = sketch.loadImage(endEffect);
 
   let imgEffect = [
     sketch.createImg(badEffect),
@@ -63,10 +71,16 @@ export default async function(sketch) {
       axios
         .get(
           "http://k02b1021.p.ssafy.io:8197/ssafy-dance/api/play/" +
-            window.videoId
+            window.videoId,
+          {
+            headers: {
+              Authorization: TOKEN,
+            },
+          }
         )
         .then((res) => {
           resolve(res.data.icon);
+          endTime = res.data.end;
         })
         .catch((err) => {
           console.log(err);
@@ -158,8 +172,8 @@ export default async function(sketch) {
         }
 
         cosineSimilarity *= 100;
-        console.log(cosineSimilarity);
-
+        // console.log(cosineSimilarity);
+        // console.log(getCurtime() - 2);
         if (cosineSimilarity > 96) {
           SCORE[3]++;
           bombEffectOn(3);
@@ -219,6 +233,7 @@ export default async function(sketch) {
     cam.hide();
     video.hide();
     video.play();
+
     startTime = new Date().getTime();
   }
 
@@ -244,6 +259,33 @@ export default async function(sketch) {
     });
   }
 
+  async function calcScore() {
+    req = 1;
+    return new Promise((resolve) => {
+      const scoreDate = {
+        video_id: window.videoId,
+        bad: SCORE[0],
+        good: SCORE[1],
+        great: SCORE[2],
+        perfect: SCORE[3],
+      };
+
+      axios
+        .post(
+          "http://k02b1021.p.ssafy.io:8197/ssafy-dance/api/play/result",
+          scoreDate,
+          {
+            headers: {
+              Authorization: TOKEN,
+            },
+          }
+        )
+        .then((res) => {
+          resolve(true);
+        });
+    });
+  }
+
   sketch.preload = async function() {
     // await bindPage();
   };
@@ -258,22 +300,36 @@ export default async function(sketch) {
   };
 
   sketch.draw = async function() {
-    sketch.translate(1600, 0);
-    sketch.scale(-1.0, 1.0);
+    if (endTime != -1 && endTime <= getCurtime() - 2) {
+      sketch.image(ENDEffect, 0, 0, 1600, 900);
+      if (req == 0) {
+        video.pause();
 
-    if (video != null && video.loadedmetadata) {
-      sketch.image(video, 0, 0, 1600, 900);
-    }
+        var status = calcScore();
+        if (status) {
+          setTimeout(function() {
+            router.push("/result");
+          }, 5000);
+        }
+      }
+    } else {
+      sketch.translate(1600, 0);
+      sketch.scale(-1.0, 1.0);
 
-    if (cam != null && cam.loadedmetadata) {
-      sketch.image(cam, 100, 250, 500, 375);
+      if (video != null && video.loadedmetadata) {
+        sketch.image(video, 0, 0, 1600, 900);
+      }
+
+      if (cam != null && cam.loadedmetadata) {
+        sketch.image(cam, 100, 250, 500, 375);
+      }
+      sketch.image(img_nodeBar, 0, 650);
+      effectInit();
+      addBarNode();
+      drawNode();
+      drawEffect();
+      drawKeypoints();
     }
-    sketch.image(img_nodeBar, 0, 650);
-    effectInit();
-    addBarNode();
-    drawNode();
-    drawEffect();
-    drawKeypoints();
   };
 
   function drawKeypoints() {
