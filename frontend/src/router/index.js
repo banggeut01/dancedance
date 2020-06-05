@@ -8,14 +8,12 @@ import DanceDetailPage from '@/views/DanceDetailPage.vue'
 import PlayPage from '@/views/PlayPage.vue'
 import RankPage from '@/views/RankPage.vue'
 import ResultPage from '@/views/ResultPage.vue'
-import TmpFaceMeshPage from '@/views/TmpFaceMeshPage.vue'
 import NotFound from '@/views/errors/NotFound.vue'
 
 Vue.use(VueRouter)
 
-  const routes = [
-  { 
-    path: '*', 
+const routes = [{
+    path: '*',
     component: NotFound
   },
   {
@@ -57,18 +55,20 @@ Vue.use(VueRouter)
   {
     path: '/rank',
     name: 'RankPage',
-    component: RankPage
+    component: RankPage,
   },
   {
     path: '/result',
     name: 'ResultPage',
-    component: ResultPage
+    component: ResultPage,
+    beforeEnter(to, from, next) {
+      if (to.path === '/result' && from.path.substring(0, 5) === '/play') {
+        return next()
+      } else {
+        return next('/main')
+      }
+    }
   },
-  {
-    path: '/faceMesh',
-    name: 'TmpFaceMeshPage',
-    component: TmpFaceMeshPage
-  }
 ]
 
 const router = new VueRouter({
@@ -77,23 +77,20 @@ const router = new VueRouter({
   routes
 })
 
-  router.beforeResolve((to, from, next) => {
-    if (sessionStorage.getItem('token')) {
-      if (to.path === '/login') {
-        return next('/main')
-      }
-      else {
-        return next()
-      }
+router.beforeResolve((to, from, next) => {
+  if (sessionStorage.getItem('token')) {
+    if (to.path === '/login') {
+      return next('/main')
+    } else {
+      return next()
     }
-    else {
-      if (to.path === '/login' || to.path === '/') {
-        return next()
-      }
-      else {
-        return next('/login')
-      }
+  } else {
+    if (to.path === '/login' || to.path === '/') {
+      return next()
+    } else {
+      return next('/login')
     }
-  })
+  }
+})
 
 export default router
