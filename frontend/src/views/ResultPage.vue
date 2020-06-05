@@ -75,6 +75,15 @@
           .then(res => {
             this.replayId = res.data.video_id
             this.userName = res.data.nickname
+
+            if (res.data.datetime.substring(0, 4) != currentdate.getFullYear() || 
+              parseInt(res.data.datetime.substring(5, 7)) != currentdate.getMonth() + 1 || 
+              parseInt(res.data.datetime.substring(8, 10)) != currentdate.getDate() || 
+              parseInt(res.data.datetime.substring(11, 13)) != currentdate.getHours() || 
+              (res.data.datetime.substring(14, 16) != currentdate.getMinutes() && (res.data.datetime.substring(14, 16) != currentdate.getMinutes() - 1))) {
+              this.$router.push('/main')
+            }
+            
             this.today = res.data.datetime.substring(0, 4) + '년 ' + res.data.datetime.substring(5, 7) + '월 ' + res.data.datetime.substring(8, 10) + '일 '+
             res.data.datetime.substring(11, 13) + '시 ' + res.data.datetime.substring(14, 16) + '분 ' + res.data.datetime.substring(17, 19) + '초'
             this.rank = res.data.ranking

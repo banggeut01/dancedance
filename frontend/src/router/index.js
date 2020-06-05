@@ -61,13 +61,6 @@ const routes = [{
     path: '/result',
     name: 'ResultPage',
     component: ResultPage,
-    beforeEnter(to, from, next) {
-      if (to.path === '/result' && from.path.substring(0, 5) === '/play') {
-        return next()
-      } else {
-        return next('/main')
-      }
-    }
   },
 ]
 
