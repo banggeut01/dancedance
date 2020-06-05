@@ -56,8 +56,8 @@ export default {
 .danceList {
   position: fixed;
   width: 100%;
-  height: 100%;
-  top: 0;
+  height: 90vh;
+  top: 10vh;
   left: 0;
 }
 .danceTitleDiv{
@@ -66,8 +66,9 @@ export default {
 }
 .carousel {
   width: 90vw;
-  top: 30vh;
+  top: 20vh;
   margin: auto;
+  z-index: 1;
 }
 .thumbnail {
   width: 100%;

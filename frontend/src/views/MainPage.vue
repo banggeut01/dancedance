@@ -1,6 +1,6 @@
 <template>
   <div class="main">
-    <Header></Header>
+    <Header style="z-index:10;"></Header>
     <video autoplay muted loop id="backgroundVideo">
       <source src="@/assets/mainBackground.mp4" type="video/mp4" />
     </video>
