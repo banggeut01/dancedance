@@ -227,7 +227,7 @@ public class GameController {
 		}
 		
 		Play play = gameservice.getPlayResult(member.getMember_id());
-		int ranking = gameservice.getMyRanking(new Play(member.getMember_id(), play.getVideo_id()));
+		int ranking = gameservice.getMyRanking(play) + 1;
 		int perfect = gameservice.getPerfectPoint(play.getVideo_id())*500;
 		String img = gameservice.getMyAvatar(member.getAvatar_now());
 		
