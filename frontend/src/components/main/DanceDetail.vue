@@ -1,24 +1,25 @@
 <template>
-  <div 
-    class="danceDetail"
-    :style="'background: url(' + require('@/assets/danceDetailBackgroundImg.png') + ') no-repeat 100%;'"
-  >
+  <div class="danceDetail">
     <div id="dancePlayInfo" >
-      <video id="danceVideo" autoplay loop width="100%" :key="nowDance.id">
+      <video id="danceVideo" autoplay loop width="100%" :key="nowDance.id" v-on:mouseover="playMouseOver">
         <source :src="danceVideo" type="video/mp4">
       </video>
-      <v-btn 
-        class="mx-2" 
-        color="purple" 
-        fab dark large 
-        @click="dancePlay" 
-        style="left: -4vw; top: -3vh; background: #E7E600"
-      >
-        <v-icon>play_arrow</v-icon>
-      </v-btn>
-      <section class="danceInfo">{{this.nowDance.title}} / 난이도 {{this.nowDance.difficulty}}</section>
+      <div id="playBtn" @click="dancePlay" v-on:mouseleave="playMouseLeave">
+        <p>Game Play</p>
+      </div>
+      
+      <section class="danceInfo" style="left: -2vw; top: -1vh"> 
+        <v-btn
+          class="mx-2" 
+          color="purple"
+          style="background: #E7E600;"
+          fab dark x-large
+        >
+          <v-icon x-large>play_arrow</v-icon>
+        </v-btn> / {{this.nowDance.title}} / 난이도 {{this.nowDance.difficulty}}</section>
       <section class="myScore"><i id="scoreStar" class="fas fa-star"></i> <p id="scoreBoard">My Score : {{ this.nowDance.myPoint }}</p></section>
     </div>
+    <p id="otherDancesList">다른 노래</p>
     <carousel class="otherDances" :loop="true" :resistanceCoef="100" :scrollPerPage="false" :paginationEnabled="false" :perPage="4">
       <slide v-for="dance in dances" :key="dance.id" v-on:mouseover="cursorOver">
         <img class="otherDanceThumbnail" :src="dance.thumbnail" :alt="dance.title" v-on:mouseover="nextDance=dance" @click="changeDetail" style="width: 20vw">
@@ -49,12 +50,15 @@ export default {
       changeDetail() {
         this.$router.replace({ name: 'DanceDetailPage', params: {'dances': this.dances, 'nowDance': this.nextDance, 'id': this.nextDance.video_id}})
       },
-      cursorOver() {
-        
+      playMouseOver() {
+        document.getElementById('playBtn').style.zIndex = 1;
+      },
+      playMouseLeave() {
+        document.getElementById('playBtn').style.zIndex = -1;
       }
     },
     mounted() {
-      document.getElementById('danceVideo').volume = 0;
+      document.getElementById('danceVideo').volume = 0.05;
     },
     computed: {
       danceVideo: function () {
@@ -79,9 +83,34 @@ export default {
   margin-left: 10vw;
   width: 30vw;
 }
+#playBtn {
+  z-index: -1;
+  position: fixed;
+  left: 10vw;
+  top: 20vh;
+  width: 30vw;
+  height: 16.9vw;
+  text-align: center;
+  display: table;
+  background-color: rgba(0, 0, 0, 0.4);
+  cursor: pointer;
+}
+#playBtn > p {
+  font-family: 'Black Han Sans';
+  color: rgba(255, 255, 255, 0.7);
+  font-size: 4em;
+  display:table-cell;
+  vertical-align: middle;
+}
 .dancePlayInfo {
   position: static;
   display: inline;
+}
+#otherDancesList{
+  position: absolute;
+  bottom: 32vh;
+  left: 1vw;
+  font-size: 2em;
 }
 .otherDances {
   position: fixed;
