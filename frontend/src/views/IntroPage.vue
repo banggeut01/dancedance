@@ -3,7 +3,6 @@
      <div class="intro">
       <h1 id="text1" class="neon">DANCE_DANCE</h1>
       <h1 id="text2">아무말 아무말</h1>
-
       <img id="myimg">
     </div>
     <section class="test">
@@ -26,7 +25,7 @@ export default {
       // img
       const img = document.querySelector('#myimg')
       const imageArray = new Array;
-      this.preloading(644, imageArray)
+      this.preloading(256, imageArray)
       console.log(imageArray)
       let obj = {curImg: 1};
       let maxlength = imageArray.length - 1;
@@ -51,10 +50,10 @@ export default {
       .addIndicators()
 
       const scene4 = this.$scrollmagic.scene({
-        duration: '20000',
+        duration: '10000',
         triggerElement: '.intro',
         triggerHook: '0',
-        offset: '2000',
+        offset: '1000',
       })
       .setTween(tween)
       .addIndicators()
