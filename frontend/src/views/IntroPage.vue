@@ -4,6 +4,7 @@
      <div class="intro">
        <div class="black"></div>
       <h1 id="text1" class="neon">DANCE_DANCE</h1>
+      <i class="material-icons" id="scroll">arrow_drop_down_circle</i>
       <p id="text2">너도 <br> 나같이 <br> 춤추고 싶니?</p>
       <p id="text3">댄스 댄스를 사용해봐!</p>
       <div class="ctext4">
@@ -20,6 +21,7 @@
     </div>
     <section class="start">
       <h1 style="color:black;">ㅁㄴㅇㅁㄴㅇㅁㄴㅇㅁㄴㅇ</h1>
+
     </section>  
   </div>
 </template>
@@ -65,6 +67,7 @@ export default {
       .setPin('.intro')
        
 
+
       const scene4 = this.$scrollmagic.scene({
         duration: '18000',
         triggerElement: '.intro',
@@ -81,6 +84,15 @@ export default {
         triggerElement: '.intro',
         triggerHook: '0'
       }).setTween(TweenLite.fromTo('#text1', 15, 
+      {opacity: 1},
+      {opacity: 0},
+      ))
+
+      let scene11 = this.$scrollmagic.scene({
+        duration: '400',
+        triggerElement: '.intro',
+        triggerHook: '0'
+      }).setTween(TweenLite.fromTo('#scroll', 15, 
       {opacity: 1},
       {opacity: 0},
       ))
@@ -182,6 +194,7 @@ export default {
       this.$scrollmagic.addScene(scene8)
       this.$scrollmagic.addScene(scene9)
       this.$scrollmagic.addScene(scene10)
+      this.$scrollmagic.addScene(scene11)
       // let accelamount = 0.1;
       // let scrollpos = 0;
       // let delay = 0;
@@ -245,6 +258,15 @@ export default {
   font-size: 4em;
 }
 
+#scroll {
+  position: absolute;
+  top: 70%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  font-size: 4em;
+  color: white;
+    text-shadow: 0 0 5px #fff, 0 0 10px #fff, 0 0 15px #0073e6, 0 0 20px #0073e6, 0 0 25px #0073e6, 0 0 30px #0073e6, 0 0 35px #0073e6;
+}
 
 #text2 {
   position: absolute;
@@ -276,6 +298,7 @@ export default {
   left: 50%;
   transform: translate(-50%, -50%);
   font-size: 8em;
+  z-index: 7;
 }
 
 #text3 {
@@ -329,6 +352,7 @@ export default {
 }
 .ctext4 span {
   color: white;
+  font-size: 20px;
 }
 
 .ctext5 {
@@ -358,6 +382,7 @@ export default {
 }
 .ctext5 span {
   color: white;
+  font-size: 20px;
 }
 
 #text6 {
