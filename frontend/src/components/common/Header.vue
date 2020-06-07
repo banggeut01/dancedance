@@ -14,12 +14,12 @@
         </v-btn>
       </div>
       <div v-if="!islogin" class="my-auto mx-2">
-        <v-btn large text to="/login" class="logInOutBtn">
+        <v-btn large text @click="login" class="logInOutBtn">
           LOGIN
         </v-btn>
       </div>
       <div v-if="islogin" class="my-auto mx-2">
-        <v-btn large text @click="logout" class="logInOutBtn">
+        <v-btn text @click="logout" class="logInOutBtn">
           LOGOUT
         </v-btn>
       </div>
@@ -42,6 +42,9 @@
       moveMain() {
         this.$router.push({ name: 'MainPage' })
       },
+      login() {
+        this.$router.push({ name: 'LoginPage' })
+      },
       logout() {
         this.$router.push({ name: 'IntroPage' })
         sessionStorage.removeItem('token')
@@ -57,6 +60,10 @@
   overflow: visible;
 }
 
+.v-btn > .v-btn__content {
+  overflow: visible;
+}
+
 @font-face {
   font-family: neon;
   src: url(https://s3-us-west-2.amazonaws.com/s.cdpn.io/707108/neon.ttf);
@@ -66,8 +73,8 @@
   font-family: neon;
   overflow: visible;
   color: #FB4264;
-  font-size: 3rem;
-  line-height: 3rem;
+  font-size: 2rem !important;
+  line-height: 2rem !important;
   text-shadow: 0 0 3vw #F40A35;
   cursor: pointer;
 }
@@ -91,9 +98,13 @@
 }
 
 .logInOutBtn {
+  height: 100% !important;
   color: #B6FF00 !important;
   font-family: "Press Start 2P" !important;
-  font-size: 0.8em;
+  font-size: 1.3rem !important;
+  -webkit-transition: all 0.5s !important;
+  -moz-transition: all 0.5s !important;
+  transition: all 0.5s !important;
 }
 .logInOutBtn:hover {
   color: #ffffff !important;

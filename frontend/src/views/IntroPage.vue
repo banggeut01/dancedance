@@ -13,21 +13,24 @@
       </div>
       <div class="ctext5">
         <p id="text5"><i class="fas fa-medal" text></i> 랭킹에서 다른 사람들에게 <br>  너의 실력을 보여줘!</p>
-        <span>랭킹 시스템을 이용하여 총 스코어 랭킹과 각각의 춤별 랭킹을 볼 수 있습니다</span>
+        <span>랭킹 시스템을 이용하여 <br> 총 스코어 랭킹과 각각의 춤별 랭킹을 볼 수 있습니다</span>
       </div>
         <p id="text6">너의 댄스본능을 깨워봐!</p>
       <div id="endblack"></div>
       <img id="myimg">
     </div>
-    <section class="start">
-      <h1 style="color:black;">ㅁㄴㅇㅁㄴㅇㅁㄴㅇㅁㄴㅇ</h1>
-
+    <section class="letsStart start">
+      <div id="startLogo" class="neon" @click="moveMain">DANCE_DANCE</div>
+      <div id="startBtn" @click="moveMain">
+        START
+      </div>
     </section>  
   </div>
 </template>
 
 <script>
-import Header from '../components/common/Header.vue'
+import Header from "@/components/common/Header.vue";
+
 export default {
   name: 'IntroPage',
   data() {
@@ -55,7 +58,7 @@ export default {
               onUpdate: function () {
                   img.src = imageArray[obj.curImg * 1].src
               }
-          }   
+          }
       );
 
       // intro pin set
@@ -75,8 +78,6 @@ export default {
         offset: '500',
       })
       .setTween(tween)
-       
-
       
       //text1
       let scene2 = this.$scrollmagic.scene({
@@ -114,7 +115,7 @@ export default {
       }).setTween(TweenLite.fromTo('#endblack', 15, 
       {opacity: 0},
       {opacity: 1},
-      )).addIndicators()
+      ))
        
 
       //text2
@@ -219,7 +220,10 @@ export default {
         img.src = require(`../assets/introImg/${value}/scene${this.pad(i, 5)}.jpg`)
         imageArray.push(img)
       }
-    } 
+    },
+    moveMain() {
+      this.$router.push({ name: 'MainPage' })
+    }
   },
   mounted () {
     this.$store.dispatch('isLogin', this.$axios)
@@ -255,7 +259,7 @@ export default {
 }
 
 .intro p {
-  font-size: 4em;
+  font-size: 3.5vw;
 }
 
 #scroll {
@@ -297,7 +301,7 @@ export default {
    top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
-  font-size: 8em;
+  font-size: 8em !important;
   z-index: 7;
 }
 
@@ -386,7 +390,7 @@ export default {
 }
 
 #text6 {
-  font-size: 5em;
+  font-size: 4vw;
   position: absolute;
   font-weight: 800;
   top: 40%;
@@ -411,8 +415,6 @@ export default {
   font-family: neon;
   overflow: visible;
   color: #FB4264;
-  font-size: 2rem;
-  line-height: 2rem;
   text-shadow: 0 0 3vw #F40A35;
 }
 .neon {
@@ -440,5 +442,62 @@ export default {
   15% { transform: skewX(15deg) translate(-50%, -50%); }
   20% { transform: skewX(0deg) translate(-50%, -50%); }
   100% { transform: skewX(0deg) translate(-50%, -50%); }  
+}
+.letsStart {
+  width: 100vw;
+  line-height: 100%;
+  text-align: center;
+  height: 100vh;
+}
+#startLogo {
+  position: relative;
+  font-size: 5rem !important;
+  width: 52vw;
+  top:50%; left:50%;
+  transform: translate(-50%, -50%);
+}
+#startBtn {
+  position: relative;
+  font-size: 4rem !important;
+  width: 52vw;
+  top:60%; left:50%;
+  transform: translate(-50%, -50%);
+  color: #FF9900;
+  font-family: Pacifico;
+  -webkit-transition: all 0.5s;
+  -moz-transition: all 0.5s;
+  transition: all 0.5s;
+  cursor: pointer;
+}
+
+#startBtn:hover {
+  color: #ffffff;
+  -webkit-animation: neon5 1.5s ease-in-out infinite alternate;
+  -moz-animation: neon5 1.5s ease-in-out infinite alternate;
+  animation: neon5 1.5s ease-in-out infinite alternate;
+}
+@-webkit-keyframes neon5 {
+  from {
+    text-shadow: 0 0 10px #fff, 0 0 20px #fff, 0 0 30px #fff, 0 0 40px #FF9900, 0 0 70px #FF9900, 0 0 80px #FF9900, 0 0 100px #FF9900, 0 0 150px #FF9900;
+  }
+  to {
+    text-shadow: 0 0 5px #fff, 0 0 10px #fff, 0 0 15px #fff, 0 0 20px #FF9900, 0 0 35px #FF9900, 0 0 40px #FF9900, 0 0 50px #FF9900, 0 0 75px #FF9900;
+  }
+}
+@-moz-keyframes neon5 {
+  from {
+    text-shadow: 0 0 10px #fff, 0 0 20px #fff, 0 0 30px #fff, 0 0 40px #FF9900, 0 0 70px #FF9900, 0 0 80px #FF9900, 0 0 100px #FF9900, 0 0 150px #FF9900;
+  }
+  to {
+    text-shadow: 0 0 5px #fff, 0 0 10px #fff, 0 0 15px #fff, 0 0 20px #FF9900, 0 0 35px #FF9900, 0 0 40px #FF9900, 0 0 50px #FF9900, 0 0 75px #FF9900;
+  }
+}
+@keyframes neon5 {
+  from {
+    text-shadow: 0 0 10px #fff, 0 0 20px #fff, 0 0 30px #fff, 0 0 40px #FF9900, 0 0 70px #FF9900, 0 0 80px #FF9900, 0 0 100px #FF9900, 0 0 150px #FF9900;
+  }
+  to {
+    text-shadow: 0 0 5px #fff, 0 0 10px #fff, 0 0 15px #fff, 0 0 20px #FF9900, 0 0 35px #FF9900, 0 0 40px #FF9900, 0 0 50px #FF9900, 0 0 75px #FF9900;
+  }
 }
 </style>
