@@ -13,7 +13,7 @@
         :key="dance.id"
         v-model="nowDance"
       >
-        <div v-if="hasActive" class="danceTitleDiv">{{dance.title}}</div>
+        <div class="danceTitleDiv">{{dance.title}}</div>
         <div 
           class="thumbnail" 
           :style="'background: url(' + dance.thumbnail + ') no-repeat center; background-size: cover;'"
@@ -61,8 +61,14 @@ export default {
   left: 0;
 }
 .danceTitleDiv{
-  background-color: rgba(0, 0, 0, 0.3);
+  position: fixed;
   text-align: center;
+  top:50%; left:50%;
+  transform: translate(-50%, -50%);
+  font-family: 'Black Han Sans';
+  width: 100%;
+  color: rgba(0, 0, 0, 0.7);
+  font-size: 7em;
 }
 .carousel {
   width: 90vw;

@@ -1,7 +1,7 @@
 <template>
    <v-row style="height: 100%">
     <v-col cols="12">
-      <v-form ref="form">
+      <v-form ref="form" @submit="submit">
         <v-card-text color="white">
           <v-text-field autocomplete="off" ref="email" v-model="email" :rules="[
                 () => !!email || '이메일을 입력해주세요',

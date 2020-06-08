@@ -1,6 +1,6 @@
 <template>
   <div class="danceDetail">
-    <div id="dancePlayInfo" >
+    <div id="dancePlayInfo" style="background: black; height: 62%;">
       <video id="danceVideo" autoplay loop width="100%" :key="nowDance.id" v-on:mouseover="playMouseOver">
         <source :src="danceVideo" type="video/mp4">
       </video>
@@ -107,6 +107,7 @@ export default {
   display: inline;
 }
 #otherDancesList{
+  color: rgba(255, 255, 255, 0.7);
   position: absolute;
   bottom: 32vh;
   left: 1vw;
