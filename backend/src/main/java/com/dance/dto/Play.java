@@ -12,7 +12,7 @@ public class Play implements Serializable {
 	private int play_id;
 	private int member_id;
 	private int video_id;
-	private int excellent;
+	private int perfect;
 	private int great;
 	private int good;
 	private int bad;
@@ -26,13 +26,13 @@ public class Play implements Serializable {
 	}
 
 
-	public Play(int play_id, int member_id, int video_id, int excellent, int great, int good, int bad, int point,
+	public Play(int play_id, int member_id, int video_id, int perfect, int great, int good, int bad, int point,
 			String datetime) {
 		super();
 		this.play_id = play_id;
 		this.member_id = member_id;
 		this.video_id = video_id;
-		this.excellent = excellent;
+		this.perfect = perfect;
 		this.great = great;
 		this.good = good;
 		this.bad = bad;
@@ -41,11 +41,11 @@ public class Play implements Serializable {
 	}
 
 
-	public Play(int member_id, int video_id, int excellent, int great, int good, int bad, int point) {
+	public Play(int member_id, int video_id, int perfect, int great, int good, int bad, int point) {
 		super();
 		this.member_id = member_id;
 		this.video_id = video_id;
-		this.excellent = excellent;
+		this.perfect = perfect;
 		this.great = great;
 		this.good = good;
 		this.bad = bad;
@@ -53,14 +53,22 @@ public class Play implements Serializable {
 	}
 
 
-	public Play(int video_id, int excellent, int great, int good, int bad, int point) {
+	public Play(int video_id, int perfect, int great, int good, int bad) {
 		super();
 		this.video_id = video_id;
-		this.excellent = excellent;
+		this.perfect = perfect;
 		this.great = great;
 		this.good = good;
 		this.bad = bad;
+	}
+
+
+	public Play(int play_id, int video_id, int point, String datetime) {
+		super();
+		this.play_id = play_id;
+		this.video_id = video_id;
 		this.point = point;
+		this.datetime = datetime;
 	}
 
 
@@ -101,13 +109,13 @@ public class Play implements Serializable {
 	}
 
 
-	public int getExcellent() {
-		return excellent;
+	public int getPerfect() {
+		return perfect;
 	}
 
 
-	public void setExcellent(int excellent) {
-		this.excellent = excellent;
+	public void setPerfect(int perfect) {
+		this.perfect = perfect;
 	}
 
 
@@ -168,8 +176,8 @@ public class Play implements Serializable {
 
 	@Override
 	public String toString() {
-		return "Play [play_id=" + play_id + ", member_id=" + member_id + ", video_id=" + video_id + ", excellent="
-				+ excellent + ", great=" + great + ", good=" + good + ", bad=" + bad + ", point=" + point
+		return "Play [play_id=" + play_id + ", member_id=" + member_id + ", video_id=" + video_id + ", perfect="
+				+ perfect + ", great=" + great + ", good=" + good + ", bad=" + bad + ", point=" + point
 				+ ", datetime=" + datetime + "]";
 	}
 

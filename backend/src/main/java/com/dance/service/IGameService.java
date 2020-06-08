@@ -15,7 +15,7 @@ public interface IGameService {
 
 	int getVideoMyPoint(Play play);
 
-	String getVideoLink(int video_id);
+	Video getVideo(int video_id);
 
 	String getMyAvatarName(int avatar_now);
 
@@ -26,5 +26,13 @@ public interface IGameService {
 	List<Ranking> getRankingByScore();
 
 	void setPlayResult(Play play);
+
+	Play getPlayResult(int member_id);
+
+	int getMyRanking(Play play);
+
+	int getPerfectPoint(int video_id);
+
+	String getMyAvatar(int avatar_id);
 
 }

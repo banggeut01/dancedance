@@ -34,8 +34,8 @@ public class GameDaoImpl {
 		}
 	}
 
-	public String getVideoLink(int video_id) {
-		return sqlSession.selectOne(ns+"getVideoLink", video_id);
+	public Video getVideo(int video_id) {
+		return sqlSession.selectOne(ns+"getVideo", video_id);
 	}
 
 	public String getMyAvatarName(int avatar_now) {
@@ -56,6 +56,22 @@ public class GameDaoImpl {
 
 	public void setPlayResult(Play play) {
 		sqlSession.insert(ns+"setPlayResult", play);
+	}
+
+	public Play getPlayResult(int member_id) {
+		return sqlSession.selectOne(ns+"getPlayResult", member_id);
+	}
+
+	public int getMyRanking(Play play) {
+		return sqlSession.selectOne(ns+"getMyRanking", play);
+	}
+
+	public int getPerfectPoint(int video_id) {
+		return sqlSession.selectOne(ns+"getPerfectPoint", video_id);
+	}
+
+	public String getMyAvatar(int avatar_id) {
+		return sqlSession.selectOne(ns+"getMyAvatar", avatar_id);
 	}
 
 }
