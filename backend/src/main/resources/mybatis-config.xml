@@ -13,5 +13,6 @@
 	<mappers>
 		<mapper resource="mapper/member.xml" />
 		<mapper resource="mapper/game.xml" />
+		<mapper resource="mapper/admin.xml" />
 	</mappers>
 </configuration>

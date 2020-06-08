@@ -36,8 +36,8 @@ public class GameServiceImpl implements IGameService {
 
 	@Override
 	@Transactional(readOnly=true)
-	public String getVideoLink(int video_id) {
-		return gamedao.getVideoLink(video_id);
+	public Video getVideo(int video_id) {
+		return gamedao.getVideo(video_id);
 	}
 
 	@Override
@@ -68,6 +68,30 @@ public class GameServiceImpl implements IGameService {
 	@Transactional
 	public void setPlayResult(Play play) {
 		gamedao.setPlayResult(play);
+	}
+
+	@Override
+	@Transactional(readOnly=true)
+	public Play getPlayResult(int member_id) {
+		return gamedao.getPlayResult(member_id);
+	}
+
+	@Override
+	@Transactional(readOnly=true)
+	public int getMyRanking(Play play) {
+		return gamedao.getMyRanking(play);
+	}
+
+	@Override
+	@Transactional(readOnly=true)
+	public int getPerfectPoint(int video_id) {
+		return gamedao.getPerfectPoint(video_id);
+	}
+
+	@Override
+	@Transactional(readOnly=true)
+	public String getMyAvatar(int avatar_id) {
+		return gamedao.getMyAvatar(avatar_id);
 	}
 
 }

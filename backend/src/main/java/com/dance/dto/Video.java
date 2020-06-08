@@ -12,6 +12,7 @@ public class Video implements Serializable {
 	private int video_id;
 	private String thumbnail;
 	private String title;
+	private String singer;
 	private String file;
 	private int difficulty;
 	private int length;
@@ -35,6 +36,18 @@ public class Video implements Serializable {
 	}
 
 
+	public Video(int video_id, String thumbnail, String title, String singer, String file, int difficulty, int length) {
+		super();
+		this.video_id = video_id;
+		this.thumbnail = thumbnail;
+		this.title = title;
+		this.singer = singer;
+		this.file = file;
+		this.difficulty = difficulty;
+		this.length = length;
+	}
+
+
 	public Video(int video_id, String thumbnail, String title, String file, int difficulty, int length, int myPoint) {
 		super();
 		this.video_id = video_id;
@@ -44,6 +57,13 @@ public class Video implements Serializable {
 		this.difficulty = difficulty;
 		this.length = length;
 		this.myPoint = myPoint;
+	}
+
+
+	public Video(String file, int length) {
+		super();
+		this.file = file;
+		this.length = length;
 	}
 
 
@@ -74,6 +94,16 @@ public class Video implements Serializable {
 
 	public void setTitle(String title) {
 		this.title = title;
+	}
+
+
+	public String getSinger() {
+		return singer;
+	}
+
+
+	public void setSinger(String singer) {
+		this.singer = singer;
 	}
 
 
