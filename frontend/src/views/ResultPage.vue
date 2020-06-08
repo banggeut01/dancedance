@@ -75,7 +75,7 @@
           .then(res => {
             this.replayId = res.data.video_id
             this.userName = res.data.nickname
-
+            var currentdate = new Date();
             if (res.data.datetime.substring(0, 4) != currentdate.getFullYear() || 
               parseInt(res.data.datetime.substring(5, 7)) != currentdate.getMonth() + 1 || 
               parseInt(res.data.datetime.substring(8, 10)) != currentdate.getDate() || 
@@ -240,7 +240,7 @@
   .resultDiv {
     position: absolute;
     height: 55%;
-    width: 50%;
+    width: 60%;
     left: 50%;
     top: 50%;
     border-radius: 10%;
