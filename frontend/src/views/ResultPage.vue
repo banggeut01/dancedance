@@ -1,16 +1,16 @@
 <template>
   <div class="resultBackground">
     <video autoplay muted loop id="videoBG">
-      <source :src="require('@/assets/resultBackground.mp4')" type="video/mp4">
+      <source :src="videoSrc" type="video/mp4">
     </video>
     <div class="resultDiv">
       <div class="resultUpper">
         <div class="profileDiv">
-          <img :src="require('@/assets/profileImg/yeom.jpg')" alt="" class="profileImg">
+          <img :src="profileSrc" alt="" class="profileImg">
         </div>
         <div class="userInfo">
           <span id="userName" class="glow">
-            무무초이<br>
+            {{userName}}<br>
           </span>
           <span id="performedTime">
             {{ today }}
@@ -26,19 +26,18 @@
         </div>
         <div class="scoreRatings">
           <span style="font-size:1rem; margin-top:10px">Score</span>
-          <span style="font-size:4rem; margin-top:10px" id="point" class="glow">12400</span>pts
+          <span id="point" class="glow scoreRank">{{ score }}</span>pts
         </div>
+
         <div class="rankingRatings">
-          <span style="color: white; font-size:2rem;">
-            <span id="ranking" style="font-size:4rem; margin-top:10px" class="glow">35</span>th
-          </span>
+          <span id="ranking" class="glow scoreRank">{{ rank }}</span>th
         </div>
       </div>
       <div class="resultBtn" style="text-align:center">
-        <p class="buttonP" style="margin-right:100px;display:inline-block;">
+        <p class="buttonP" @click="replay()">
           <a class="buttonCommon buttonA">다시하기</a>
         </p>
-        <p class="buttonP" style="margin:0;display:inline;">
+        <p class="buttonP" style="margin:0;display:inline;" @click="goToMain()">
           <a class="buttonCommon buttonB">종료하기</a>
         </p>
       </div>
@@ -51,34 +50,89 @@
     name: 'ResultPage',
     data() {
       return {
-        chgNumSpeed: 0.1,
-        today: ''
+        chgNumSpeed: 3,
+        today: '',
+        userName: '',
+        perfectScore: 0,
+        score: 0,
+        rank: 0,
+        videoSrc: require('@/assets/resultBackground.mp4'),
+        profileSrc: '',
+        replayId: null,
+      }
+    },
+    watch: {
+      score: function () {
+        this.increaseNum("point", 100, this.score);
+      },
+      rank: function () {
+        this.increaseNum("ranking", 1, this.rank);
       }
     },
     methods: {
-      increaseNum(id, unit) {
+      getResult() {
+        this.$axios.get('http://k02b1021.p.ssafy.io:8197/ssafy-dance/api/play/result')
+          .then(res => {
+            this.replayId = res.data.video_id
+            this.userName = res.data.nickname
+
+            if (res.data.datetime.substring(0, 4) != currentdate.getFullYear() || 
+              parseInt(res.data.datetime.substring(5, 7)) != currentdate.getMonth() + 1 || 
+              parseInt(res.data.datetime.substring(8, 10)) != currentdate.getDate() || 
+              parseInt(res.data.datetime.substring(11, 13)) != currentdate.getHours() || 
+              (res.data.datetime.substring(14, 16) != currentdate.getMinutes() && (res.data.datetime.substring(14, 16) != currentdate.getMinutes() - 1))) {
+              this.$router.push('/main')
+            }
+            
+            this.today = res.data.datetime.substring(0, 4) + '년 ' + res.data.datetime.substring(5, 7) + '월 ' + res.data.datetime.substring(8, 10) + '일 '+
+            res.data.datetime.substring(11, 13) + '시 ' + res.data.datetime.substring(14, 16) + '분 ' + res.data.datetime.substring(17, 19) + '초'
+            this.rank = res.data.ranking
+            this.score = res.data.point
+            this.perfectScore = res.data.perfect
+            this.profileSrc = require('@/components/avatar' + `${res.data.img.substring(1, res.data.img.length)}`)
+            this.fillStar(this.score, this.perfectScore);
+          })
+      },
+      increaseNum(id, unit, endNbr) {
         var elt = document.getElementById(id);
-        var endNbr = Number(document.getElementById(id).innerHTML);
         this.incNumRecur(0, endNbr, elt, unit);
       },
-      /*A recursive function to increase the number.*/
       incNumRecur(i, endNbr, elt, unit) {
         if (i <= endNbr) {
           elt.innerHTML = i;
           var th = this
-          setTimeout(function () { //Delay a bit before calling the function again.
+          setTimeout(function () {
             th.incNumRecur(i + unit, endNbr, elt, unit);
           }, th.chgNumSpeed);
         }
       },
       getCurrentTime() {
         var today = new Date();
-        this.today = today.getFullYear() + '년 ' + (today.getMonth() + 1) + '월 ' + today.getDate() + '일 ' + today.getHours() +'시 ' + today.getMinutes() + '분';
+        this.today = today.getFullYear() + '년 ' + (today.getMonth() + 1) + '월 ' + today.getDate() + '일 ' + today
+          .getHours() + '시 ' + today.getMinutes() + '분';
+      },
+      fillStar(score, perfectScore) {
+        const rate = parseInt((score / perfectScore) * 100);
+        var cssAnimation = document.createElement('style');
+        cssAnimation.type = 'text/css';
+
+        var rules = document.createTextNode('@keyframes rating{' +
+          'from { width: 0; }' +
+          `to { width: ${rate}%; }` +
+          '}');
+        cssAnimation.appendChild(rules);
+        document.getElementsByTagName("head")[0].appendChild(cssAnimation);
+      },
+      replay() {
+        this.$router.push(`/play/${this.replayId}`)
+      },
+      goToMain() {
+        this.$router.push('/main')
       }
     },
     mounted() {
-      this.increaseNum("ranking", 1);
-      this.increaseNum("point", 100);
+      this.$store.dispatch('isLogin', this.$axios);
+      this.getResult();
       this.getCurrentTime();
     }
   }
@@ -87,9 +141,11 @@
 <style>
   .buttonP {
     text-align: center;
-    font-size: 3rem;
+    font-size: 3.5vw;
     margin: 20px 0 20px 0;
     cursor: pointer;
+    margin-right: 3.5vw;
+    display: inline-block;
   }
 
   .buttonCommon {
@@ -128,6 +184,11 @@
     animation: none;
   }
 
+  .scoreRank {
+    font-size: 4vw;
+    margin-top: 10px;
+  }
+
   @keyframes neon1 {
     from {
       text-shadow: 0 0 10px #fff, 0 0 20px #fff, 0 0 30px #fff, 0 0 40px #45b6fe, 0 0 70px #45b6fe, 0 0 80px #45b6fe, 0 0 100px #FF1177, 0 0 150px #FF1177;
@@ -156,6 +217,14 @@
     height: 100%;
     min-width: 100%;
     min-height: 100%;
+  }
+
+  @media screen and (max-width: 1360px) {
+
+    #videoBG {
+      display: none;
+    }
+
   }
 
   .resultBackground {
@@ -193,8 +262,9 @@
   }
 
   .profileImg {
-    height: 200px;
-    width: 200px;
+    max-width: 11vw;
+    max-height: 100%;
+    margin: auto;
   }
 
   .userInfo {
@@ -204,24 +274,24 @@
 
   .userInfo #userName {
     color: white;
-    font-size: 4rem;
+    font-size: 4vw;
   }
 
   .userInfo #performedTime {
     color: white;
-    font-size: 1rem;
+    font-size: 1vw;
   }
 
   .resultBottom {
-    height: 200px;
+    height: 15vh;
     /* width: 600px; */
-    margin-left: 50px;
+    margin-left: 4vw;
   }
 
   .starRatings {
     unicode-bidi: bidi-override;
     color: white;
-    font-size: 4rem;
+    font-size: 3.7vw;
     display: inline-block;
     margin: 0 auto;
     position: relative;
@@ -274,16 +344,6 @@
   .resultThird {
     margin-left: 100px;
     height: 100px;
-  }
-
-  @keyframes rating {
-    from {
-      width: 0;
-    }
-
-    to {
-      width: 70%;
-    }
   }
 
   @font-face {

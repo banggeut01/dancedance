@@ -1,18 +1,13 @@
 <template>
     <div class="centered">
         <h1 class="glow">Your Avatar</h1>
-        <FaceMesh :name="avatar.name" />
+        <img :src="require(`${avatar.url}`)" class="selectedImg">
     </div>
 </template>
 
 <script>
-    import FaceMesh from '@/components/faceMesh/FaceMesh.vue'
-
     export default {
         name: 'SelectedAvatar',
-        components: {
-            FaceMesh
-        },
         props: {
             avatar: {
                 type: Object,
@@ -22,6 +17,10 @@
 </script>
 
 <style>
+    .selectedImg {
+        height: 100%;
+        width: 30vw;
+    }
     .centered {
         position: absolute;
         left: 50%;
