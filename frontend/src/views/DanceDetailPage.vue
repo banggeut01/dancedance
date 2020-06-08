@@ -1,8 +1,10 @@
 <template>
   <div 
     class="danceDetail" 
-    style="background: linear-gradient(#000000 62%, #ffffff 38%);"
   >
+    <video autoplay muted loop id="backgroundVideo">
+      <source src="@/assets/mainBackground.mp4" type="video/mp4" />
+    </video>
     <Header></Header>
     <DanceDetail :dances.sync="dances" :nowDance.sync="nowDance"></DanceDetail>
   </div>
@@ -25,6 +27,7 @@ export default {
     })
   },
 }
+
 </script>
 
 <style>
